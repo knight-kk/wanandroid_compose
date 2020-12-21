@@ -1,0 +1,2 @@
+rootProject.name = "wanandroid_compose"
+include ':app'
