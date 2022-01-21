@@ -3,8 +3,6 @@ object Deps {
      * AndroidX
      */
     object Androidx {
-        const val BROWSER = "androidx.browser:browser:1.4.0"
-
         const val NAV_COMPOSE = "androidx.navigation:navigation-compose:2.4.0-rc01"
 
         object Common {

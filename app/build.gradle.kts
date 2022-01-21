@@ -8,7 +8,7 @@ android {
     compileSdk = 31
 
     defaultConfig {
-        applicationId = "com.wkk.yuque"
+        applicationId = "com.wkk.wanandroid"
         minSdk = 21
         targetSdk = 31
         versionCode = 1
@@ -57,7 +57,6 @@ dependencies {
 
     implementation(Deps.Androidx.Lifecycle.RUNTIME_KTX)
     implementation(Deps.Androidx.Lifecycle.ACTIVITY_COMPOSE)
-    implementation(Deps.Androidx.BROWSER)
     implementation(Deps.Androidx.DataStore.DATASTORE_PREFERENCES)
     implementation(Deps.Androidx.NAV_COMPOSE)
 
