@@ -14,5 +14,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "yuque_Android"
+rootProject.name = "wanAndroid"
 include(":app")
