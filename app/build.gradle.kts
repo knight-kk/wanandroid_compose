@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("com.google.devtools.ksp") version "1.5.31-1.0.0"
+    id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -49,9 +49,8 @@ android {
 dependencies {
     implementation(Deps.Androidx.Common.CORE_KTX)
     implementation(Deps.Androidx.Common.APPCOMPAT)
-    implementation(Deps.Androidx.Common.MATERIAL)
     implementation(Deps.Androidx.Compose.UI)
-    implementation(Deps.Androidx.Compose.MATERIAL)
+    implementation(Deps.Androidx.Compose.MATERIAL3)
     implementation(Deps.Androidx.Compose.UI_TOOLING)
     implementation(Deps.Androidx.Compose.UI_TOOLING_PREVIEW)
 

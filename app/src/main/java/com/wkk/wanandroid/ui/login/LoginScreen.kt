@@ -15,54 +15,69 @@
  */
 package com.wkk.wanandroid.ui.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.wkk.wanandroid.net.LoginManager
-import com.wkk.wanandroid.net.NetManager
-import kotlinx.coroutines.launch
+import androidx.compose.ui.unit.dp
+import com.wkk.wanandroid.R
 
 @Composable
 fun LoginScreen() {
     val coroutineScope = rememberCoroutineScope()
-    Column(Modifier.fillMaxSize()) {
-        Button(onClick = {
-            coroutineScope.launch {
-                val result = NetManager.apiService.login("*****", "*****")
-                if (result.isSuccess()) {
-                    LoginManager.login()
-                }
-            }
-        }) {
-            Text(text = "登录")
-        }
-        Button(onClick = {
-            coroutineScope.launch {
-                NetManager.apiService.unReadMessageCount()
-            }
-        }) {
-            Text(text = "未读消息")
-        }
+    Column(Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.4f),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_foreground),
+            contentDescription = "logo"
+        )
+        var userName by remember { mutableStateOf("") }
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            value = userName,
+            onValueChange = { value ->
+                userName = value
+            },
+            label = { Text(text = "用户名") }
+        )
 
-        Button(onClick = {
-            coroutineScope.launch {
-                val result = NetManager.apiService.logout()
-                if (result.isSuccess()) {
-                    LoginManager.logout()
-                }
-            }
-        }) {
-            Text(text = "退出登录")
+        var password by remember { mutableStateOf("") }
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            value = password,
+            onValueChange = { value ->
+                password = value
+            }, label = { Text(text = "密码") }
+        )
+
+        Button(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            shape = RoundedCornerShape(4.dp),
+            onClick = { }
+        ) {
+            Text(text = "登录")
         }
     }
 }
 
-@Preview(showBackground = false)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginPreView() {
     LoginScreen()

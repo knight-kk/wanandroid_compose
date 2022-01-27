@@ -18,9 +18,10 @@ object Deps {
         }
 
         object Compose {
-            const val VERSION = "1.0.5"
+            const val VERSION = "1.2.0-alpha02"
             const val UI = "androidx.compose.ui:ui:$VERSION"
             const val MATERIAL = "androidx.compose.material:material:$VERSION"
+            const val MATERIAL3 = "androidx.compose.material3:material3:1.0.0-alpha04"
             const val UI_TOOLING = "androidx.compose.ui:ui-tooling:$VERSION"
             const val UI_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:$VERSION"
             const val UI_TEST_JUNIT = "androidx.compose.ui:ui-test-junit4:$VERSION"

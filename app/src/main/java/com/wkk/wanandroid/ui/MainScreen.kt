@@ -15,29 +15,27 @@
  */
 package com.wkk.wanandroid.ui
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.Crossfade
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.wkk.wanandroid.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     var currentSection by remember { mutableStateOf(HomeSections.INDEX) }
@@ -58,35 +56,22 @@ fun MainScreen() {
 
 @Composable
 private fun Toolbar(title: String = stringResource(id = R.string.app_name)) =
-    TopAppBar(title = { Text(text = title) })
+    SmallTopAppBar(title = { Text(text = title) })
 
 @Composable
 private fun HomeBottomNav(
     currentSection: HomeSections,
     onItemSelected: (section: HomeSections) -> Unit,
 ) {
-    BottomNavigation(backgroundColor = MaterialTheme.colors.background) {
+    NavigationBar {
         val items = HomeSections.values()
-        items.forEach { homeSection ->
-            val selected = homeSection == currentSection
-            val tintColor =
-                if (selected) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
-            BottomNavigationItem(
-                icon = {
-                    Icon(
-                        imageVector = homeSection.icon,
-                        contentDescription = "",
-                        tint = tintColor
-                    )
-                },
+        items.forEach { item ->
+            val selected = item == currentSection
+            NavigationBarItem(
+                icon = { Icon(painterResource(id = item.icon), contentDescription = "") },
+                label = { Text(text = stringResource(item.title),) },
                 selected = selected,
-                label = {
-                    Text(
-                        text = stringResource(homeSection.title),
-                        style = TextStyle(color = tintColor)
-                    )
-                },
-                onClick = { onItemSelected(homeSection) }
+                onClick = { onItemSelected(item) }
             )
         }
     }
@@ -94,12 +79,12 @@ private fun HomeBottomNav(
 
 private enum class HomeSections(
     @StringRes val title: Int,
-    val icon: ImageVector
+    @DrawableRes val icon: Int
 ) {
-    INDEX(R.string.main_tab_home, Icons.Outlined.Home),
-    TREE(R.string.main_tab_qa, Icons.Outlined.Home),
-    QA(R.string.main_tab_tree, Icons.Outlined.Home),
-    USER(R.string.main_tab_user, Icons.Outlined.Person)
+    INDEX(R.string.main_tab_home, R.drawable.ic_outline_home_24),
+    TREE(R.string.main_tab_qa, R.drawable.ic_outline_home_24),
+    QA(R.string.main_tab_tree, R.drawable.ic_outline_home_24),
+    USER(R.string.main_tab_user, R.drawable.ic_outline_home_24)
 }
 
 @Preview
