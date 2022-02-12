@@ -17,14 +17,24 @@ package com.wkk.wanandroid.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.PersonPinCircle
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,48 +43,119 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.wkk.wanandroid.R
+import com.wkk.wanandroid.net.NetManager
+import com.wkk.wanandroid.ui.components.PasswordTextField
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen() {
+    Scaffold(
+        topBar = {
+            SmallTopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            painterResource(R.drawable.ic_round_close_24),
+                            contentDescription = "back"
+                        )
+                    }
+                },
+                title = { Text(text = "登录") }
+            )
+        }
+    ) {
+    }
+
     val coroutineScope = rememberCoroutineScope()
-    Column(Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Image(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.4f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.32f),
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = "logo"
         )
         var userName by remember { mutableStateOf("") }
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+        UserTextField(
             value = userName,
             onValueChange = { value ->
                 userName = value
             },
-            label = { Text(text = "用户名") }
+            onClear = { userName = "" }
         )
 
         var password by remember { mutableStateOf("") }
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+        PasswordTextField(
             value = password,
             onValueChange = { value ->
                 password = value
-            }, label = { Text(text = "密码") }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
         )
+        Row(Modifier.fillMaxWidth()) {
+            TextButton(onClick = { /*TODO*/ }) {
+                Text(text = "忘记密码?")
+            }
+        }
 
         Button(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            shape = RoundedCornerShape(4.dp),
-            onClick = { }
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            onClick = {
+                coroutineScope.launch {
+                    NetManager.apiService.login(userName, password)
+                }
+            }
         ) {
             Text(text = "登录")
         }
+
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            onClick = { /*TODO*/ }
+        ) {
+            Text(text = "注册")
+        }
     }
+}
+
+@Composable
+private fun UserTextField(value: String, onValueChange: (String) -> Unit, onClear: () -> Unit) {
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(text = "用户名") },
+        leadingIcon = {
+            Icon(Icons.Rounded.PersonPinCircle, contentDescription = "", tint = Color.Gray)
+        },
+        trailingIcon = {
+            IconButton(onClick = onClear) {
+                Icon(Icons.Rounded.Clear, contentDescription = "")
+            }
+        }
+    )
 }
 
 @Preview(showBackground = true, showSystemUi = true)

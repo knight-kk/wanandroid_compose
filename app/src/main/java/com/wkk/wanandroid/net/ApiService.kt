@@ -16,12 +16,15 @@
 package com.wkk.wanandroid.net
 
 import com.wkk.wanandroid.constants.UrlConstants
+import com.wkk.wanandroid.model.Article
+import com.wkk.wanandroid.model.PageData
 import com.wkk.wanandroid.model.Result
 import com.wkk.wanandroid.model.UserDetail
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -57,4 +60,10 @@ interface ApiService {
      */
     @GET("message/lg/count_unread/json")
     suspend fun unReadMessageCount(): Result<Any?>
+
+    /**
+     * 首页文章列表
+     */
+    @GET("/article/list/{page}/json")
+    suspend fun fetchArticle(@Path("page") page: Int = 0): Result<PageData<Article>>
 }

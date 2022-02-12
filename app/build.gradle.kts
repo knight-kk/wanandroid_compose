@@ -51,6 +51,7 @@ dependencies {
     implementation(Deps.Androidx.Common.APPCOMPAT)
     implementation(Deps.Androidx.Compose.UI)
     implementation(Deps.Androidx.Compose.MATERIAL)
+    implementation(Deps.Androidx.Compose.MATERIAL_ICONS_EXTENDED)
     implementation(Deps.Androidx.Compose.MATERIAL3)
     implementation(Deps.Androidx.Compose.UI_TOOLING)
     implementation(Deps.Androidx.Compose.UI_TOOLING_PREVIEW)

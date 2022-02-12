@@ -17,6 +17,7 @@ package com.wkk.wanandroid.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
@@ -26,9 +27,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.wkk.wanandroid.R
+import androidx.navigation.NavHostController
+import com.wkk.wanandroid.AppDestinations
 import com.wkk.wanandroid.net.LoginManager
 import com.wkk.wanandroid.net.NetManager
 import kotlinx.coroutines.launch
@@ -47,16 +48,22 @@ fun UserScreen() {
             .background(Color(15, 157, 88)),
         contentAlignment = Alignment.Center
     ) {
-        Text(stringResource(id = R.string.main_tab_user))
-        Button(onClick = {
-            coroutineScope.launch {
-                val result = NetManager.apiService.logout()
-                if (result.isSuccess()) {
-                    LoginManager.logout()
-                }
+        Column {
+            Button(onClick = {
+
+            }) {
+                Text(text = "登录")
             }
-        }) {
-            Text(text = "退出登录")
+            Button(onClick = {
+                coroutineScope.launch {
+                    val result = NetManager.apiService.logout()
+                    if (result.isSuccess()) {
+                        LoginManager.logout()
+                    }
+                }
+            }) {
+                Text(text = "退出登录")
+            }
         }
     }
 }
