@@ -5,12 +5,14 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 32
+
+    namespace = "com.wkk.wanandroid"
 
     defaultConfig {
         applicationId = "com.wkk.wanandroid"
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -37,7 +39,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Deps.Androidx.Compose.VERSION
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
     packagingOptions {
         resources {
@@ -47,32 +49,30 @@ android {
 }
 
 dependencies {
-    implementation(Deps.Androidx.Common.CORE_KTX)
-    implementation(Deps.Androidx.Common.APPCOMPAT)
-    implementation(Deps.Androidx.Compose.UI)
-    implementation(Deps.Androidx.Compose.MATERIAL)
-    implementation(Deps.Androidx.Compose.MATERIAL_ICONS_EXTENDED)
-    implementation(Deps.Androidx.Compose.MATERIAL3)
-    implementation(Deps.Androidx.Compose.UI_TOOLING)
-    implementation(Deps.Androidx.Compose.UI_TOOLING_PREVIEW)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material)
+    implementation(libs.compose.material.icon.extended)
+    implementation(libs.compose.material3)
 
-    implementation(Deps.Androidx.Lifecycle.RUNTIME_KTX)
-    implementation(Deps.Androidx.Lifecycle.ACTIVITY_COMPOSE)
-    implementation(Deps.Androidx.DataStore.DATASTORE_PREFERENCES)
-    implementation(Deps.Androidx.NAV_COMPOSE)
+    implementation(libs.androidx.lifecycle.ktx)
+    implementation(libs.compose.activity)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.compose.navigation)
 
-    implementation(Deps.Google.Accompanist.PAGER)
-    implementation(Deps.Google.Accompanist.NAV_ANIMATION)
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.navigation.animation)
 
-    implementation(Deps.Squareup.OKHTTP)
-    implementation(Deps.Squareup.OKHTTP_LOGGING)
-    implementation(Deps.Squareup.RETROFIT)
-    implementation(Deps.Squareup.RETROFIT_CONVERTER_MOSHI)
-    implementation(Deps.Squareup.MOSHI)
-    ksp(Deps.Squareup.MOSHI_CODEGEN)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
 
-    testImplementation(Deps.Test.JUNIT)
-    androidTestImplementation(Deps.Androidx.Test.EXT_JUNIT)
-    androidTestImplementation(Deps.Androidx.Test.ESPRESSO_CORE)
-    androidTestImplementation(Deps.Androidx.Compose.UI_TEST_JUNIT)
+    testImplementation(libs.test.junit)
+    androidTestImplementation(libs.compose.ui.test.junit4)
 }

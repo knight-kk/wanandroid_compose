@@ -33,7 +33,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
 import com.wkk.wanandroid.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,8 +46,8 @@ fun MainScreen() {
         Crossfade(currentSection) {
             when (it) {
                 HomeSections.INDEX -> HomeScreen()
-                HomeSections.QA -> QAScreen()
-                HomeSections.TREE -> TreeScreen()
+//                HomeSections.QA -> QAScreen()
+//                HomeSections.TREE -> TreeScreen()
                 HomeSections.USER -> UserScreen()
             }
         }
@@ -83,9 +82,9 @@ private enum class HomeSections(
     @DrawableRes val icon: Int
 ) {
     INDEX(R.string.main_tab_home, R.drawable.ic_outline_home_24),
-    TREE(R.string.main_tab_qa, R.drawable.ic_outline_home_24),
-    QA(R.string.main_tab_tree, R.drawable.ic_outline_home_24),
-    USER(R.string.main_tab_user, R.drawable.ic_outline_home_24)
+//    TREE(R.string.main_tab_qa, R.drawable.ic_outline_home_24),
+//    QA(R.string.main_tab_tree, R.drawable.ic_outline_home_24),
+    USER(R.string.main_tab_user, R.drawable.ic_outline_person_outline_24)
 }
 
 @Preview
