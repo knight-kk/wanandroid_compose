@@ -1,72 +1,87 @@
+/*
+ * Copyright 2022 knight-kk
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.wkk.wanandroid.model
 
 import com.squareup.moshi.Json
 
 data class Article(
     @Json(name = "apkLink")
-    val apkLink: String,
+    val apkLink: String = "",
     @Json(name = "audit")
-    val audit: Int,
+    val audit: Int = -1,
     @Json(name = "author")
-    val author: String,
+    val author: String = "",
     @Json(name = "canEdit")
-    val canEdit: Boolean,
+    val canEdit: Boolean = false,
     @Json(name = "chapterId")
-    val chapterId: Int,
+    val chapterId: Int = -1,
     @Json(name = "chapterName")
-    val chapterName: String,
+    val chapterName: String = "",
     @Json(name = "collect")
-    val collect: Boolean,
+    val collect: Boolean = false,
     @Json(name = "courseId")
-    val courseId: Int,
+    val courseId: Int = 0,
     @Json(name = "desc")
-    val desc: String,
+    val desc: String = "",
     @Json(name = "descMd")
-    val descMd: String,
+    val descMd: String = "",
     @Json(name = "envelopePic")
-    val envelopePic: String,
+    val envelopePic: String = "",
     @Json(name = "fresh")
-    val fresh: Boolean,
+    val fresh: Boolean = false,
     @Json(name = "host")
-    val host: String,
+    val host: String = "",
     @Json(name = "id")
-    val id: Int,
+    val id: Int = -1,
     @Json(name = "link")
-    val link: String,
+    val link: String = "",
     @Json(name = "niceDate")
-    val niceDate: String,
+    val niceDate: String = "",
     @Json(name = "niceShareDate")
-    val niceShareDate: String,
+    val niceShareDate: String = "",
     @Json(name = "origin")
-    val origin: String,
+    val origin: String = "",
     @Json(name = "prefix")
-    val prefix: String,
+    val prefix: String = "",
     @Json(name = "projectLink")
-    val projectLink: String,
+    val projectLink: String = "",
     @Json(name = "publishTime")
-    val publishTime: Long,
+    val publishTime: Long = 1L,
     @Json(name = "realSuperChapterId")
-    val realSuperChapterId: Int,
+    val realSuperChapterId: Int = 1,
     @Json(name = "selfVisible")
-    val selfVisible: Int,
+    val selfVisible: Int = 1,
     @Json(name = "shareDate")
-    val shareDate: Long,
+    val shareDate: Long = 1L,
     @Json(name = "shareUser")
-    val shareUser: String,
+    val shareUser: String = "",
     @Json(name = "superChapterId")
-    val superChapterId: Int,
+    val superChapterId: Int = 0,
     @Json(name = "superChapterName")
-    val superChapterName: String,
+    val superChapterName: String = "",
     @Json(name = "tags")
-    val tags: List<Tag>,
+    val tags: List<Tag> = emptyList(),
     @Json(name = "title")
-    val title: String,
+    val title: String = "",
     @Json(name = "type")
-    val type: Int,
+    val type: Int = 1,
     @Json(name = "userId")
-    val userId: Int,
+    val userId: Int = 1,
     @Json(name = "visible")
-    val visible: Int,
+    val visible: Int = 0,
     @Json(name = "zan")
-    val zan: Int
+    val zan: Int = 0
 )

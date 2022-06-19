@@ -32,13 +32,12 @@ object NetManager {
     val apiService by lazy { retrofit.create(ApiService::class.java) }
 
     val okHttpClient by lazy {
-
         OkHttpClient.Builder()
             .cookieJar(LoginCookieJar()).apply {
                 if (BuildConfig.DEBUG) {
                     addInterceptor(
                         HttpLoggingInterceptor().apply {
-                            setLevel(HttpLoggingInterceptor.Level.BODY)
+                            setLevel(HttpLoggingInterceptor.Level.BASIC)
                         }
                     )
                 }

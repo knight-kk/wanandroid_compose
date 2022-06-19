@@ -15,50 +15,54 @@
  */
 package com.wkk.wanandroid.ui
 
-import androidx.compose.foundation.layout.Box
+import android.text.format.DateFormat
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.wkk.wanandroid.R
-import com.wkk.wanandroid.net.NetManager
-import kotlinx.coroutines.launch
+import androidx.compose.ui.unit.dp
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
+import com.wkk.wanandroid.model.Article
+import com.wkk.wanandroid.vm.HomeViewModel
 
 /**
  * 首页
  */
 @Composable
-fun HomeScreen() {
-    val coroutineScope = rememberCoroutineScope()
-    Box(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(stringResource(id = R.string.main_tab_home))
-        Column(Modifier.fillMaxSize()) {
-            Button(onClick = {
-                coroutineScope.launch {
-                    NetManager.apiService.unReadMessageCount()
-                }
-            }) {
-                Text(text = "未读消息")
+fun HomeScreen(viewModel: HomeViewModel, onItemClick: (Article) -> Unit) {
+    ArticleList(viewModel, onItemClick)
+}
+
+@Composable
+fun ArticleList(viewModel: HomeViewModel, onItemClick: (Article) -> Unit) {
+    val lazyPagingItems = viewModel.getPagerFlow().collectAsLazyPagingItems()
+//    val data by remember { mutableStateOf(lazyPagingItems) }
+    LazyColumn {
+        items(lazyPagingItems, { it.id }) { article ->
+            if (article != null) {
+                ArticleItem(article, onItemClick)
+                Divider()
             }
         }
+    }
+}
+
+@Composable
+fun ArticleItem(article: Article, onItemClick: (Article) -> Unit) {
+    Column(Modifier.padding(10.dp).clickable(onClick = { onItemClick(article) })) {
+        Text(text = article.title)
+        Text(text = article.author)
+        Text(text = DateFormat.format("yyyy-MM-dd HH:mm:ss", article.publishTime).toString())
     }
 }
 
 @Preview(showBackground = false)
 @Composable
 fun HomePreView() {
-    HomeScreen()
 }

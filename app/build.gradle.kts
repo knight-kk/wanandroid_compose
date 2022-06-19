@@ -61,10 +61,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.compose.activity)
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.compose.navigation)
+    implementation(libs.navigation.compose)
+    implementation(libs.viewmodel.compose)
+    implementation(libs.paging.compose)
 
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.webview)
 
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
@@ -75,4 +78,5 @@ dependencies {
 
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.okhttp.mockwebserver)
 }

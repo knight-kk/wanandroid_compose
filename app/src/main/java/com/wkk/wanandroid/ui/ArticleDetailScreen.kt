@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid
+package com.wkk.wanandroid.ui
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.Modifier
+import com.wkk.wanandroid.ui.components.CommonTopBar
+import com.wkk.wanandroid.ui.components.WebView
 
-class MainActivity : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            WanAndroidApp()
-        }
-    }
-}
-
-@Preview(showBackground = true)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DefaultPreview() {
-    WanAndroidApp()
+fun ArticleDetailScreen(title: String, url: String, onBack: () -> Unit) {
+    Scaffold(
+        topBar = { CommonTopBar(null, onBack) }
+    ) {
+        WebView(Modifier.fillMaxSize(), url)
+    }
 }

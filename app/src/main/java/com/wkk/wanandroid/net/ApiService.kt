@@ -25,6 +25,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -65,5 +66,8 @@ interface ApiService {
      * 首页文章列表
      */
     @GET("/article/list/{page}/json")
-    suspend fun fetchArticle(@Path("page") page: Int = 0): Result<PageData<Article>>
+    suspend fun fetchArticle(
+        @Path("page") page: Int = 0,
+        @Query("page_size") pageSize: Int = 20
+    ): Result<PageData<Article>>
 }
