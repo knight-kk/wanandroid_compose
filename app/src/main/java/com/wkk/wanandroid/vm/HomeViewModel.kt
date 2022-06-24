@@ -19,19 +19,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.wkk.wanandroid.data.ArticlePagingSource
 import com.wkk.wanandroid.data.impl.RemoteArticleRepository
-import com.wkk.wanandroid.model.Article
-import kotlinx.coroutines.flow.Flow
 
 class HomeViewModel : ViewModel() {
-    private val pager = Pager(PagingConfig(10)) {
-        ArticlePagingSource(RemoteArticleRepository())
-    }
-
-    fun getPagerFlow(): Flow<PagingData<Article>> {
-        return pager.flow.cachedIn(viewModelScope)
+    val pagerFlow by lazy {
+        Pager(PagingConfig(10)) {
+            ArticlePagingSource(RemoteArticleRepository())
+        }.flow.cachedIn(viewModelScope)
     }
 }

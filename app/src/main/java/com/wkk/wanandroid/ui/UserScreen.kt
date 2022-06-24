@@ -28,8 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import com.wkk.wanandroid.AppDestinations
 import com.wkk.wanandroid.net.LoginManager
 import com.wkk.wanandroid.net.NetManager
 import kotlinx.coroutines.launch
@@ -50,7 +48,6 @@ fun UserScreen() {
     ) {
         Column {
             Button(onClick = {
-
             }) {
                 Text(text = "登录")
             }

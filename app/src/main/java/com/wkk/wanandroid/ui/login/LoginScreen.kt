@@ -49,7 +49,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.wkk.wanandroid.R
 import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.components.PasswordTextField

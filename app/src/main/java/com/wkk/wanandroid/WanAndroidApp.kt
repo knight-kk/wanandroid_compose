@@ -25,10 +25,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,13 +39,12 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun WanAndroidApp() {
     val navController = rememberNavController()
-    var currentSection by remember { mutableStateOf(HomeSections.INDEX) }
     Scaffold(
         bottomBar = {
-            val shouldShowBottomBar = navController
-                .currentBackStackEntryAsState().value?.destination?.route in HomeSections.values()
-                .map { it.route }
-            if (shouldShowBottomBar) HomeBottomNav(currentSection) {
+            val currentRoute = navController
+                .currentBackStackEntryAsState().value?.destination?.route ?: return@Scaffold
+            val shouldShowBottomBar = currentRoute in HomeSections.values().map { it.route }
+            if (shouldShowBottomBar) HomeBottomNav(currentRoute) {
                 navigateToBottomBarRoute(
                     navController,
                     it.route
@@ -66,17 +61,16 @@ fun WanAndroidApp() {
 
 @Composable
 private fun HomeBottomNav(
-    currentSection: HomeSections,
+    currentRoute: String,
     onItemSelected: (section: HomeSections) -> Unit,
 ) {
     NavigationBar {
         val items = HomeSections.values()
         items.forEach { item ->
-            val selected = item == currentSection
             NavigationBarItem(
                 icon = { Icon(painterResource(id = item.icon), contentDescription = "") },
                 label = { Text(text = stringResource(item.title)) },
-                selected = selected,
+                selected = currentRoute == item.route,
                 onClick = { onItemSelected(item) }
             )
         }

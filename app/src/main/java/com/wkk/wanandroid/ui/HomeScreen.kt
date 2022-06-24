@@ -41,8 +41,7 @@ fun HomeScreen(viewModel: HomeViewModel, onItemClick: (Article) -> Unit) {
 
 @Composable
 fun ArticleList(viewModel: HomeViewModel, onItemClick: (Article) -> Unit) {
-    val lazyPagingItems = viewModel.getPagerFlow().collectAsLazyPagingItems()
-//    val data by remember { mutableStateOf(lazyPagingItems) }
+    val lazyPagingItems = viewModel.pagerFlow.collectAsLazyPagingItems()
     LazyColumn {
         items(lazyPagingItems, { it.id }) { article ->
             if (article != null) {
