@@ -15,7 +15,7 @@
  */
 package com.wkk.wanandroid.ui.components
 
-import android.webkit.WebChromeClient
+import android.annotation.SuppressLint
 import android.webkit.WebView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,16 +29,21 @@ import com.google.accompanist.web.LoadingState
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebView(modifier: Modifier = Modifier, url: String) {
     val urlAddress by remember { mutableStateOf(url) }
     val state = rememberWebViewState(urlAddress)
     val loadingState = state.loadingState
     Box(modifier) {
+//        WebView.setWebContentsDebuggingEnabled(true)
         WebView(
             state = state,
             onCreated = { webView: WebView ->
-                webView.settings.javaScriptEnabled = true
+                webView.settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                }
             }
         )
 
@@ -50,44 +55,3 @@ fun WebView(modifier: Modifier = Modifier, url: String) {
         }
     }
 }
-
-// @Composable
-// fun WebView(
-//    modifier: Modifier = Modifier,
-//    url: String,
-//    initSettings: (WebSettings) -> Unit,
-//    webChromeClient: WebChromeClient? = null,
-//    webViewClient: WebViewClient? = null
-// ) {
-//    WebView(modifier, url) { webView ->
-//        initSettings(webView.settings)
-//        if (webViewClient != null) {
-//            webView.webViewClient = webViewClient
-//        }
-//        if (webChromeClient != null) {
-//            webView.webChromeClient = webChromeClient
-//        }
-//    }
-// }
-
-// @Composable
-// fun WebView(
-//    modifier: Modifier = Modifier,
-//    url: String,
-//    init: (WebView) -> Unit
-// ) {
-//    AndroidView(modifier = modifier, factory = { context ->
-//        WebView(context).apply {
-//            init(this)
-//            loadUrl(url)
-//        }
-//    })
-// }
-//
-private fun getDefaultWebChromeClient(onProgress: (progress: Int) -> Unit) =
-    object : WebChromeClient() {
-        override fun onProgressChanged(view: WebView?, newProgress: Int) {
-            super.onProgressChanged(view, newProgress)
-            onProgress(newProgress)
-        }
-    }
