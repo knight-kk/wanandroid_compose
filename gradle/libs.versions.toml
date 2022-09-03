@@ -20,7 +20,7 @@ compose-activity = "androidx.activity:activity-compose:1.4.0"
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-material-icon-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
-compose-material3 = "androidx.compose.material3:material3:1.0.0-alpha04"
+compose-material3 = "androidx.compose.material3:material3:1.0.0-alpha14"
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
