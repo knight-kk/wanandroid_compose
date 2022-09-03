@@ -16,6 +16,10 @@
 package com.wkk.wanandroid
 
 object AppDestinations {
+    object Account {
+        const val LOGIN = "login"
+    }
+
     object Main {
         const val HOME = "home"
         const val USER = "user"

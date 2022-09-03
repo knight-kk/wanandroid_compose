@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.wkk.wanandroid.ui.ArticleDetailScreen
 import com.wkk.wanandroid.ui.HomeScreen
 import com.wkk.wanandroid.ui.UserScreen
+import com.wkk.wanandroid.ui.login.LoginScreen
 import com.wkk.wanandroid.vm.HomeViewModel
 import java.net.URLEncoder
 
@@ -40,6 +41,10 @@ fun AppNavGraph(
         modifier = modifier
     ) {
 
+        composable(AppDestinations.Account.LOGIN) {
+            LoginScreen()
+        }
+
         composable(AppDestinations.Main.HOME) {
             HomeScreen(viewModel) {
                 navController.navigate(
@@ -50,7 +55,7 @@ fun AppNavGraph(
                 )
             }
         }
-        composable(AppDestinations.Main.USER) { UserScreen() }
+        composable(AppDestinations.Main.USER) { UserScreen { navController.navigate(AppDestinations.Account.LOGIN) } }
 
         composable(AppDestinations.ArticleDetail.getValue()) { navBackStackEntry ->
             val arguments = navBackStackEntry.arguments ?: return@composable
