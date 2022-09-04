@@ -16,19 +16,21 @@
 package com.wkk.wanandroid.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.wkk.wanandroid.ui.components.CommonTopBar
 import com.wkk.wanandroid.ui.components.WebView
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleDetailScreen(title: String, url: String, onBack: () -> Unit) {
     Scaffold(
-        topBar = { CommonTopBar(null, onBack) }
-    ) {
-        WebView(Modifier.fillMaxSize(), url)
+        topBar = { CommonTopBar(title, onBack) }
+    ) { paddingValues ->
+        WebView(
+            Modifier
+                .fillMaxSize()
+                .padding(paddingValues), url)
     }
 }

@@ -27,7 +27,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.PersonPinCircle
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
@@ -54,7 +53,6 @@ import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.components.PasswordTextField
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen() {
     Scaffold(
@@ -71,74 +69,77 @@ fun LoginScreen() {
                 title = { Text(text = "登录") }
             )
         }
-    ) {
-    }
+    ) { paddingValues ->
+        val coroutineScope = rememberCoroutineScope()
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.32f),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = "logo"
+            )
+            var userName by remember { mutableStateOf("") }
+            UserTextField(
+                value = userName,
+                onValueChange = { value ->
+                    userName = value
+                },
+                onClear = { userName = "" }
+            )
 
-    val coroutineScope = rememberCoroutineScope()
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.32f),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "logo"
-        )
-        var userName by remember { mutableStateOf("") }
-        UserTextField(
-            value = userName,
-            onValueChange = { value ->
-                userName = value
-            },
-            onClear = { userName = "" }
-        )
-
-        var password by remember { mutableStateOf("") }
-        PasswordTextField(
-            value = password,
-            onValueChange = { value ->
-                password = value
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-        )
-        Row(Modifier.fillMaxWidth()) {
-            TextButton(onClick = { /*TODO*/ }) {
-                Text(text = "忘记密码?")
-            }
-        }
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            onClick = {
-                coroutineScope.launch {
-                    NetManager.apiService.login(userName, password)
+            var password by remember { mutableStateOf("") }
+            PasswordTextField(
+                value = password,
+                onValueChange = { value ->
+                    password = value
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+            Row(Modifier.fillMaxWidth()) {
+                TextButton(onClick = { /*TODO*/ }) {
+                    Text(text = "忘记密码?")
                 }
             }
-        ) {
-            Text(text = "登录")
-        }
 
-        OutlinedButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            onClick = { /*TODO*/ }
-        ) {
-            Text(text = "注册")
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                onClick = {
+                    coroutineScope.launch {
+                        NetManager.apiService.login(userName, password)
+                    }
+                }
+            ) {
+                Text(text = "登录")
+            }
+
+            OutlinedButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                onClick = { /*TODO*/ }
+            ) {
+                Text(text = "注册")
+            }
         }
     }
 }
 
 @Composable
-private fun UserTextField(value: String, onValueChange: (String) -> Unit, onClear: () -> Unit) {
+private fun UserTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    onClear: () -> Unit
+) {
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
