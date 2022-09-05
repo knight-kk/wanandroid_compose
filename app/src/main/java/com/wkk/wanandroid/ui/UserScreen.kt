@@ -15,36 +15,93 @@
  */
 package com.wkk.wanandroid.ui
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.wkk.wanandroid.R
+import com.wkk.wanandroid.net.LoginManager
+import com.wkk.wanandroid.ui.components.CommonTopBar
 
 /**
  * 我的
  */
-
 @Composable
 fun UserScreen(toLogin: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column {
-            Button(onClick = toLogin) {
-                Text(text = "登录")
-            }
+    Scaffold(
+        topBar = { CommonTopBar("我的") }
+    ) { paddingValues ->
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            UserHeader(toLogin)
         }
     }
 }
+
+@Composable
+fun UserHeader(toLogin: () -> Unit) {
+    if (LoginManager.isLogin.not()) {
+        UserNoLoginHeader(toLogin)
+        return
+    }
+    UserLoginHeader()
+}
+
+@Composable
+private fun UserNoLoginHeader(toLogin: () -> Unit) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Image(
+            modifier = Modifier
+                .padding(horizontal = 10.dp)
+                .border(1.dp, Color(0xFFE7E7E7), CircleShape)
+                .size(60.dp)
+                .clip(CircleShape),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
+            contentDescription = "user icon"
+        )
+        Button(onClick = toLogin) {
+            Text(text = "登录")
+        }
+    }
+}
+
+@Composable
+fun UserLoginHeader() {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Image(
+            modifier = Modifier
+                .padding(horizontal = 10.dp)
+                .border(1.dp, Color(0xFFE7E7E7), CircleShape)
+                .size(60.dp)
+                .clip(CircleShape),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
+            contentDescription = "user icon"
+        )
+        Text(text = "已登录")
+    }
+}
+
 
 @Preview
 @Composable

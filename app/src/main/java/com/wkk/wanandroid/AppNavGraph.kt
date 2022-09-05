@@ -42,7 +42,9 @@ fun AppNavGraph(
     ) {
 
         composable(AppDestinations.Account.LOGIN) {
-            LoginScreen()
+            LoginScreen{
+                navController.navigateUp()
+            }
         }
 
         composable(AppDestinations.Main.HOME) {

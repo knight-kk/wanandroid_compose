@@ -49,17 +49,18 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wkk.wanandroid.R
+import com.wkk.wanandroid.net.LoginManager
 import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.components.PasswordTextField
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onClosePage:()->Unit) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = onClosePage) {
                         Icon(
                             painterResource(R.drawable.ic_round_close_24),
                             contentDescription = "back"
@@ -115,7 +116,12 @@ fun LoginScreen() {
                     .padding(16.dp),
                 onClick = {
                     coroutineScope.launch {
-                        NetManager.apiService.login(userName, password)
+                        val result = NetManager.apiService.login(userName, password)
+                        if (result.isSuccess()) {
+                            return@launch
+                        }
+                        LoginManager.login()
+                        onClosePage()
                     }
                 }
             ) {
@@ -161,5 +167,5 @@ private fun UserTextField(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginPreView() {
-    LoginScreen()
+    LoginScreen({})
 }
