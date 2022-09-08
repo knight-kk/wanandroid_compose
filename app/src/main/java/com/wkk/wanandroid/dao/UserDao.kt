@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid
+package com.wkk.wanandroid.dao
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import com.wkk.wanandroid.model.User
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+@Dao
+interface UserDao {
+    @Insert
+    suspend fun insert(user: User)
+
+    @Delete
+    suspend fun delete(user: User)
+
+    @Query("SELECT * FROM users WHERE id=:userId")
+    suspend fun getUserById(userId: Int): User
 }

@@ -46,6 +46,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.0"
     }
+    testOptions {
+     unitTests.isIncludeAndroidResources = true
+    }
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -79,9 +82,23 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi.kotlin)
+    implementation("com.google.firebase:firebase-firestore-ktx:24.1.0")
+    implementation("androidx.test.ext:junit-ktx:1.1.3")
     ksp(libs.moshi.kotlin.codegen)
 
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
     testImplementation(libs.test.junit)
-    androidTestImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.junit.ktx)
+    testImplementation(libs.androidx.test.core)
     testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.room.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.compose.ui.test.junit4)
+
+
+
 }

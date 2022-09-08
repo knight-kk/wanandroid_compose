@@ -19,7 +19,7 @@ import com.wkk.wanandroid.constants.UrlConstants
 import com.wkk.wanandroid.model.Article
 import com.wkk.wanandroid.model.PageData
 import com.wkk.wanandroid.model.Result
-import com.wkk.wanandroid.model.UserDetail
+import com.wkk.wanandroid.model.User
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -37,7 +37,7 @@ interface ApiService {
     suspend fun login(
         @Field("username") userName: String,
         @Field("password") password: String
-    ): Result<UserDetail>
+    ): Result<User>
 
     /**
      * 注册
@@ -48,7 +48,7 @@ interface ApiService {
         @Field("username") userName: String,
         @Field("password") password: String,
         @Field("repassword") rePassword: String,
-    ): Result<UserDetail>
+    ): Result<User>
 
     /**
      * 退出登录

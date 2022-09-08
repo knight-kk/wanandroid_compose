@@ -15,31 +15,31 @@
  */
 package com.wkk.wanandroid.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity(tableName = "users")
 @JsonClass(generateAdapter = true)
-data class UserDetail(
-    @Json(name = "admin")
-    val admin: Boolean,
-    @Json(name = "chapterTops")
-    val chapterTops: List<Any>,
-    @Json(name = "coinCount")
-    val coinCount: Int,
-    @Json(name = "collectIds")
-    val collectIds: List<Int>,
-    @Json(name = "email")
-    val email: String,
-    @Json(name = "icon")
-    val icon: String,
+data class User(
+    @PrimaryKey
     @Json(name = "id")
     val id: Int,
+    @Json(name = "coinCount")
+    val coinCount: Int = 0,
+    @Json(name = "collectIds")
+    val collectIds: List<Int> = listOf(),
+    @Json(name = "email")
+    val email: String = "",
+    @Json(name = "icon")
+    val icon: String = "",
     @Json(name = "nickname")
-    val nickname: String,
+    val nickname: String = "",
     @Json(name = "publicName")
-    val publicName: String,
+    val publicName: String = "",
     @Json(name = "type")
-    val type: Int,
+    val type: Int = 0,
     @Json(name = "username")
-    val username: String
+    val username: String = ""
 )
