@@ -19,4 +19,5 @@ object DataStoreConstants {
 
     const val IS_LOGIN_KEY = "is_login_key"
     const val LOGIN_COOKIES_KEY = "login_cookies_key"
+    const val USER_ID = "user_id"
 }

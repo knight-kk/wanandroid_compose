@@ -31,6 +31,8 @@ fun ArticleDetailScreen(title: String, url: String, onBack: () -> Unit) {
         WebView(
             Modifier
                 .fillMaxSize()
-                .padding(paddingValues), url)
+                .padding(paddingValues),
+            url
+        )
     }
 }

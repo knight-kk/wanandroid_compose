@@ -30,5 +30,5 @@ interface UserDao {
     suspend fun delete(user: User)
 
     @Query("SELECT * FROM users WHERE id=:userId")
-    suspend fun getUserById(userId: Int): User
+    suspend fun getUserById(userId: Long): User
 }

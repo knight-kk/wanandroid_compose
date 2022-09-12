@@ -25,7 +25,7 @@ import com.squareup.moshi.JsonClass
 data class User(
     @PrimaryKey
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
     @Json(name = "coinCount")
     val coinCount: Int = 0,
     @Json(name = "collectIds")

@@ -45,7 +45,6 @@ fun RegisterScreen() {
         }
     ) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
-
         }
     }
 }

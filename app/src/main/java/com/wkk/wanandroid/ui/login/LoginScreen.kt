@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.PersonPinCircle
@@ -49,14 +51,16 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wkk.wanandroid.R
-import com.wkk.wanandroid.net.LoginManager
 import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.components.PasswordTextField
+import com.wkk.wanandroid.utils.UserManager
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onClosePage:()->Unit) {
+fun LoginScreen(onClosePage: () -> Unit) {
+    val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             SmallTopAppBar(
                 navigationIcon = {
@@ -102,7 +106,7 @@ fun LoginScreen(onClosePage:()->Unit) {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
             )
             Row(Modifier.fillMaxWidth()) {
                 TextButton(onClick = { /*TODO*/ }) {
@@ -117,10 +121,12 @@ fun LoginScreen(onClosePage:()->Unit) {
                 onClick = {
                     coroutineScope.launch {
                         val result = NetManager.apiService.login(userName, password)
-                        if (result.isSuccess()) {
+                        if (result.isSuccess().not()) {
+                            snackbarHostState.showSnackbar(result.errorMsg)
                             return@launch
                         }
-                        LoginManager.login()
+                        val user = result.data ?: return@launch
+                        UserManager.login(user)
                         onClosePage()
                     }
                 }

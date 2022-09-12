@@ -15,6 +15,7 @@
  */
 package com.wkk.wanandroid.net
 
+import com.wkk.wanandroid.utils.UserManager
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -22,14 +23,10 @@ import okhttp3.HttpUrl
 class LoginCookieJar : CookieJar {
 
     override fun loadForRequest(url: HttpUrl): List<Cookie> {
-        return LoginManager.getCookies(url) ?: emptyList()
+        return UserManager.getCookies(url) ?: emptyList()
     }
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-        LoginManager.saveCookie(url, cookies)
-    }
-
-    companion object {
-        private const val TAG = "LoginCookieJar"
+        UserManager.saveCookie(url, cookies)
     }
 }

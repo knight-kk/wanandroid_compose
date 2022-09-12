@@ -32,8 +32,6 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "co
 fun <T> DataStore<Preferences>.getValue(key: Preferences.Key<T>) =
     data.map { preferences -> preferences[key] }
 
-fun DataStore<Preferences>.getBooleanValue(keyName: String) = getValue(booleanPreferencesKey(keyName))
-
 suspend fun <T> DataStore<Preferences>.setValue(key: Preferences.Key<T>, value: T) {
     edit { preferences -> preferences[key] = value }
 }
@@ -42,14 +40,14 @@ suspend fun <T> DataStore<Preferences>.remove(key: Preferences.Key<T>) {
     edit { preferences -> preferences.remove(key) }
 }
 
-suspend fun DataStore<Preferences>.setValue(key: String, value: Any) {
+suspend fun <T : Any> DataStore<Preferences>.setValue(key: String, value: T) {
     edit { preferences ->
-        when (value) {
-            is Boolean -> preferences[booleanPreferencesKey(key)] = value
-            is Int -> preferences[intPreferencesKey(key)] = value
-            is Double -> preferences[doublePreferencesKey(key)] = value
-            is Long -> preferences[longPreferencesKey(key)] = value
-            is Set<*> -> {
+        when (value::class) {
+            Boolean::class -> preferences[booleanPreferencesKey(key)] = value as Boolean
+            Int::class -> preferences[intPreferencesKey(key)] = value as Int
+            Double::class -> preferences[doublePreferencesKey(key)] = value as Double
+            Long::class -> preferences[longPreferencesKey(key)] = value as Long
+            Set::class -> {
                 val componentType = value::class.java.componentType
                 @Suppress("UNCHECKED_CAST")
                 if (componentType == String::class.java) {

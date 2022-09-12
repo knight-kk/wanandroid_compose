@@ -15,27 +15,29 @@
  */
 package com.wkk.wanandroid.dao
 
-import android.content.Context
+import android.os.Build
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.wkk.wanandroid.App
 import com.wkk.wanandroid.model.User
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.S_V2])
 class UserDaoTest {
     private lateinit var db: AppDatabase
     private lateinit var userDao: UserDao
 
     @Before
     fun createDb() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
+        val context = RuntimeEnvironment.getApplication() as App
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         userDao = db.userDao()
     }
@@ -43,17 +45,6 @@ class UserDaoTest {
     @After
     fun closeDb() {
         db.close()
-    }
-
-    suspend fun fetchData(): String {
-        delay(1000L)
-        return "Hello world"
-    }
-
-    @Test
-    public fun dataShouldBeHelloWorld() = runTest {
-        val data = fetchData()
-        assertEquals("Hello world", data)
     }
 
     @Test

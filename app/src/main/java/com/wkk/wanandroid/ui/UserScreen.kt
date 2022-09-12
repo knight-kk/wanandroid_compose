@@ -15,8 +15,8 @@
  */
 package com.wkk.wanandroid.ui
 
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +29,10 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,8 +42,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wkk.wanandroid.R
-import com.wkk.wanandroid.net.LoginManager
+import com.wkk.wanandroid.model.User
 import com.wkk.wanandroid.ui.components.CommonTopBar
+import com.wkk.wanandroid.utils.UserManager
+import kotlinx.coroutines.launch
 
 /**
  * 我的
@@ -54,18 +60,18 @@ fun UserScreen(toLogin: () -> Unit) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            UserHeader(toLogin)
+            UserHeader(UserManager.isLogin, toLogin)
         }
     }
 }
 
 @Composable
-fun UserHeader(toLogin: () -> Unit) {
-    if (LoginManager.isLogin.not()) {
-        UserNoLoginHeader(toLogin)
+fun UserHeader(isLogin: Boolean, toLogin: () -> Unit) {
+    if (isLogin) {
+        UserLoginHeader()
         return
     }
-    UserLoginHeader()
+    UserNoLoginHeader(toLogin)
 }
 
 @Composable
@@ -88,20 +94,39 @@ private fun UserNoLoginHeader(toLogin: () -> Unit) {
 
 @Composable
 fun UserLoginHeader() {
-    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Image(
-            modifier = Modifier
-                .padding(horizontal = 10.dp)
-                .border(1.dp, Color(0xFFE7E7E7), CircleShape)
-                .size(60.dp)
-                .clip(CircleShape),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-            contentDescription = "user icon"
-        )
-        Text(text = "已登录")
+    val (user, setUser) = remember { mutableStateOf<User?>(User(-1)) }
+    val coroutineScope = rememberCoroutineScope()
+    Column(Modifier.fillMaxWidth()) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .border(1.dp, Color(0xFFE7E7E7), CircleShape)
+                    .size(60.dp)
+                    .clip(CircleShape),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
+                contentDescription = "user icon"
+            )
+            LaunchedEffect(user) {
+                try {
+                    setUser(UserManager.getLoginUser())
+                } catch (e: Exception) {
+                    Log.i("TAG", "UserLoginHeader: " + e.message)
+                }
+                Log.i("TAG", "LaunchedEffect UserLoginHeader: " + user)
+            }
+            if (user == null) return
+            Text(text = user.nickname)
+        }
+        Button(onClick = {
+            coroutineScope.launch {
+                UserManager.logout()
+            }
+        }) {
+            Text("退出登录")
+        }
     }
 }
-
 
 @Preview
 @Composable
