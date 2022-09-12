@@ -32,7 +32,7 @@ import java.net.URLEncoder
 @Composable
 fun AppNavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController = rememberNavController()
 ) {
     val viewModel = viewModel<HomeViewModel>()
     NavHost(
@@ -40,9 +40,8 @@ fun AppNavGraph(
         startDestination = AppDestinations.Main.HOME,
         modifier = modifier
     ) {
-
         composable(AppDestinations.Account.LOGIN) {
-            LoginScreen{
+            LoginScreen {
                 navController.navigateUp()
             }
         }
