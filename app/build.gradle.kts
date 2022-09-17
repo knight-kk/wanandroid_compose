@@ -18,7 +18,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
-
         }
     }
 
@@ -47,12 +46,16 @@ android {
         kotlinCompilerExtensionVersion = "1.3.0"
     }
     testOptions {
-     unitTests.isIncludeAndroidResources = true
+        unitTests.isIncludeAndroidResources = true
     }
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    // Enable room auto-migrations
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
 
@@ -62,7 +65,6 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling)
     implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material)
     implementation(libs.compose.material.icon.extended)
     implementation(libs.compose.material3)
 
@@ -82,8 +84,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi.kotlin)
-    implementation("com.google.firebase:firebase-firestore-ktx:24.1.0")
-    implementation("androidx.test.ext:junit-ktx:1.1.3")
     ksp(libs.moshi.kotlin.codegen)
 
     implementation(libs.room.runtime)
@@ -98,7 +98,4 @@ dependencies {
     testImplementation(libs.room.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.compose.ui.test.junit4)
-
-
-
 }

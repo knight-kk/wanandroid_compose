@@ -24,8 +24,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wkk.wanandroid.ui.ArticleDetailScreen
 import com.wkk.wanandroid.ui.HomeScreen
-import com.wkk.wanandroid.ui.UserScreen
 import com.wkk.wanandroid.ui.login.LoginScreen
+import com.wkk.wanandroid.ui.user.UserScreen
 import com.wkk.wanandroid.vm.HomeViewModel
 import java.net.URLEncoder
 

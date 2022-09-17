@@ -18,9 +18,14 @@ package com.wkk.wanandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import com.wkk.wanandroid.ui.theme.AppTheme
 import com.wkk.wanandroid.utils.UserManager
 import kotlinx.coroutines.launch
 
@@ -32,7 +37,14 @@ class MainActivity : ComponentActivity() {
             UserManager.observeLoginStatus()
         }
         setContent {
-            WanAndroidApp()
+            AppTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    WanAndroidApp()
+                }
+            }
         }
     }
 }

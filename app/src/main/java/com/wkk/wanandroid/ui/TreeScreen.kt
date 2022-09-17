@@ -19,7 +19,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +35,10 @@ import com.wkk.wanandroid.R
 @Composable
 fun TreeScreen() {
     Box(
-        modifier = Modifier.fillMaxHeight().fillMaxWidth().background(Color(244, 160, 0)),
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth()
+            .background(Color(244, 160, 0)),
         contentAlignment = Alignment.Center
     ) {
         Text(stringResource(id = R.string.main_tab_tree))
