@@ -76,25 +76,19 @@ fun UserScreen(toLogin: () -> Unit) {
 
             OutlinedCard(Modifier.padding(vertical = 10.dp)) {
                 UserMenuItem(Icons.Rounded.Notifications, "消息") {
-
                 }
                 UserMenuItem(Icons.Rounded.ListAlt, "待办清单") {
-
                 }
                 UserMenuItem(Icons.Rounded.History, "阅读记录", true) {
-
                 }
             }
 
             OutlinedCard(Modifier.padding(vertical = 10.dp)) {
                 UserMenuItem(Icons.Rounded.Info, "关于") {
-
                 }
                 UserMenuItem(Icons.Rounded.Settings, "设置", true) {
-
                 }
             }
-
 
             if (UserManager.isLogin) {
                 UserSetting()
@@ -105,7 +99,10 @@ fun UserScreen(toLogin: () -> Unit) {
 
 @Composable
 fun UserMenuItem(
-    icon: ImageVector, itemName: String, hideDividerLine: Boolean = false, onClick: () -> Unit
+    icon: ImageVector,
+    itemName: String,
+    hideDividerLine: Boolean = false,
+    onClick: () -> Unit
 ) {
     Row(
         Modifier
@@ -134,32 +131,31 @@ fun UserMenuItem(
             if (hideDividerLine.not()) {
                 Divider(Modifier.align(Alignment.BottomEnd))
             }
-
         }
     }
 }
 
 @Composable
 fun UserSetting(modifier: Modifier = Modifier) {
-
-
     val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = modifier
             .padding(top = 20.dp)
             .fillMaxWidth()
     ) {
-        Button(modifier = Modifier
-            .padding(30.dp)
-            .fillMaxWidth(), onClick = {
-            coroutineScope.launch {
-                UserManager.logout()
+        Button(
+            modifier = Modifier
+                .padding(30.dp)
+                .fillMaxWidth(),
+            onClick = {
+                coroutineScope.launch {
+                    UserManager.logout()
+                }
             }
-        }) {
+        ) {
             Text("退出登录")
         }
     }
-
 }
 
 @Preview
@@ -168,11 +164,9 @@ fun UserScreenPreView() {
     UserScreen {}
 }
 
-
 @Preview
 @Composable
 fun MenuItemPreView() {
     UserMenuItem(Icons.Rounded.Settings, "设置") {
-
     }
 }

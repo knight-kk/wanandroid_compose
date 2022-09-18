@@ -50,7 +50,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wkk.wanandroid.model.User
 
-
 @Composable
 fun UserHeader(isLogin: Boolean, user: User, goToLogin: () -> Unit) {
     if (isLogin) {
@@ -122,7 +121,7 @@ fun UserInfo(user: User?, modifier: Modifier = Modifier) {
         Row(verticalAlignment = Alignment.Bottom) {
             Text(
                 text = user.nickname,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleLarge
             )
             Text(
                 modifier = Modifier
@@ -133,7 +132,7 @@ fun UserInfo(user: User?, modifier: Modifier = Modifier) {
                     .padding(horizontal = 10.dp, vertical = 4.dp),
                 text = "LV100",
                 style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
 
@@ -171,10 +170,9 @@ private fun DefaultUserIcon(userName: String = "--") {
             textAlign = TextAlign.Center,
             fontSize = 22.sp,
             color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Bold
         )
     }
-
 }
 
 @Preview

@@ -54,7 +54,11 @@ fun ArticleList(viewModel: HomeViewModel, onItemClick: (Article) -> Unit) {
 
 @Composable
 fun ArticleItem(article: Article, onItemClick: (Article) -> Unit) {
-    Column(Modifier.padding(10.dp).clickable(onClick = { onItemClick(article) })) {
+    Column(
+        Modifier
+            .clickable(onClick = { onItemClick(article) })
+            .padding(10.dp)
+    ) {
         Text(text = article.title)
         Text(text = article.author)
         Text(text = DateFormat.format("yyyy-MM-dd HH:mm:ss", article.publishTime).toString())
@@ -64,4 +68,5 @@ fun ArticleItem(article: Article, onItemClick: (Article) -> Unit) {
 @Preview(showBackground = false)
 @Composable
 fun HomePreView() {
+    ArticleItem(Article()) {}
 }
