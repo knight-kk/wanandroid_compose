@@ -15,17 +15,28 @@
  */
 package com.wkk.wanandroid.ui.user
 
-import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowForwardIos
+import androidx.compose.material.icons.rounded.History
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.ListAlt
+import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,13 +46,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wkk.wanandroid.R
 import com.wkk.wanandroid.model.User
 import com.wkk.wanandroid.ui.components.CommonTopBar
 import com.wkk.wanandroid.utils.UserManager
@@ -52,73 +59,99 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun UserScreen(toLogin: () -> Unit) {
-    Scaffold(
-        topBar = { CommonTopBar("我的") }
-    ) { paddingValues ->
+    val (user, setUser) = remember { mutableStateOf(User(-1)) }
+    LaunchedEffect(user) {
+        UserManager.getLoginUser()?.let { setUser(it) }
+    }
+    Scaffold(topBar = { CommonTopBar("我的") }) { paddingValues ->
         Column(
             Modifier
+                .padding(horizontal = 16.dp)
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            UserHeader(UserManager.isLogin, toLogin)
-        }
-    }
-}
+            UserHeader(UserManager.isLogin, user, toLogin)
 
-@Composable
-fun UserHeader(isLogin: Boolean, toLogin: () -> Unit) {
-    if (isLogin) {
-        UserLoginHeader()
-        return
-    }
-    UserNoLoginHeader(toLogin)
-}
+            Spacer(modifier = Modifier.height(20.dp))
 
-@Composable
-private fun UserNoLoginHeader(toLogin: () -> Unit) {
-    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Image(
-            modifier = Modifier
-                .padding(horizontal = 10.dp)
-                .border(1.dp, Color(0xFFE7E7E7), CircleShape)
-                .size(60.dp)
-                .clip(CircleShape),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-            contentDescription = "user icon"
-        )
-        Button(onClick = toLogin) {
-            Text(text = "登录")
-        }
-    }
-}
+            OutlinedCard(Modifier.padding(vertical = 10.dp)) {
+                UserMenuItem(Icons.Rounded.Notifications, "消息") {
 
-@Composable
-fun UserLoginHeader() {
-    val (user, setUser) = remember { mutableStateOf<User?>(User(-1)) }
-    val coroutineScope = rememberCoroutineScope()
-    Column(Modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
-                    .border(1.dp, Color(0xFFE7E7E7), CircleShape)
-                    .size(60.dp)
-                    .clip(CircleShape),
-                imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-                contentDescription = "user icon"
-            )
-            LaunchedEffect(user) {
-                try {
-                    setUser(UserManager.getLoginUser())
-                } catch (e: Exception) {
-                    Log.i("TAG", "UserLoginHeader: " + e.message)
                 }
-                Log.i("TAG", "LaunchedEffect UserLoginHeader: " + user)
+                UserMenuItem(Icons.Rounded.ListAlt, "待办清单") {
+
+                }
+                UserMenuItem(Icons.Rounded.History, "阅读记录", true) {
+
+                }
             }
-            if (user == null) return
-            Text(text = user.nickname)
+
+            OutlinedCard(Modifier.padding(vertical = 10.dp)) {
+                UserMenuItem(Icons.Rounded.Info, "关于") {
+
+                }
+                UserMenuItem(Icons.Rounded.Settings, "设置", true) {
+
+                }
+            }
+
+
+            if (UserManager.isLogin) {
+                UserSetting()
+            }
         }
-        Button(onClick = {
+    }
+}
+
+@Composable
+fun UserMenuItem(
+    icon: ImageVector, itemName: String, hideDividerLine: Boolean = false, onClick: () -> Unit
+) {
+    Row(
+        Modifier
+            .height(56.dp)
+            .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(imageVector = icon, contentDescription = "icon", Modifier.padding(horizontal = 16.dp))
+        Box(
+            Modifier
+                .weight(1f)
+                .fillMaxHeight()
+        ) {
+            Row(Modifier.align(Alignment.Center)) {
+                Text(
+                    text = itemName,
+                    Modifier.weight(1f),
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Icon(
+                    imageVector = Icons.Rounded.ArrowForwardIos,
+                    contentDescription = "arrow",
+                    Modifier.padding(end = 16.dp)
+                )
+            }
+            if (hideDividerLine.not()) {
+                Divider(Modifier.align(Alignment.BottomEnd))
+            }
+
+        }
+    }
+}
+
+@Composable
+fun UserSetting(modifier: Modifier = Modifier) {
+
+
+    val coroutineScope = rememberCoroutineScope()
+    Column(
+        modifier = modifier
+            .padding(top = 20.dp)
+            .fillMaxWidth()
+    ) {
+        Button(modifier = Modifier
+            .padding(30.dp)
+            .fillMaxWidth(), onClick = {
             coroutineScope.launch {
                 UserManager.logout()
             }
@@ -126,10 +159,20 @@ fun UserLoginHeader() {
             Text("退出登录")
         }
     }
+
 }
 
 @Preview
 @Composable
-fun UserPreView() {
+fun UserScreenPreView() {
     UserScreen {}
+}
+
+
+@Preview
+@Composable
+fun MenuItemPreView() {
+    UserMenuItem(Icons.Rounded.Settings, "设置") {
+
+    }
 }

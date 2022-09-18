@@ -15,56 +15,128 @@
  */
 package com.wkk.wanandroid.ui.user
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowForwardIos
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wkk.wanandroid.R
+import androidx.compose.ui.unit.sp
 import com.wkk.wanandroid.model.User
-import com.wkk.wanandroid.utils.UserManager
-import kotlinx.coroutines.launch
+
+
+@Composable
+fun UserHeader(isLogin: Boolean, user: User, goToLogin: () -> Unit) {
+    if (isLogin) {
+        UserInfoCard(user = user)
+        return
+    }
+    UserNoLoginHeader(goToLogin)
+}
 
 @Composable
 fun UserInfoCard(user: User) {
-    Card(
-        Modifier
-            .padding(10.dp)
-            .fillMaxWidth()
-    ) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            DefaultUserIcon()
-            UserInfo(user)
+    Column(Modifier.fillMaxWidth()) {
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            DefaultUserIcon(user.nickname.trim())
+            UserInfo(user, modifier = Modifier.weight(1f))
+            Icon(imageVector = Icons.Rounded.ArrowForwardIos, contentDescription = "arrow")
+        }
+
+        Row(
+            Modifier
+                .padding(top = 20.dp)
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { }
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "101110",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(text = "积分", style = MaterialTheme.typography.labelSmall)
+            }
+            Divider(
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxHeight()
+                    .width(DividerDefaults.Thickness)
+            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { }
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "100",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(text = "收藏", style = MaterialTheme.typography.labelSmall)
+            }
         }
     }
 }
 
 @Composable
-fun UserInfo(user: User?) {
+fun UserInfo(user: User?, modifier: Modifier = Modifier) {
     if (user == null) return
-    Column(verticalArrangement = Arrangement.SpaceBetween) {
-        Text(
-            text = user.nickname,
-            style = MaterialTheme.typography.titleLarge
-        )
+    Column(modifier, verticalArrangement = Arrangement.SpaceBetween) {
+        Row(verticalAlignment = Alignment.Bottom) {
+            Text(
+                text = user.nickname,
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Text(
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
+                text = "LV100",
+                style = MaterialTheme.typography.labelSmall,
+                textAlign = TextAlign.Center,
+            )
+        }
+
         Text(
             text = user.email,
             style = MaterialTheme.typography.bodySmall
@@ -83,30 +155,26 @@ private fun UserNoLoginHeader(toLogin: () -> Unit) {
 }
 
 @Composable
-fun UserHeader() {
-    val coroutineScope = rememberCoroutineScope()
-    Column(Modifier.fillMaxWidth()) {
-        Button(onClick = {
-            coroutineScope.launch {
-                UserManager.logout()
-            }
-        }) {
-            Text("退出登录")
-        }
-    }
-}
-
-@Composable
-private fun DefaultUserIcon() {
-    Image(
+private fun DefaultUserIcon(userName: String = "--") {
+    val content = if (userName.isNotEmpty()) userName.substring(0 until 1) else ""
+    Box(
         modifier = Modifier
             .padding(horizontal = 10.dp)
-            .border(1.dp, Color(0xFFE7E7E7), CircleShape)
             .size(60.dp)
-            .clip(CircleShape),
-        imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-        contentDescription = "user icon"
-    )
+            .clip(CircleShape)
+            .border(1.dp, MaterialTheme.colorScheme.primary, CircleShape)
+            .background(MaterialTheme.colorScheme.secondaryContainer),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = content,
+            textAlign = TextAlign.Center,
+            fontSize = 22.sp,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
 }
 
 @Preview

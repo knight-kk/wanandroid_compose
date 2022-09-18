@@ -31,7 +31,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
 /**
- * 由 [Material Theme Builder](https://www.figma.com/community/plugin/1034969338659738588) 生成
+ * 由 [Material Theme Builder](https://m3.material.io/theme-builder#/custom) 生成
  */
 
 private val LightColorScheme = lightColorScheme(
