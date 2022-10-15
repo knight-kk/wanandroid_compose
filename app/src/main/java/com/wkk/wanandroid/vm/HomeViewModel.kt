@@ -16,17 +16,30 @@
 package com.wkk.wanandroid.vm
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.wkk.wanandroid.data.ArticlePagingSource
-import com.wkk.wanandroid.data.impl.RemoteArticleRepository
+import com.wkk.wanandroid.data.ArticleRepository
+import com.wkk.wanandroid.model.Article
+import com.wkk.wanandroid.model.Result
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val articleRepository: ArticleRepository
+) : ViewModel() {
     val pagerFlow by lazy {
-        Pager(PagingConfig(10)) {
-            ArticlePagingSource(RemoteArticleRepository())
-        }.flow.cachedIn(viewModelScope)
+        articleRepository.getPagerFlow().cachedIn(viewModelScope)
+    }
+
+    suspend fun toggleCollection(article: Article): Result<Any> {
+        return articleRepository.toggleCollection(article)
+    }
+
+    class Factory(private val articleRepository: ArticleRepository) :
+        ViewModelProvider.Factory {
+
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return HomeViewModel(articleRepository) as T
+        }
     }
 }

@@ -15,14 +15,28 @@
  */
 package com.wkk.wanandroid.data.impl
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.wkk.wanandroid.data.ArticlePagingSource
 import com.wkk.wanandroid.data.ArticleRepository
 import com.wkk.wanandroid.model.Article
-import com.wkk.wanandroid.model.PageData
 import com.wkk.wanandroid.model.Result
-import com.wkk.wanandroid.net.NetManager
+import com.wkk.wanandroid.net.ApiService
 
-class RemoteArticleRepository : ArticleRepository {
-    override suspend fun getArticleList(page: Int, pageSize: Int): Result<PageData<Article>> {
-        return NetManager.apiService.fetchArticle(page, pageSize)
+class RemoteArticleRepository(
+    private val apiService: ApiService,
+) : ArticleRepository {
+
+    override fun getPagerFlow(pageSize: Int) =
+        Pager(PagingConfig(10)) {
+            ArticlePagingSource(apiService)
+        }.flow
+
+    override suspend fun toggleCollection(article: Article): Result<Any> {
+        return if (article.collect) {
+            apiService.unCollectArticle(article.id)
+        } else {
+            apiService.collectArticle(article.id)
+        }
     }
 }

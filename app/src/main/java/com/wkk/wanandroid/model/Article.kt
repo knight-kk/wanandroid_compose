@@ -31,7 +31,7 @@ data class Article(
     @Json(name = "chapterName")
     val chapterName: String = "",
     @Json(name = "collect")
-    val collect: Boolean = false,
+    var collect: Boolean = false,
     @Json(name = "courseId")
     val courseId: Int = 0,
     @Json(name = "desc")
@@ -45,7 +45,7 @@ data class Article(
     @Json(name = "host")
     val host: String = "",
     @Json(name = "id")
-    val id: Int = -1,
+    val id: String = "",
     @Json(name = "link")
     val link: String = "",
     @Json(name = "niceDate")

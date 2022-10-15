@@ -70,4 +70,10 @@ interface ApiService {
         @Path("page") page: Int = 0,
         @Query("page_size") pageSize: Int = 20
     ): Result<PageData<Article>>
+
+    @POST("/lg/collect/{articleId}/json")
+    suspend fun collectArticle(@Path("articleId") articleId: String): Result<Any>
+
+    @POST("/lg/uncollect_originId/{articleId}/json")
+    suspend fun unCollectArticle(@Path("articleId") articleId: String): Result<Any>
 }

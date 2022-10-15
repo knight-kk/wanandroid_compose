@@ -22,8 +22,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.wkk.wanandroid.data.impl.RemoteArticleRepository
+import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.ArticleDetailScreen
-import com.wkk.wanandroid.ui.HomeScreen
+import com.wkk.wanandroid.ui.home.HomeScreen
 import com.wkk.wanandroid.ui.login.LoginScreen
 import com.wkk.wanandroid.ui.user.UserScreen
 import com.wkk.wanandroid.vm.HomeViewModel
@@ -34,7 +36,8 @@ fun AppNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
-    val viewModel = viewModel<HomeViewModel>()
+    val viewModel =
+        viewModel<HomeViewModel>(factory = HomeViewModel.Factory(RemoteArticleRepository(NetManager.apiService)))
     NavHost(
         navController = navController,
         startDestination = AppDestinations.Main.HOME,

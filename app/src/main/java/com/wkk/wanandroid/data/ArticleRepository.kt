@@ -15,11 +15,13 @@
  */
 package com.wkk.wanandroid.data
 
+import androidx.paging.PagingData
 import com.wkk.wanandroid.model.Article
-import com.wkk.wanandroid.model.PageData
 import com.wkk.wanandroid.model.Result
+import kotlinx.coroutines.flow.Flow
 
 interface ArticleRepository {
 
-    suspend fun getArticleList(page: Int, pageSize: Int = 20): Result<PageData<Article>>
+    fun getPagerFlow(pageSize: Int = 20): Flow<PagingData<Article>>
+    suspend fun toggleCollection(article: Article): Result<Any>
 }

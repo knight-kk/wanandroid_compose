@@ -19,8 +19,9 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.wkk.wanandroid.model.Article
+import com.wkk.wanandroid.net.ApiService
 
-class ArticlePagingSource(private val articleRepository: ArticleRepository) :
+class ArticlePagingSource(private val apiService: ApiService) :
     PagingSource<Int, Article>() {
 
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
@@ -34,7 +35,7 @@ class ArticlePagingSource(private val articleRepository: ArticleRepository) :
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         Log.i(TAG, "load: " + params.key)
         return try {
-            val result = articleRepository.getArticleList(params.key ?: 0, params.loadSize)
+            val result = apiService.fetchArticle(params.key ?: 0, params.loadSize)
             val pageData = result.data
             if (!result.isSuccess() || pageData == null) {
                 return LoadResult.Error(RuntimeException("数据获取失败"))
