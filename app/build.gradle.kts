@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.webview)
+    implementation(libs.accompanist.flowlayout)
 
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)

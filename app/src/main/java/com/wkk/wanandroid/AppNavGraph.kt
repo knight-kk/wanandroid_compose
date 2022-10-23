@@ -23,10 +23,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wkk.wanandroid.data.impl.RemoteArticleRepository
+import com.wkk.wanandroid.data.impl.RemoteKnowledgeTreeRepository
 import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.ArticleDetailScreen
 import com.wkk.wanandroid.ui.home.HomeScreen
 import com.wkk.wanandroid.ui.login.LoginScreen
+import com.wkk.wanandroid.ui.tree.KnowledgeTreeScreen
+import com.wkk.wanandroid.ui.tree.vm.KnowledgeTreeViewModel
 import com.wkk.wanandroid.ui.user.UserScreen
 import com.wkk.wanandroid.vm.HomeViewModel
 import java.net.URLEncoder
@@ -52,16 +55,19 @@ fun AppNavGraph(
         composable(AppDestinations.Main.HOME) {
             HomeScreen(viewModel) {
                 navController.navigate(
-                    AppDestinations.ArticleDetail.getValue(
+                    AppDestinations.ArticleDetail.crateParams(
                         it.title,
                         URLEncoder.encode(it.link, Charsets.UTF_8.name())
                     )
                 )
             }
         }
+        composable(AppDestinations.Main.TREE) {
+            KnowledgeTreeScreen(viewModel = viewModel(factory = KnowledgeTreeViewModel.Factory(RemoteKnowledgeTreeRepository(NetManager.apiService))))
+        }
         composable(AppDestinations.Main.USER) { UserScreen { navController.navigate(AppDestinations.Account.LOGIN) } }
 
-        composable(AppDestinations.ArticleDetail.getValue()) { navBackStackEntry ->
+        composable(AppDestinations.ArticleDetail.NAME) { navBackStackEntry ->
             val arguments = navBackStackEntry.arguments ?: return@composable
             ArticleDetailScreen(
                 arguments.getString(AppDestinations.ArticleDetail.ARGUMENT_TITLE) ?: "",

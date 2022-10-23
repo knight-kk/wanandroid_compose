@@ -17,6 +17,7 @@ package com.wkk.wanandroid.net
 
 import com.wkk.wanandroid.constants.UrlConstants
 import com.wkk.wanandroid.model.Article
+import com.wkk.wanandroid.model.KnowledgeTree
 import com.wkk.wanandroid.model.PageData
 import com.wkk.wanandroid.model.Result
 import com.wkk.wanandroid.model.User
@@ -76,4 +77,7 @@ interface ApiService {
 
     @POST("/lg/uncollect_originId/{articleId}/json")
     suspend fun unCollectArticle(@Path("articleId") articleId: String): Result<Any>
+
+    @GET("/tree/json")
+    suspend fun getKnowledgeTrees(): Result<List<KnowledgeTree>>
 }

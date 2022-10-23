@@ -13,25 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid
+package com.wkk.wanandroid.data.impl
 
-object AppDestinations {
-    object Account {
-        const val LOGIN = "login"
-    }
+import com.wkk.wanandroid.data.KnowledgeTreeRepository
+import com.wkk.wanandroid.net.ApiService
 
-    object Main {
-        const val HOME = "home"
-        const val USER = "user"
-        const val TREE = "tree"
-    }
-
-    object ArticleDetail {
-        const val ARGUMENT_TITLE = "title"
-        const val ARGUMENT_URL = "url"
-
-        val NAME: String = crateParams("{$ARGUMENT_TITLE}", "{$ARGUMENT_URL}")
-
-        fun crateParams(title: String, url: String) = "articleDetail/$title/$url"
-    }
+class RemoteKnowledgeTreeRepository(private val apiService: ApiService) : KnowledgeTreeRepository {
+    override suspend fun getKnowledgeTrees() = apiService.getKnowledgeTrees()
 }

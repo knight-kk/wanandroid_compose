@@ -1,8 +1,8 @@
 [versions]
 kotlin = "1.6.2"
 compose = "1.2.1"
-accompanist = "0.24.11-rc"
-okhttp = "4.9.1"
+accompanist = "0.25.1"
+okhttp = "4.10.0"
 retrofit = "2.9.0"
 moshi = "1.13.0"
 liefcycle = "2.4.1"
@@ -32,6 +32,7 @@ paging-compose = "androidx.paging:paging-compose:1.0.0-alpha15"
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
 accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-webview = { group = "com.google.accompanist", name = "accompanist-webview", version.ref = "accompanist" }
+accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }

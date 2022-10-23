@@ -83,8 +83,6 @@ fun navigateToBottomBarRoute(navController: NavController, route: String) {
         navController.navigate(route) {
             launchSingleTop = true
             restoreState = true
-            // Pop up backstack to the first destination and save state. This makes going back
-            // to the start destination when pressing back in any other bottom tab.
             popUpTo(findStartDestination(navController.graph).id) {
                 saveState = true
             }
@@ -110,10 +108,9 @@ private enum class HomeSections(
     @DrawableRes val icon: Int
 ) {
     INDEX(AppDestinations.Main.HOME, R.string.main_tab_home, R.drawable.ic_outline_home_24),
-
-    //    TREE(R.string.main_tab_qa, R.drawable.ic_outline_home_24),
+    TREE(AppDestinations.Main.TREE, R.string.main_tab_tree, R.drawable.ic_tree_24),
 //    QA(R.string.main_tab_tree, R.drawable.ic_outline_home_24),
-    USER(AppDestinations.Main.USER, R.string.main_tab_user, R.drawable.ic_outline_person_outline_24)
+    USER(AppDestinations.Main.USER, R.string.main_tab_user, R.drawable.ic_outline_person_outline_24),
 }
 
 @Preview
