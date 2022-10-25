@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid
+package com.wkk.wanandroid.di
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.wkk.wanandroid.net.ApiService
+import com.wkk.wanandroid.net.NetManager
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@HiltAndroidApp
-class App : Application() {
+@Module
+@InstallIn(SingletonComponent::class)
+class NetworkModule {
 
-    override fun onCreate() {
-        super.onCreate()
-        context = this
-    }
-
-    companion object {
-        private var context: App? = null
-        fun getInstance() = context!!
-
-        private var isLogin = false
-        fun isLogin() = isLogin
+    @Provides
+    fun provideApiService(): ApiService {
+        return NetManager.retrofit.create(ApiService::class.java)
     }
 }

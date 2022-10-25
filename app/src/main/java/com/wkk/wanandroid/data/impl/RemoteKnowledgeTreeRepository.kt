@@ -17,7 +17,8 @@ package com.wkk.wanandroid.data.impl
 
 import com.wkk.wanandroid.data.KnowledgeTreeRepository
 import com.wkk.wanandroid.net.ApiService
+import javax.inject.Inject
 
-class RemoteKnowledgeTreeRepository(private val apiService: ApiService) : KnowledgeTreeRepository {
+class RemoteKnowledgeTreeRepository @Inject constructor(private val apiService: ApiService) : KnowledgeTreeRepository {
     override suspend fun getKnowledgeTrees() = apiService.getKnowledgeTrees()
 }

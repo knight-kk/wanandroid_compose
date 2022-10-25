@@ -19,20 +19,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.wkk.wanandroid.data.KnowledgeTreeRepository
 import com.wkk.wanandroid.model.KnowledgeTree
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class KnowledgeTreeViewModel(private val repository: KnowledgeTreeRepository) : ViewModel() {
+@HiltViewModel
+class KnowledgeTreeViewModel @Inject constructor(private val repository: KnowledgeTreeRepository) : ViewModel() {
 
     val knowledgeTrees = flow<List<KnowledgeTree>> {
         emit(repository.getKnowledgeTrees().data ?: emptyList())
-    }
-
-    class Factory(private val articleRepository: KnowledgeTreeRepository) :
-        ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return KnowledgeTreeViewModel(articleRepository) as T
-        }
     }
 }

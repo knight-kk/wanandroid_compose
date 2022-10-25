@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid
+package com.wkk.wanandroid.di
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.wkk.wanandroid.data.KnowledgeTreeRepository
+import com.wkk.wanandroid.data.impl.RemoteKnowledgeTreeRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@HiltAndroidApp
-class App : Application() {
+@Module
+@InstallIn(SingletonComponent::class)
+interface DataModule {
 
-    override fun onCreate() {
-        super.onCreate()
-        context = this
-    }
-
-    companion object {
-        private var context: App? = null
-        fun getInstance() = context!!
-
-        private var isLogin = false
-        fun isLogin() = isLogin
-    }
+    @Binds
+    fun bindsKnowledgeTreeRepository(
+        knowledgeTreeRepository: RemoteKnowledgeTreeRepository
+    ): KnowledgeTreeRepository
 }

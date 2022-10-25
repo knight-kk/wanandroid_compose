@@ -25,12 +25,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.wkk.wanandroid.model.KnowledgeTree
 import com.wkk.wanandroid.ui.tree.components.KnowledgeTreeItem
 import com.wkk.wanandroid.ui.tree.vm.KnowledgeTreeViewModel
 
 @Composable
-fun KnowledgeTreeScreen(viewModel: KnowledgeTreeViewModel) {
+fun KnowledgeTreeScreen(viewModel: KnowledgeTreeViewModel = hiltViewModel()) {
     val knowledgeTrees = viewModel.knowledgeTrees.collectAsState(emptyList<KnowledgeTree>()).value
     Scaffold(topBar = { SmallTopAppBar(title = { Text(text = "体系") }) }) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {

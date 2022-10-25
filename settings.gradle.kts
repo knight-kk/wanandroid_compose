@@ -2,6 +2,11 @@
 @Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    versionCatalogs{
+        create("libs"){
+            plugin("jmh", "me.champeau.jmh").version("0.6.5")
+        }
+    }
     repositories {
         maven("https://maven.aliyun.com/repository/google")
         maven("https://maven.aliyun.com/repository/public")

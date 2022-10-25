@@ -23,13 +23,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wkk.wanandroid.data.impl.RemoteArticleRepository
-import com.wkk.wanandroid.data.impl.RemoteKnowledgeTreeRepository
 import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.ArticleDetailScreen
 import com.wkk.wanandroid.ui.home.HomeScreen
 import com.wkk.wanandroid.ui.login.LoginScreen
 import com.wkk.wanandroid.ui.tree.KnowledgeTreeScreen
-import com.wkk.wanandroid.ui.tree.vm.KnowledgeTreeViewModel
 import com.wkk.wanandroid.ui.user.UserScreen
 import com.wkk.wanandroid.vm.HomeViewModel
 import java.net.URLEncoder
@@ -63,7 +61,7 @@ fun AppNavGraph(
             }
         }
         composable(AppDestinations.Main.TREE) {
-            KnowledgeTreeScreen(viewModel = viewModel(factory = KnowledgeTreeViewModel.Factory(RemoteKnowledgeTreeRepository(NetManager.apiService))))
+            KnowledgeTreeScreen()
         }
         composable(AppDestinations.Main.USER) { UserScreen { navController.navigate(AppDestinations.Account.LOGIN) } }
 
