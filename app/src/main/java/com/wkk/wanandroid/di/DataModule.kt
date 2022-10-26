@@ -15,7 +15,9 @@
  */
 package com.wkk.wanandroid.di
 
+import com.wkk.wanandroid.data.ArticleRepository
 import com.wkk.wanandroid.data.KnowledgeTreeRepository
+import com.wkk.wanandroid.data.impl.RemoteArticleRepository
 import com.wkk.wanandroid.data.impl.RemoteKnowledgeTreeRepository
 import dagger.Binds
 import dagger.Module
@@ -30,4 +32,9 @@ interface DataModule {
     fun bindsKnowledgeTreeRepository(
         knowledgeTreeRepository: RemoteKnowledgeTreeRepository
     ): KnowledgeTreeRepository
+
+    @Binds
+    fun bindsArticleRepository(
+        knowledgeTreeRepository: RemoteArticleRepository
+    ): ArticleRepository
 }

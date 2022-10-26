@@ -31,18 +31,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.wkk.wanandroid.model.Article
 import com.wkk.wanandroid.ui.home.components.ArticleItem
-import com.wkk.wanandroid.vm.HomeViewModel
+import com.wkk.wanandroid.ui.home.vm.HomeViewModel
 import kotlinx.coroutines.launch
 
 /**
  * 首页
  */
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, onItemClick: (Article) -> Unit) {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), onItemClick: (Article) -> Unit) {
     Scaffold(topBar = { SmallTopAppBar(title = { Text(text = "首页") }) }) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
             ArticleList(viewModel, onItemClick)

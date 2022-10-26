@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid.vm
+package com.wkk.wanandroid.ui.home.vm
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.wkk.wanandroid.data.ArticleRepository
 import com.wkk.wanandroid.model.Article
 import com.wkk.wanandroid.model.Result
-
-class HomeViewModel(
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val articleRepository: ArticleRepository
 ) : ViewModel() {
     val pagerFlow by lazy {
@@ -32,14 +33,5 @@ class HomeViewModel(
 
     suspend fun toggleCollection(article: Article): Result<Any> {
         return articleRepository.toggleCollection(article)
-    }
-
-    class Factory(private val articleRepository: ArticleRepository) :
-        ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(articleRepository) as T
-        }
     }
 }

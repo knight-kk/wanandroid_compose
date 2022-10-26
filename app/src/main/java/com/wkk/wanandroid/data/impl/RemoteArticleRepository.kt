@@ -22,8 +22,9 @@ import com.wkk.wanandroid.data.ArticleRepository
 import com.wkk.wanandroid.model.Article
 import com.wkk.wanandroid.model.Result
 import com.wkk.wanandroid.net.ApiService
+import javax.inject.Inject
 
-class RemoteArticleRepository(
+class RemoteArticleRepository @Inject constructor(
     private val apiService: ApiService,
 ) : ArticleRepository {
 

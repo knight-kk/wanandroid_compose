@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid.ui.tree.vm
+package com.wkk.wanandroid.ui.login.vm
 
 import androidx.lifecycle.ViewModel
-import com.wkk.wanandroid.data.KnowledgeTreeRepository
-import com.wkk.wanandroid.model.KnowledgeTree
+import com.wkk.wanandroid.net.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 @HiltViewModel
-class KnowledgeTreeViewModel @Inject constructor(
-    private val repository: KnowledgeTreeRepository
-) : ViewModel() {
+class LoginViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
 
-    val knowledgeTrees = flow<List<KnowledgeTree>> {
-        emit(repository.getKnowledgeTrees().data ?: emptyList())
-    }
+    suspend fun login(userName: String, password: String) = apiService.login(userName, password)
 }

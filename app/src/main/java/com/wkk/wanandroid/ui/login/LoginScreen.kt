@@ -50,14 +50,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.wkk.wanandroid.R
-import com.wkk.wanandroid.net.NetManager
 import com.wkk.wanandroid.ui.components.PasswordTextField
+import com.wkk.wanandroid.ui.login.vm.LoginViewModel
 import com.wkk.wanandroid.utils.UserManager
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onClosePage: () -> Unit) {
+fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), onClosePage: () -> Unit,) {
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -120,7 +121,7 @@ fun LoginScreen(onClosePage: () -> Unit) {
                     .padding(16.dp),
                 onClick = {
                     coroutineScope.launch {
-                        val result = NetManager.apiService.login(userName, password)
+                        val result = viewModel.login(userName, password)
                         if (result.isSuccess().not()) {
                             snackbarHostState.showSnackbar(result.errorMsg)
                             return@launch
