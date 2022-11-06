@@ -1,4 +1,5 @@
-# wanandroid_compose
+# wanandroid_compose 🔨
+ ![license](https://img.shields.io/badge/License-Apache-blue) &emsp; ![Workflow result](https://github.com/knight-kk/wanandroid_compose/workflows/Check/badge.svg)
 
 
 # License
