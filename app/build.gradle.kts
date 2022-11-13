@@ -39,7 +39,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
     }
     buildFeatures {
         compose = true
@@ -68,6 +68,11 @@ android {
 
 
 dependencies {
+
+    implementation(project(":data"))
+    implementation(project(":data:model"))
+    implementation(project(":feature:article"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     val composeBom = platform(libs.androidx.compose.bom)
@@ -87,7 +92,6 @@ dependencies {
 
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.navigation.animation)
-    implementation(libs.accompanist.webview)
     implementation(libs.accompanist.flowlayout)
 
     implementation(libs.okhttp)

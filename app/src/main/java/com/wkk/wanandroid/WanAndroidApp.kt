@@ -18,7 +18,6 @@ package com.wkk.wanandroid
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -34,8 +33,8 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.wkk.article.nav.ArticleRoutes
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WanAndroidApp() {
     val navController = rememberNavController()
@@ -50,7 +49,7 @@ fun WanAndroidApp() {
                     it.route
                 )
             }
-        },
+        }
     ) { innerPaddingValue ->
         AppNavGraph(
             Modifier.padding(innerPaddingValue),
@@ -62,7 +61,7 @@ fun WanAndroidApp() {
 @Composable
 private fun HomeBottomNav(
     currentRoute: String,
-    onItemSelected: (section: HomeSections) -> Unit,
+    onItemSelected: (section: HomeSections) -> Unit
 ) {
     NavigationBar {
         val items = HomeSections.values()
@@ -107,10 +106,7 @@ private enum class HomeSections(
     @StringRes val title: Int,
     @DrawableRes val icon: Int
 ) {
-    INDEX(AppDestinations.Main.HOME, R.string.main_tab_home, R.drawable.ic_outline_home_24),
-    TREE(AppDestinations.Main.TREE, R.string.main_tab_tree, R.drawable.ic_tree_24),
-//    QA(R.string.main_tab_tree, R.drawable.ic_outline_home_24),
-    USER(AppDestinations.Main.USER, R.string.main_tab_user, R.drawable.ic_outline_person_outline_24),
+    INDEX(ArticleRoutes.MAIN, R.string.main_tab_home, R.drawable.ic_outline_home_24),
 }
 
 @Preview
