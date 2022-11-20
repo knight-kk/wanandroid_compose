@@ -13,25 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.article
+package com.wkk.data.repository
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
-import com.wkk.data.repository.ArticleRepository
+import androidx.paging.PagingData
+import com.wkk.model.Article
 import com.wkk.network.model.NetworkResult
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
-@HiltViewModel
-class ArticleViewModel @Inject constructor(
-    private val articleRepository: ArticleRepository
-) : ViewModel() {
-    val pagerFlow by lazy {
-        articleRepository.getPagerFlow().cachedIn(viewModelScope)
-    }
+interface ArticleRepository {
 
-    suspend fun toggleCollection(article: com.wkk.model.Article): NetworkResult<Any> {
-        return articleRepository.toggleCollection(article)
-    }
+    fun getPagerFlow(pageSize: Int = 20): Flow<PagingData<Article>>
+    suspend fun toggleCollection(article: Article): NetworkResult<Any>
 }

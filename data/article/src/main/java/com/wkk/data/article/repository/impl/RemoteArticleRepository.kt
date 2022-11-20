@@ -13,25 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.article
+package com.wkk.data.article.repository.impl
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.wkk.data.article.ArticlePagingSource
 import com.wkk.data.repository.ArticleRepository
-import com.wkk.network.model.NetworkResult
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.wkk.model.Article
+import com.wkk.network.datasource.ArticleRemoteDataSource
 import javax.inject.Inject
 
-@HiltViewModel
-class ArticleViewModel @Inject constructor(
-    private val articleRepository: ArticleRepository
-) : ViewModel() {
-    val pagerFlow by lazy {
-        articleRepository.getPagerFlow().cachedIn(viewModelScope)
-    }
+class RemoteArticleRepository @Inject constructor(
+    private val articleRemoteDataSource: ArticleRemoteDataSource
+) : ArticleRepository {
 
-    suspend fun toggleCollection(article: com.wkk.model.Article): NetworkResult<Any> {
-        return articleRepository.toggleCollection(article)
-    }
+    override fun getPagerFlow(pageSize: Int) = Pager(PagingConfig(10)) {
+        ArticlePagingSource(articleRemoteDataSource)
+    }.flow
+
+    override suspend fun toggleCollection(article: Article) =
+        articleRemoteDataSource.toggleCollection(article)
 }

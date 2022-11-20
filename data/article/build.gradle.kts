@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wkk.article"
+    namespace = "com.wkk.data.article"
     compileSdk = 33
 
     defaultConfig {
@@ -18,19 +18,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
-    }
-
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -38,41 +31,20 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
     }
 }
 
 dependencies {
+
     implementation(project(":core:model"))
     implementation(project(":core:network"))
-    implementation(project(":data:article"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-
-    debugImplementation(libs.compose.ui.tooling)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material.icon.extended)
-    implementation(libs.compose.material3)
-
-    implementation(libs.androidx.lifecycle.ktx)
-    implementation(libs.compose.activity)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.navigation.compose)
-    implementation(libs.viewmodel.compose)
-    implementation(libs.paging.compose)
+    implementation(libs.paging.runtime)
 
     implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
-
-    implementation(libs.accompanist.webview)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.androidx.test.junit.ktx)
-    androidTestImplementation(composeBom)
 }

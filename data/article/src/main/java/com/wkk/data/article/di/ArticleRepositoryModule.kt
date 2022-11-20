@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.article
+package com.wkk.data.article.di
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
+import com.wkk.data.article.repository.impl.RemoteArticleRepository
 import com.wkk.data.repository.ArticleRepository
-import com.wkk.network.model.NetworkResult
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@HiltViewModel
-class ArticleViewModel @Inject constructor(
-    private val articleRepository: ArticleRepository
-) : ViewModel() {
-    val pagerFlow by lazy {
-        articleRepository.getPagerFlow().cachedIn(viewModelScope)
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+interface ArticleRepositoryModule {
 
-    suspend fun toggleCollection(article: com.wkk.model.Article): NetworkResult<Any> {
-        return articleRepository.toggleCollection(article)
-    }
+    @Binds
+    fun bindsArticleRepository(
+        knowledgeTreeRepository: RemoteArticleRepository
+    ): ArticleRepository
 }

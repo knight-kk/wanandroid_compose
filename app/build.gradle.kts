@@ -69,8 +69,8 @@ android {
 
 dependencies {
 
-    implementation(project(":data"))
-    implementation(project(":data:model"))
+    implementation(project(":core:model"))
+    implementation(project(":data:article"))
     implementation(project(":feature:article"))
 
     implementation(libs.androidx.core.ktx)

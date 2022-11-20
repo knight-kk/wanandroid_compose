@@ -42,7 +42,7 @@ fun ArticleItem(
             .fillMaxWidth()
             .clickable(onClick = { onItemClick(article) }),
         overlineText = {
-            Text(text = article.author.takeIf { it.isNotEmpty() } ?: article.shareUser)
+            Text(text = article.author)
         },
         headlineText = { Text(text = article.title) },
         supportingText = {

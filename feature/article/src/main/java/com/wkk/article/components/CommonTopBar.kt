@@ -26,7 +26,7 @@ import androidx.compose.runtime.Composable
 @Composable
 fun CommonTopBar(title: String?, onBack: (() -> Unit)? = null) {
     CenterAlignedTopAppBar(
-        title = { if (!title.isNullOrEmpty()) Text(title) },
+        title = { if (!title.isNullOrEmpty()) Text(title, maxLines = 1) },
         navigationIcon = {
             if (onBack == null) return@CenterAlignedTopAppBar
             IconButton(onClick = onBack) {

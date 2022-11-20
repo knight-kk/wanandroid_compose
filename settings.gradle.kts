@@ -22,8 +22,11 @@ pluginManagement {
 
 rootProject.name = "wanAndroid"
 include(":app")
-include(":data")
-include(":data:network")
-include(":data:model")
-include(":feature")
+
+include(":core:model")
+include(":core:database")
+include(":core:network")
+
+include(":data:article")
+
 include(":feature:article")
