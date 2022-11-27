@@ -19,14 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.wkk.wanandroid.ui.ArticleDetailScreen
-import com.wkk.wanandroid.ui.home.HomeScreen
-import com.wkk.wanandroid.ui.login.LoginScreen
-import com.wkk.wanandroid.ui.tree.KnowledgeTreeScreen
-import com.wkk.wanandroid.ui.user.UserScreen
-import java.net.URLEncoder
+import com.wkk.article.nav.ArticleRoutes
+import com.wkk.article.nav.articleNav
+import com.wkk.article.nav.navigateToArticleDetail
 
 @Composable
 fun AppNavGraph(
@@ -35,38 +31,13 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppDestinations.Main.HOME,
+        startDestination = ArticleRoutes.MAIN,
         modifier = modifier
     ) {
-        composable(AppDestinations.Account.LOGIN) {
-            LoginScreen {
-                navController.navigateUp()
-            }
-        }
 
-        composable(AppDestinations.Main.HOME) {
-            HomeScreen {
-                navController.navigate(
-                    AppDestinations.ArticleDetail.crateParams(
-                        it.title,
-                        URLEncoder.encode(it.link, Charsets.UTF_8.name())
-                    )
-                )
-            }
-        }
-        composable(AppDestinations.Main.TREE) {
-            KnowledgeTreeScreen()
-        }
-        composable(AppDestinations.Main.USER) { UserScreen { navController.navigate(AppDestinations.Account.LOGIN) } }
-
-        composable(AppDestinations.ArticleDetail.NAME) { navBackStackEntry ->
-            val arguments = navBackStackEntry.arguments ?: return@composable
-            ArticleDetailScreen(
-                arguments.getString(AppDestinations.ArticleDetail.ARGUMENT_TITLE) ?: "",
-                arguments.getString(AppDestinations.ArticleDetail.ARGUMENT_URL) ?: ""
-            ) {
-                navController.navigateUp()
-            }
-        }
+        articleNav(
+            navigateToArticleDetail = navController::navigateToArticleDetail,
+            navigateUp = navController::navigateUp
+        )
     }
 }

@@ -2,17 +2,13 @@
 @Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    versionCatalogs{
-        create("libs"){
-            plugin("jmh", "me.champeau.jmh").version("0.6.5")
-        }
-    }
     repositories {
         google()
         maven("https://maven.aliyun.com/repository/google")
         maven("https://maven.aliyun.com/repository/public")
         mavenCentral()
     }
+
 }
 
 pluginManagement {
@@ -26,3 +22,11 @@ pluginManagement {
 
 rootProject.name = "wanAndroid"
 include(":app")
+
+include(":core:model")
+include(":core:database")
+include(":core:network")
+
+include(":data:article")
+
+include(":feature:article")

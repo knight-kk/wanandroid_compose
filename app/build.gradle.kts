@@ -39,7 +39,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
     }
     buildFeatures {
         compose = true
@@ -56,9 +56,7 @@ android {
         }
     }
     // Enable room auto-migrations
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-    }
+
 
     kapt {
         correctErrorTypes = true
@@ -68,6 +66,11 @@ android {
 
 
 dependencies {
+
+    implementation(project(":core:model"))
+    implementation(project(":data:article"))
+    implementation(project(":feature:article"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     val composeBom = platform(libs.androidx.compose.bom)
@@ -87,7 +90,6 @@ dependencies {
 
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.navigation.animation)
-    implementation(libs.accompanist.webview)
     implementation(libs.accompanist.flowlayout)
 
     implementation(libs.okhttp)
@@ -96,10 +98,6 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
-
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
