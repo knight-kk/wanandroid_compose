@@ -56,9 +56,7 @@ android {
         }
     }
     // Enable room auto-migrations
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-    }
+
 
     kapt {
         correctErrorTypes = true
@@ -100,10 +98,6 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
-
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
