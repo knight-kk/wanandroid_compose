@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.wanandroid
+package com.wkk.data.article.model
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.wkk.database.model.ArticleEntity
+import com.wkk.network.model.NetworkArticle
 
-@HiltAndroidApp
-class App : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-        context = this
-    }
-
-    companion object {
-        private var context: App? = null
-        fun getInstance() = context!!
-
-        private var isLogin = false
-        fun isLogin() = isLogin
-    }
-}
+fun NetworkArticle.asEntity() = ArticleEntity(
+    id = id,
+    title = title,
+    desc = desc,
+    link = link,
+    author = author.takeIf { it.isNotEmpty() } ?: shareUser,
+    collect = collect,
+    publishTime = publishTime,
+)

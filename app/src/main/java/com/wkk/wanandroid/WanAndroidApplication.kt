@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.model
+package com.wkk.wanandroid
 
-data class Article(
-    val id: String = "",
-    val title: String = "",
-    val desc: String = "",
-    val link: String = "",
-    val author: String = "",
-    val collect: Boolean = false,
-    val publishTime: Long = -1L,
-)
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class WanAndroidApplication : Application()

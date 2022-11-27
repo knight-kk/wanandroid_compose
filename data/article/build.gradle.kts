@@ -38,6 +38,7 @@ dependencies {
 
     implementation(project(":core:model"))
     implementation(project(":core:network"))
+    implementation(project(":core:database"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.paging.runtime)

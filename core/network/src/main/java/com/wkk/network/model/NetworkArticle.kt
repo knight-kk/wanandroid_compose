@@ -17,7 +17,6 @@ package com.wkk.network.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.wkk.model.Article
 
 @JsonClass(generateAdapter = true)
 data class NetworkArticle(
@@ -48,31 +47,9 @@ data class NetworkArticle(
     @Json(name = "shareUser") val shareUser: String = "",
     @Json(name = "superChapterId") val superChapterId: Int = 0,
     @Json(name = "superChapterName") val superChapterName: String = "",
-    @Json(name = "tags") val tags: List<Tag> = emptyList(),
     @Json(name = "title") val title: String = "",
     @Json(name = "type") val type: Int = 1,
     @Json(name = "userId") val userId: Int = 1,
     @Json(name = "visible") val visible: Int = 0,
     @Json(name = "zan") val zan: Int = 0
-) {
-
-    @JsonClass(generateAdapter = true)
-    data class Tag(
-        val name: String,
-        val url: String
-    )
-}
-
-private fun NetworkArticle.Tag.asExternalModule() = Article.Tag(name = name, url = url)
-
-fun NetworkArticle.asExternalModule() = Article(
-    id = id,
-    title = title,
-    desc = desc,
-    link = link,
-    author = author.takeIf { it.isNotEmpty() } ?: shareUser,
-    collect = collect,
-    publishTime = publishTime,
-    tags = tags.map { it.asExternalModule() },
-    type = type
 )

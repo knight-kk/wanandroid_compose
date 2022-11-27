@@ -15,21 +15,36 @@
  */
 package com.wkk.data.article.repository.impl
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.wkk.data.article.ArticlePagingSource
+import androidx.paging.map
+import com.wkk.data.article.ArticleRemoteMediator
 import com.wkk.data.repository.ArticleRepository
+import com.wkk.database.dao.ArticleDao
+import com.wkk.database.dao.ArticleRemoteKeysDao
+import com.wkk.database.model.asExternalModule
 import com.wkk.model.Article
 import com.wkk.network.datasource.ArticleRemoteDataSource
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RemoteArticleRepository @Inject constructor(
-    private val articleRemoteDataSource: ArticleRemoteDataSource
+    private val articleRemoteDataSource: ArticleRemoteDataSource,
+    private val articleDao: ArticleDao,
+    private val articleRemoteKeysDao: ArticleRemoteKeysDao,
 ) : ArticleRepository {
 
-    override fun getPagerFlow(pageSize: Int) = Pager(PagingConfig(10)) {
-        ArticlePagingSource(articleRemoteDataSource)
-    }.flow
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getPagerFlow(pageSize: Int) = Pager(
+        config = PagingConfig(10),
+        remoteMediator = ArticleRemoteMediator(
+            articleRemoteDataSource,
+            articleDao,
+            articleRemoteKeysDao
+        ),
+        pagingSourceFactory = { articleDao.getArticles() }
+    ).flow.map { pagingData -> pagingData.map { it.asExternalModule() } }
 
     override suspend fun toggleCollection(article: Article) =
         articleRemoteDataSource.toggleCollection(article)

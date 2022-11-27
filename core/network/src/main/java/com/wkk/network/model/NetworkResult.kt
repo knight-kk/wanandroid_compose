@@ -29,7 +29,7 @@ class NetworkResult<T>(
     @Json(name = "errorCode")
     val errorCode: Int,
     @Json(name = "errorMsg")
-    val errorMsg: String
+    val errorMsg: String = ""
 ) {
     fun isSuccess() = errorCode == 0
 }

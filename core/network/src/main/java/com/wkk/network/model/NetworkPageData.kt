@@ -36,30 +36,30 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class NetworkPageData<T>(
     @Json(name = "curPage")
-    val curPage: Int,
+    val curPage: Int = 1,
     @Json(name = "datas")
-    val datas: List<T>,
+    val datas: List<T> = emptyList(),
     @Json(name = "offset")
-    val offset: Int,
+    val offset: Int = 0,
     /**
      * 是否是最后一页
      */
     @Json(name = "over")
-    val over: Boolean,
+    val over: Boolean = false,
     /**
      * 每页的数量
      */
     @Json(name = "size")
-    val size: Int,
+    val size: Int = 0,
     /**
      * 总页数
      */
     @Json(name = "pageCount")
-    val pageCount: Int,
+    val pageCount: Int = 0,
     /**
      * 总条目
      */
     @Json(name = "total")
-    val total: Int,
+    val total: Int = 0,
 
 )

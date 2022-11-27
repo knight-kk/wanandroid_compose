@@ -24,7 +24,7 @@ interface ArticleRemoteDataSource {
 
     suspend fun fetchArticle(
         page: Int = 0,
-        pageSize: Int = 20
+        pageSize: Int = 10
     ): NetworkResult<NetworkPageData<NetworkArticle>>
 
     suspend fun toggleCollection(article: Article): NetworkResult<Any>
