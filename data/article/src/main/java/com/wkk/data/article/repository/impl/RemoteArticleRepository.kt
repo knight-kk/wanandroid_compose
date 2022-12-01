@@ -21,8 +21,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.map
 import com.wkk.data.article.ArticleRemoteMediator
 import com.wkk.data.repository.ArticleRepository
+import com.wkk.database.AppDatabase
 import com.wkk.database.dao.ArticleDao
-import com.wkk.database.dao.ArticleRemoteKeysDao
 import com.wkk.database.model.asExternalModule
 import com.wkk.model.Article
 import com.wkk.network.datasource.ArticleRemoteDataSource
@@ -32,7 +32,7 @@ import javax.inject.Inject
 class RemoteArticleRepository @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource,
     private val articleDao: ArticleDao,
-    private val articleRemoteKeysDao: ArticleRemoteKeysDao,
+    private val database: AppDatabase
 ) : ArticleRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -40,8 +40,7 @@ class RemoteArticleRepository @Inject constructor(
         config = PagingConfig(10),
         remoteMediator = ArticleRemoteMediator(
             articleRemoteDataSource,
-            articleDao,
-            articleRemoteKeysDao
+            database
         ),
         pagingSourceFactory = { articleDao.getArticles() }
     ).flow.map { pagingData -> pagingData.map { it.asExternalModule() } }
