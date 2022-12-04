@@ -15,9 +15,11 @@
  */
 package com.wkk.database.model
 
+import androidx.core.text.HtmlCompat
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.wkk.database.utils.DateTimeUtils
 import com.wkk.model.Article
 
 @Entity(tableName = "articles")
@@ -53,10 +55,11 @@ data class ArticleEntity(
 
 fun ArticleEntity.asExternalModule() = Article(
     id = id,
-    title = title,
+    title = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_COMPACT).toString(),
     desc = desc,
     link = link,
     author = author,
     collect = collect,
-    publishTime = publishTime,
+    formatDateTime = DateTimeUtils.formatDate(publishTime),
+    category = arrayOf(superChapterName, chapterName).filter { it.isNotEmpty() }.joinToString("/")
 )

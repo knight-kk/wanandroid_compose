@@ -15,19 +15,28 @@
  */
 package com.wkk.article.components
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.wkk.model.Article
 
 @Composable
@@ -37,31 +46,80 @@ fun ArticleItem(
     onItemClick: (Article) -> Unit,
     onCollectionClick: () -> Unit
 ) {
-    ListItem(
-        modifier = Modifier
+    Column(
+        Modifier
             .fillMaxWidth()
-            .clickable(onClick = { onItemClick(article) }),
-        overlineText = {
-            Text(text = article.author)
-        },
-        headlineText = { Text(text = article.title) },
-        supportingText = {
-            Text(text = DateFormat.format("yyyy-MM-dd HH:mm:ss", article.publishTime).toString())
-        },
-        leadingContent = {
-            IconButton(onClick = onCollectionClick) {
-                Icon(
-                    imageVector = Icons.Rounded.Star,
-                    tint = if (isCollection) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                    contentDescription = "collection"
+            .clickable(onClick = { onItemClick(article) })
+            .padding(16.dp, 8.dp)
+    ) {
+
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text(
+                    text = article.title,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.titleMedium
                 )
+
+                Row(
+                    Modifier.padding(top = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(IntrinsicSize.Max),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = article.author,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        Divider(
+                            Modifier
+                                .padding(horizontal = 4.dp)
+                                .fillMaxHeight(0.6f)
+                                .width(1.dp)
+                        )
+                        Text(
+                            text = article.formatDateTime,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+
+                    Text(
+                        text = article.category,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+            }
+
+            IconButton(onClick = onCollectionClick) {
+                Icon(imageVector = Icons.Outlined.BookmarkBorder, contentDescription = "collection")
             }
         }
-    )
+    }
 }
 
 @Preview
 @Composable
 fun ArticleItemPreview() {
-    ArticleItem(Article(), false, {}, {})
+    ArticleItem(
+        Article(
+            author = "分享者",
+            title = "标题-wanAndroid 开发",
+            formatDateTime = "1天前",
+            category = "技术/Android"
+        ),
+        false,
+        {},
+        {}
+    )
 }

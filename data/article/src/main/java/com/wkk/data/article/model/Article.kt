@@ -26,4 +26,6 @@ fun NetworkArticle.asEntity() = ArticleEntity(
     author = author.takeIf { it.isNotEmpty() } ?: shareUser,
     collect = collect,
     publishTime = publishTime,
+    chapterName = chapterName,
+    superChapterName = superChapterName,
 )

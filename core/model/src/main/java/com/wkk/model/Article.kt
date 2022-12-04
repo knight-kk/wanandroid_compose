@@ -22,5 +22,6 @@ data class Article(
     val link: String = "",
     val author: String = "",
     val collect: Boolean = false,
-    val publishTime: Long = -1L,
+    val formatDateTime: String = "",
+    val category: String = "",
 )

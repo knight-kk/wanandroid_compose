@@ -17,16 +17,39 @@ package com.wkk.article
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.wkk.article.components.CommonTopBar
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import com.wkk.article.components.WebView
 
 @Composable
 fun ArticleDetailScreen(title: String, url: String, onBack: () -> Unit) {
     Scaffold(
-        topBar = { CommonTopBar(title, onBack) }
+        topBar = {
+            TopAppBar(
+                title = {
+                    if (title.isNotEmpty()) Text(
+                        title,
+                        maxLines = 1,
+                        fontSize = 16.sp,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "icon")
+                    }
+                }
+            )
+        }
     ) { paddingValues ->
         WebView(
             Modifier
