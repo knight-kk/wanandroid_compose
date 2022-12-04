@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.wkk.data.repository.ArticleRepository
-import com.wkk.network.model.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -31,7 +30,7 @@ class ArticleViewModel @Inject constructor(
         articleRepository.getPagerFlow().cachedIn(viewModelScope)
     }
 
-    suspend fun toggleCollection(article: com.wkk.model.Article): NetworkResult<Any> {
-        return articleRepository.toggleCollection(article)
-    }
+    suspend fun toggleCollection(article: com.wkk.model.Article) =
+        articleRepository.toggleCollection(article)
+
 }

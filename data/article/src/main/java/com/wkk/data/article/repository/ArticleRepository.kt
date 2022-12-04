@@ -23,5 +23,5 @@ import kotlinx.coroutines.flow.Flow
 interface ArticleRepository {
 
     fun getPagerFlow(pageSize: Int = 20): Flow<PagingData<Article>>
-    suspend fun toggleCollection(article: Article): NetworkResult<Any>
+    suspend fun toggleCollection(article: Article): Boolean
 }

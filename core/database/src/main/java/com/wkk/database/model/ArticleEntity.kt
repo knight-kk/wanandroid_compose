@@ -36,7 +36,7 @@ data class ArticleEntity(
     @ColumnInfo(name = "author")
     val author: String = "",
     @ColumnInfo(name = "collect")
-    val collect: Boolean = false,
+    var collect: Boolean = false,
     @ColumnInfo(name = "publish_time")
     val publishTime: Long = -1L,
     @ColumnInfo(name = "type")

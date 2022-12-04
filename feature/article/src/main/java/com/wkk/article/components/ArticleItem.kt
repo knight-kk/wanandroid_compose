@@ -26,10 +26,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,69 +44,71 @@ import com.wkk.model.Article
 @Composable
 fun ArticleItem(
     article: Article,
-    isCollection: Boolean,
     onItemClick: (Article) -> Unit,
     onCollectionClick: () -> Unit
 ) {
-    Column(
+    Row(
         Modifier
             .fillMaxWidth()
             .clickable(onClick = { onItemClick(article) })
-            .padding(16.dp, 8.dp)
+            .padding(16.dp, 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        Column(Modifier.weight(1f)) {
+            Text(
+                text = article.title,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.titleMedium
+            )
 
-        Row(
-            Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(Modifier.weight(1f)) {
-                Text(
-                    text = article.title,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
+            Row(
+                Modifier.padding(top = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Row(
-                    Modifier.padding(top = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(IntrinsicSize.Max),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(IntrinsicSize.Max),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = article.author,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                        Divider(
-                            Modifier
-                                .padding(horizontal = 4.dp)
-                                .fillMaxHeight(0.6f)
-                                .width(1.dp)
-                        )
-                        Text(
-                            text = article.formatDateTime,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
-
                     Text(
-                        text = article.category,
+                        text = article.author,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Divider(
+                        Modifier
+                            .padding(horizontal = 4.dp)
+                            .fillMaxHeight(0.6f)
+                            .width(1.dp)
+                    )
+                    Text(
+                        text = article.formatDateTime,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-            }
 
-            IconButton(onClick = onCollectionClick) {
-                Icon(imageVector = Icons.Outlined.BookmarkBorder, contentDescription = "collection")
+                Text(
+                    text = article.category,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.labelSmall
+                )
             }
         }
+        ArticleCollectionButton(article.collect, onCollectionClick)
+    }
+}
+
+@Composable
+fun ArticleCollectionButton(isCollection: Boolean, onCollectionClick: () -> Unit) {
+    val icon = if (isCollection) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder
+    val tintColor =
+        if (isCollection) MaterialTheme.colorScheme.primary else LocalContentColor.current
+
+    IconButton(onClick = onCollectionClick) {
+        Icon(imageVector = icon, tint = tintColor, contentDescription = "ArticleCollectionButton")
     }
 }
 
@@ -118,7 +122,6 @@ fun ArticleItemPreview() {
             formatDateTime = "1天前",
             category = "技术/Android"
         ),
-        false,
         {},
         {}
     )

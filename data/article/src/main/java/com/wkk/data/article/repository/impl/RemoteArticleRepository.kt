@@ -19,6 +19,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
+import androidx.room.withTransaction
 import com.wkk.data.article.ArticleRemoteMediator
 import com.wkk.data.repository.ArticleRepository
 import com.wkk.database.AppDatabase
@@ -45,6 +46,12 @@ class RemoteArticleRepository @Inject constructor(
         pagingSourceFactory = { articleDao.getArticles() }
     ).flow.map { pagingData -> pagingData.map { it.asExternalModule() } }
 
-    override suspend fun toggleCollection(article: Article) =
-        articleRemoteDataSource.toggleCollection(article)
+    override suspend fun toggleCollection(article: Article) = database.withTransaction {
+        val articleEntity = articleDao.getArticle(article.id) ?: return@withTransaction false
+        articleEntity.collect = !article.collect
+        articleDao.update(articleEntity)
+        // TODO 网络请求
+        true
+
+    }
 }

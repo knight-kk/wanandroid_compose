@@ -20,6 +20,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.wkk.database.model.ArticleEntity
 
 @Dao
@@ -29,6 +30,12 @@ interface ArticleDao {
 
     @Query("SELECT * FROM articles")
     fun getArticles(): PagingSource<Int, ArticleEntity>
+
+    @Query("SELECT * FROM articles WHERE id=:id")
+    suspend fun getArticle(id: String): ArticleEntity?
+
+    @Update
+    suspend fun update(articleEntity: ArticleEntity)
 
     @Query("DELETE FROM articles")
     suspend fun clear()

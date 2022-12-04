@@ -24,11 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,19 +51,15 @@ private fun ArticleList(viewModel: ArticleViewModel, onItemClick: (Article) -> U
 
     LazyColumn {
         items(lazyPagingItems, { it.id }) { article ->
-            var isCollection by remember { mutableStateOf(article?.collect ?: false) }
             if (article != null) {
                 ArticleItem(
                     article,
-                    isCollection = isCollection,
                     onItemClick,
                     onCollectionClick = {
                         coroutineScope.launch {
-                            val result = viewModel.toggleCollection(article)
-                            if (result.isSuccess()) {
-                                isCollection = !isCollection
-                            } else {
-                                Toast.makeText(context, result.errorMsg, Toast.LENGTH_SHORT).show()
+                            val isSuccess = viewModel.toggleCollection(article)
+                            if (!isSuccess) {
+                                Toast.makeText(context, "更新失败", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
