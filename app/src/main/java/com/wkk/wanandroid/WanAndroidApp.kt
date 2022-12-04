@@ -106,7 +106,7 @@ private enum class HomeSections(
     @StringRes val title: Int,
     @DrawableRes val icon: Int
 ) {
-    INDEX(ArticleRoutes.MAIN, R.string.main_tab_home, R.drawable.ic_outline_home_24),
+    INDEX(ArticleRoutes.MAIN, R.string.main_tab_article, R.drawable.icon_outline_article_24px),
 }
 
 @Preview
