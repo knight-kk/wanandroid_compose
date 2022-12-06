@@ -17,7 +17,6 @@ package com.wkk.data.repository
 
 import androidx.paging.PagingData
 import com.wkk.model.Article
-import com.wkk.network.model.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface ArticleRepository {

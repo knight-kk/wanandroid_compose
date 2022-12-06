@@ -27,8 +27,8 @@ import com.wkk.database.dao.ArticleDao
 import com.wkk.database.model.asExternalModule
 import com.wkk.model.Article
 import com.wkk.network.datasource.ArticleRemoteDataSource
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import kotlinx.coroutines.flow.map
 
 class RemoteArticleRepository @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource,
@@ -52,6 +52,5 @@ class RemoteArticleRepository @Inject constructor(
         articleDao.update(articleEntity)
         // TODO 网络请求
         true
-
     }
 }

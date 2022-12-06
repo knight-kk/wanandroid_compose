@@ -94,7 +94,6 @@ fun ArticleItem(
         }
         ArticleCollectionButton(article.collect, onCollectionClick)
     }
-
 }
 
 @Composable

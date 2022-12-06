@@ -32,5 +32,4 @@ class ArticleViewModel @Inject constructor(
 
     suspend fun toggleCollection(article: com.wkk.model.Article) =
         articleRepository.toggleCollection(article)
-
 }
