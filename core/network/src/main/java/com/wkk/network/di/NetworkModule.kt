@@ -15,20 +15,22 @@
  */
 package com.wkk.network.di
 
+import com.example.datastore.datasource.PreferencesDataSource
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.wkk.network.ApiService
 import com.wkk.network.BuildConfig
+import com.wkk.network.LoginCookieJar
 import com.wkk.network.UrlConstants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,9 +38,9 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkhttpClient(): OkHttpClient {
+    fun provideOkhttpClient(preferencesDataSource: PreferencesDataSource): OkHttpClient {
         return OkHttpClient.Builder()
-//            .cookieJar(LoginCookieJar())
+            .cookieJar(LoginCookieJar(preferencesDataSource))
             .apply {
                 if (BuildConfig.DEBUG) {
                     addInterceptor(
