@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.datastore.datasource.impl
+package com.wkk.datastore.datasource.impl
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -21,8 +21,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import com.example.datastore.DataStoreConstants
-import com.example.datastore.datasource.PreferencesDataSource
+import com.wkk.datastore.DataStoreConstants
+import com.wkk.datastore.datasource.PreferencesDataSource
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 

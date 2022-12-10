@@ -46,5 +46,6 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.test.junit)
+    testImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.androidx.test.junit.ktx)
 }

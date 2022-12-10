@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.datastore.di
+package com.wkk.datastore.di
 
-import com.example.datastore.datasource.PreferencesDataSource
-import com.example.datastore.datasource.impl.PreferencesDataSourceImpl
+import com.wkk.datastore.datasource.PreferencesDataSource
+import com.wkk.datastore.datasource.impl.PreferencesDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

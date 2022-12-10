@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.datastore
+package com.wkk.datastore
 
 object DataStoreConstants {
 
