@@ -3,12 +3,11 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
-        maven("https://maven.aliyun.com/repository/google")
         maven("https://maven.aliyun.com/repository/public")
+        maven("https://maven.aliyun.com/repository/google")
+        google()
         mavenCentral()
     }
-
 }
 
 pluginManagement {
@@ -25,8 +24,11 @@ include(":app")
 
 include(":core:model")
 include(":core:database")
+include(":core:datastore")
 include(":core:network")
+include(":core:ui")
 
 include(":data:article")
 
 include(":feature:article")
+include(":feature:user")

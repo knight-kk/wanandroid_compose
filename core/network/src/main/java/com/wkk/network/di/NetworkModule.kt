@@ -15,9 +15,9 @@
  */
 package com.wkk.network.di
 
-import com.example.datastore.datasource.PreferencesDataSource
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.wkk.datastore.datasource.PreferencesDataSource
 import com.wkk.network.ApiService
 import com.wkk.network.BuildConfig
 import com.wkk.network.LoginCookieJar

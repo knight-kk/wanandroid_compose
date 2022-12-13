@@ -15,7 +15,7 @@
  */
 package com.wkk.network
 
-import com.example.datastore.datasource.PreferencesDataSource
+import com.wkk.datastore.datasource.PreferencesDataSource
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
