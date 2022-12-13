@@ -50,7 +50,6 @@ class RemoteArticleRepository @Inject constructor(
         val articleEntity = articleDao.getArticle(article.id) ?: return@withTransaction false
         articleEntity.collect = !article.collect
         articleDao.update(articleEntity)
-        // TODO 网络请求
         true
     }
 }
