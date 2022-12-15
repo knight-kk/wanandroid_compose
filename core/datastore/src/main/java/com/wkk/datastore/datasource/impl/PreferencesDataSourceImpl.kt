@@ -23,8 +23,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.wkk.datastore.DataStoreConstants
 import com.wkk.datastore.datasource.PreferencesDataSource
-import javax.inject.Inject
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class PreferencesDataSourceImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>

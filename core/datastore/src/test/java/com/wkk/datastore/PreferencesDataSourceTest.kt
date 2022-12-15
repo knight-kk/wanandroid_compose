@@ -18,7 +18,6 @@ package com.wkk.datastore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import com.wkk.datastore.datasource.PreferencesDataSource
 import com.wkk.datastore.datasource.impl.PreferencesDataSourceImpl
-import java.io.File
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -26,6 +25,7 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import java.io.File
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PreferencesDataSourceTest {
