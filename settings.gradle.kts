@@ -29,6 +29,7 @@ include(":core:network")
 include(":core:ui")
 
 include(":data:article")
+include(":data:user")
 
 include(":feature:article")
 include(":feature:user")
