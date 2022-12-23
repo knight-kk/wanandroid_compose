@@ -23,11 +23,11 @@ import com.wkk.model.User
 import com.wkk.network.datasource.UserRemoteDataSource
 import com.wkk.user.model.asEntity
 import com.wkk.user.repository.UserRepository
-import javax.inject.Inject
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.mapNotNull
+import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource,

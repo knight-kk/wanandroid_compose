@@ -27,8 +27,8 @@ import com.wkk.database.dao.ArticleDao
 import com.wkk.database.model.asExternalModule
 import com.wkk.model.Article
 import com.wkk.network.datasource.ArticleRemoteDataSource
-import javax.inject.Inject
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class RemoteArticleRepository @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource,
