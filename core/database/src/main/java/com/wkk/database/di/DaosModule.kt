@@ -18,6 +18,7 @@ package com.wkk.database.di
 import com.wkk.database.AppDatabase
 import com.wkk.database.dao.ArticleDao
 import com.wkk.database.dao.ArticleRemoteKeysDao
+import com.wkk.database.dao.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,4 +37,9 @@ object DaosModule {
     fun providesArticleRemoteKeysDao(
         database: AppDatabase,
     ): ArticleRemoteKeysDao = database.articleKeyDao()
+
+    @Provides
+    fun providesUserDao(
+        database: AppDatabase,
+    ): UserDao = database.userDao()
 }
