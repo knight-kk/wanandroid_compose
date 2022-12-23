@@ -15,29 +15,11 @@
  */
 package com.wkk.model
 
-import com.squareup.moshi.Json
-
-data class KnowledgeTree(
-    @Json(name = "id")
-    val id: Long = 0,
-    @Json(name = "name")
-    val name: String = "",
-    @Json(name = "children")
-    val tags: List<Tag> = emptyList(),
-    @Json(name = "type")
-    val type: Int = 0,
+sealed class DataResult<T>(
+    val data: T?,
+    val message: String = "",
+    val code: Int = 0,
 ) {
-
-    data class Tag(
-        @Json(name = "id")
-        val id: Long = 0,
-        @Json(name = "name")
-        val name: String = "",
-        @Json(name = "courseId")
-        val courseId: Int = 0,
-        @Json(name = "cover")
-        val cover: String = "",
-        @Json(name = "desc")
-        val desc: String = "",
-    )
+    class Success<T>(data: T?) : DataResult<T>(data)
+    class Error<T>(message: String, code: Int = -1) : DataResult<T>(null, message, code)
 }

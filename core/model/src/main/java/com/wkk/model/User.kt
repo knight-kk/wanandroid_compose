@@ -15,27 +15,13 @@
  */
 package com.wkk.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-
-@JsonClass(generateAdapter = true)
 data class User(
-    @Json(name = "id")
-    val id: Long,
-    @Json(name = "coinCount")
+    val id: String,
     val coinCount: Int = 0,
-    @Json(name = "collectIds")
-    val collectIds: List<Int> = listOf(),
-    @Json(name = "email")
     val email: String = "",
-    @Json(name = "icon")
     val icon: String = "",
-    @Json(name = "nickname")
     val nickname: String = "",
-    @Json(name = "publicName")
     val publicName: String = "",
-    @Json(name = "type")
     val type: Int = 0,
-    @Json(name = "username")
     val username: String = ""
 )
