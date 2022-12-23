@@ -39,7 +39,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs =
+            freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
     }
     buildFeatures {
         compose = true
@@ -57,19 +58,17 @@ android {
     }
     // Enable room auto-migrations
 
-
     kapt {
         correctErrorTypes = true
     }
 }
-
-
 
 dependencies {
 
     implementation(project(":core:model"))
     implementation(project(":data:article"))
     implementation(project(":feature:article"))
+    implementation(project(":feature:user"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -83,7 +82,6 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.compose.activity)
-    implementation(libs.androidx.datastore.preferences)
     implementation(libs.navigation.compose)
     implementation(libs.viewmodel.compose)
     implementation(libs.paging.compose)

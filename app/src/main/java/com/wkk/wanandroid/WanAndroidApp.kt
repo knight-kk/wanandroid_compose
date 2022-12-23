@@ -19,6 +19,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -34,6 +36,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.wkk.article.nav.ArticleRoutes
+import com.wkk.user.nav.UserRoutes
 
 @Composable
 fun WanAndroidApp() {
@@ -66,10 +69,19 @@ private fun HomeBottomNav(
     NavigationBar {
         val items = HomeSections.values()
         items.forEach { item ->
+            val selected = currentRoute == item.route
+            val selectedColor =
+                if (selected) MaterialTheme.colorScheme.primary else LocalContentColor.current
             NavigationBarItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = "") },
-                label = { Text(text = stringResource(item.title)) },
-                selected = currentRoute == item.route,
+                icon = {
+                    Icon(
+                        painterResource(item.icon),
+                        contentDescription = item.route,
+                        tint = selectedColor
+                    )
+                },
+                label = { Text(text = stringResource(item.title), color = selectedColor) },
+                selected = selected,
                 onClick = { onItemSelected(item) }
             )
         }
@@ -106,7 +118,8 @@ private enum class HomeSections(
     @StringRes val title: Int,
     @DrawableRes val icon: Int
 ) {
-    INDEX(ArticleRoutes.MAIN, R.string.main_tab_article, R.drawable.icon_outline_article_24px),
+    INDEX(ArticleRoutes.MAIN, R.string.main_tab_article, R.drawable.ic_outline_article_24),
+    USER(UserRoutes.MAIN, R.string.main_tab_user, R.drawable.ic_outline_person_24),
 }
 
 @Preview
