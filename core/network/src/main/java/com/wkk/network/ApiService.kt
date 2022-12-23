@@ -15,7 +15,6 @@
  */
 package com.wkk.network
 
-import com.wkk.model.KnowledgeTree
 import com.wkk.network.model.NetworkArticle
 import com.wkk.network.model.NetworkPageData
 import com.wkk.network.model.NetworkResult
@@ -76,7 +75,4 @@ interface ApiService {
 
     @POST("/lg/uncollect_originId/{articleId}/json")
     suspend fun unCollectArticle(@Path("articleId") articleId: String): NetworkResult<Any>
-
-    @GET("/tree/json")
-    suspend fun getKnowledgeTrees(): NetworkResult<List<KnowledgeTree>>
 }

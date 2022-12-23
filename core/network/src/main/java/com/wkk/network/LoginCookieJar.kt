@@ -16,7 +16,6 @@
 package com.wkk.network
 
 import com.wkk.datastore.datasource.PreferencesDataSource
-import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Cookie
@@ -27,23 +26,35 @@ class LoginCookieJar(
     private val preferencesDataSource: PreferencesDataSource
 ) : CookieJar {
 
-    private val cacheCookie = ConcurrentHashMap<String, List<Cookie>>()
+    private var cacheCookies: List<Cookie>? = null
 
     override fun loadForRequest(url: HttpUrl): List<Cookie> {
-        var list = cacheCookie[url.host]
-        if (list.isNullOrEmpty()) {
-            val cookieSet = runBlocking { preferencesDataSource.getCookies().first() }
-            list = cookieSet.mapNotNull { Cookie.parse(url, it) }.toList()
+        val list = (
+            cacheCookies ?: runBlocking {
+                preferencesDataSource.getCookies().first().mapNotNull { Cookie.parse(url, it) }
+                    .toList()
+            }.also { cacheCookies = it }
+            )
+        if (list.isEmpty()) return list
+        val filterList = list.filter { cookie -> cookie.expiresAt > System.currentTimeMillis() }
+        if (filterList.isEmpty()) {
+            cacheCookies = null
+            runBlocking { preferencesDataSource.clearLoginInfo() }
         }
-        return list.filter { cookie -> cookie.expiresAt > System.currentTimeMillis() }
+        return list
     }
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-        val urlStr = url.toString()
-        val needSaveCookieUrls =
-            listOf(UrlConstants.LOGIN, UrlConstants.REGISTER, UrlConstants.LOGOUT)
-        if (needSaveCookieUrls.find { urlStr.contains(it) } == null) return
-        cacheCookie[url.host] = cookies
+        if (isNeedSaveCookie(url.toString()).not()) return
+        if (cacheCookies.isNullOrEmpty().not()) return
+        cacheCookies = cookies
         runBlocking { preferencesDataSource.saveCookies(cookies.map { it.toString() }.toSet()) }
+    }
+
+    private fun isNeedSaveCookie(url: String): Boolean {
+        if (url.contains(UrlConstants.LOGIN)) return true
+        if (url.contains(UrlConstants.REGISTER)) return true
+        if (url.contains(UrlConstants.LOGOUT)) return true
+        return false
     }
 }

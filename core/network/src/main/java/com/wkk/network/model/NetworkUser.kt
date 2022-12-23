@@ -21,11 +21,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class NetworkUser(
     @Json(name = "id")
-    val id: Long,
+    val id: String,
     @Json(name = "coinCount")
     val coinCount: Int = 0,
-    @Json(name = "collectIds")
-    val collectIds: List<Int> = listOf(),
     @Json(name = "email")
     val email: String = "",
     @Json(name = "icon")
