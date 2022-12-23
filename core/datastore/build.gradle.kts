@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.datastore"
+    namespace = "com.wkk.datastore"
     compileSdk = 33
 
     defaultConfig {
