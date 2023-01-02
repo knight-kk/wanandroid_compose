@@ -106,6 +106,5 @@ dependencies {
     testImplementation(libs.androidx.test.junit.ktx)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.okhttp.mockwebserver)
-    testImplementation(libs.room.testing)
     testImplementation(libs.kotlinx.coroutines.test)
 }

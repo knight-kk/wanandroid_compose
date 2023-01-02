@@ -14,8 +14,8 @@ datastore = "1.0.0"
 [libraries]
 androidx-core-ktx = "androidx.core:core-ktx:1.9.0"
 androidx-appcompat = "androidx.appcompat:appcompat:1.5.1"
-androidx-datastore-preferences ={module = "androidx.datastore:datastore-preferences",version.ref = "datastore"}
-androidx-datastore-preferences-core ={module = "androidx.datastore:datastore-preferences-core",version.ref = "datastore"}
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 androidx-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "liefcycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "liefcycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "liefcycle" }
@@ -71,3 +71,4 @@ kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 # http://robolectric.org/getting-started/
 
 robolectric = "org.robolectric:robolectric:4.9"
+desugar_jdk = "com.android.tools:desugar_jdk_libs:1.2.0"

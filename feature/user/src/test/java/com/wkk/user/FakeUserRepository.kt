@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 knight-kk
+ * Copyright 2023 knight-kk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.database
+package com.wkk.user
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import com.wkk.model.DataResult
+import com.wkk.model.User
+import com.wkk.user.repository.UserRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+class FakeUserRepository : UserRepository {
+
+    override suspend fun login(userName: String, password: String): DataResult<Any> {
+        delay(2000)
+        return DataResult.Success(Any())
+    }
+
+    override suspend fun getUserInfo(): Flow<User> {
+        TODO()
     }
 }

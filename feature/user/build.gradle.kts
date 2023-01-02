@@ -64,7 +64,8 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.navigation.compose)
-    implementation(libs.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
@@ -72,5 +73,6 @@ dependencies {
 
     testImplementation(libs.test.junit)
     testImplementation(libs.androidx.test.junit.ktx)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(composeBom)
 }

@@ -15,6 +15,7 @@
  */
 package com.wkk.user.nav
 
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -26,6 +27,7 @@ object UserRoutes {
     const val LOGIN = "login"
 }
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 fun NavGraphBuilder.userNav(navigateToLogin: () -> Unit, navigateUp: () -> Unit) {
     composable(UserRoutes.MAIN) {
         UserScreen(navigateToLogin)

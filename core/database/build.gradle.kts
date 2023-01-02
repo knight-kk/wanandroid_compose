@@ -27,7 +27,6 @@ android {
         }
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -41,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core:model"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -57,5 +55,8 @@ dependencies {
     implementation(libs.paging.runtime)
 
     testImplementation(libs.test.junit)
-    testImplementation(libs.androidx.test.junit.ktx)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.junit.ktx)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.room.testing)
 }

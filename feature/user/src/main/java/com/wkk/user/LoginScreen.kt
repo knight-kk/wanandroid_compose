@@ -16,6 +16,7 @@
 package com.wkk.user
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -27,6 +28,7 @@ import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.PersonPinCircle
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
@@ -38,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,96 +54,122 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.wkk.model.DataResult
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wkk.user.components.PasswordTextField
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@ExperimentalLifecycleComposeApi
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), onClosePage: () -> Unit) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val login = coroutineScope.rememberLoginFun(viewModel::login)
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onClosePage) {
-                        Icon(
-                            imageVector = Icons.Outlined.Close,
-                            contentDescription = "close"
-                        )
-                    }
-                },
-                title = { Text(text = "登录") }
-            )
-        }
+        topBar = { LoginTopBar(onClosePage) }
     ) { paddingValues ->
-        val coroutineScope = rememberCoroutineScope()
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            contentAlignment = Alignment.Center
         ) {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.32f),
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "logo"
-            )
-            var userName by remember { mutableStateOf("") }
-            UserTextField(
-                value = userName,
-                onValueChange = { value ->
-                    userName = value
-                },
-                onClear = { userName = "" }
-            )
-
-            var password by remember { mutableStateOf("") }
-            PasswordTextField(
-                value = password,
-                onValueChange = { value ->
-                    password = value
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
-            Row(Modifier.fillMaxWidth()) {
-                TextButton(onClick = { /*TODO*/ }) {
-                    Text(text = "忘记密码?")
+            when (uiState) {
+                LoginUiState.None -> {}
+                LoginUiState.Loading -> CircularProgressIndicator()
+                is LoginUiState.Error -> LaunchedEffect(uiState) {
+                    snackbarHostState.showSnackbar(
+                        (uiState as LoginUiState.Error).message
+                    )
                 }
+                LoginUiState.Success -> onClosePage()
             }
-
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                onClick = {
-                    coroutineScope.launch {
-                        val result = viewModel.login(userName, password)
-                        if (result is DataResult.Error) {
-                            snackbarHostState.showSnackbar(result.message)
-                            return@launch
-                        }
-                        onClosePage()
-                    }
-                }
-            ) {
-                Text(text = "登录")
-            }
-
-            OutlinedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                onClick = { /*TODO*/ }
-            ) {
-                Text(text = "注册")
-            }
+            LoginScreenContent(login)
         }
     }
+}
+
+@Composable
+private fun CoroutineScope.rememberLoginFun(
+    login: suspend (userName: String, password: String) -> Unit
+): (userName: String, password: String) -> Unit = remember {
+    { userName, password ->
+        launch { login(userName, password) }
+    }
+}
+
+@ExperimentalLifecycleComposeApi
+@Composable
+fun LoginScreenContent(
+    login: (userName: String, password: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.24f),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_logo),
+            contentDescription = "logo"
+        )
+        var userName by remember { mutableStateOf("") }
+        UserTextField(
+            value = userName,
+            onValueChange = { value -> userName = value },
+            onClear = { userName = "" }
+        )
+
+        var password by remember { mutableStateOf("") }
+        PasswordTextField(
+            value = password,
+            onValueChange = { value -> password = value },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+        Row(Modifier.fillMaxWidth()) {
+            TextButton(onClick = { /*TODO*/ }) {
+                Text(text = "忘记密码?")
+            }
+        }
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            onClick = { login(userName, password) }
+        ) {
+            Text(text = "登录")
+        }
+
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            onClick = { /*TODO*/ }
+        ) {
+            Text(text = "注册")
+        }
+    }
+}
+
+@Composable
+private fun LoginTopBar(onNavigationAction: () -> Unit) {
+    TopAppBar(
+        navigationIcon = {
+            IconButton(onClick = onNavigationAction) {
+                Icon(
+                    imageVector = Icons.Outlined.Close,
+                    contentDescription = "close"
+                )
+            }
+        },
+        title = { Text(text = "登录") }
+    )
 }
 
 @Composable
@@ -167,8 +196,9 @@ private fun UserTextField(
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = false)
+@ExperimentalLifecycleComposeApi
 @Composable
 fun LoginPreView() {
-    LoginScreen {}
+    LoginScreenContent(login = { _, _ -> })
 }
