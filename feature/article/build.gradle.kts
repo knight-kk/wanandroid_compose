@@ -63,7 +63,7 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.navigation.compose)
-    implementation(libs.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.paging.compose)
 
     implementation(libs.hilt.android)
