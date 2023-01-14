@@ -41,12 +41,11 @@ class LoginCookieJar(
             cacheCookies = null
             runBlocking { preferencesDataSource.clearLoginInfo() }
         }
-        return list
+        return filterList
     }
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
         if (isNeedSaveCookie(url.toString()).not()) return
-        if (cacheCookies.isNullOrEmpty().not()) return
         cacheCookies = cookies
         runBlocking { preferencesDataSource.saveCookies(cookies.map { it.toString() }.toSet()) }
     }

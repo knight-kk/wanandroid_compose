@@ -29,7 +29,10 @@ interface UserDao {
     suspend fun insertOrUpdate(user: UserEntity)
 
     @Query("SELECT * FROM users WHERE id=:userId")
-    fun getUser(userId: String): Flow<UserEntity?>
+    fun getUserFow(userId: String): Flow<UserEntity?>
+
+    @Query("SELECT * FROM users WHERE id=:userId")
+    suspend fun getUser(userId: String): UserEntity?
 
     @Query("DELETE FROM users WHERE id=:userId")
     suspend fun delete(userId: String)

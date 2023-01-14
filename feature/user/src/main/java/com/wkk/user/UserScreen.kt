@@ -15,6 +15,7 @@
  */
 package com.wkk.user
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,27 +42,27 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wkk.model.User
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 
 /**
  * 我的
  */
+@SuppressLint("ProduceStateDoesNotAssignValue")
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun UserScreen(toLogin: () -> Unit) {
-    val (user, setUser) = remember { mutableStateOf(User("")) }
-    LaunchedEffect(user) {
-//        UserManager.getLoginUser()?.let { setUser(it) }
-    }
+fun UserScreen(userViewModel: UserViewModel = hiltViewModel(), navigateToLogin: () -> Unit) {
+    val coroutineScope = rememberCoroutineScope()
+    val userUiState by userViewModel.userUiState.collectAsStateWithLifecycle()
     Scaffold(topBar = { TopAppBar(title = { Text(text = "我的") }) }) { paddingValues ->
         Column(
             Modifier
@@ -69,7 +70,7 @@ fun UserScreen(toLogin: () -> Unit) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            UserInfoHeader(false, user, toLogin)
+            UserInfoHeader(userUiState, navigateToLogin)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -89,7 +90,12 @@ fun UserScreen(toLogin: () -> Unit) {
                 }
             }
 
-            UserSetting()
+            UserLogoutButton {
+                coroutineScope.launch {
+                    userViewModel.logout()
+                    navigateToLogin()
+                }
+            }
         }
     }
 }
@@ -133,25 +139,14 @@ fun UserMenuItem(
 }
 
 @Composable
-fun UserSetting(modifier: Modifier = Modifier) {
-    val coroutineScope = rememberCoroutineScope()
-    Column(
-        modifier = modifier
-            .padding(top = 20.dp)
-            .fillMaxWidth()
+fun UserLogoutButton(logout: () -> Unit) {
+    Button(
+        modifier = Modifier
+            .padding(30.dp)
+            .fillMaxWidth(),
+        onClick = logout
     ) {
-        Button(
-            modifier = Modifier
-                .padding(30.dp)
-                .fillMaxWidth(),
-            onClick = {
-                coroutineScope.launch {
-//                    UserManager.logout()
-                }
-            }
-        ) {
-            Text("退出登录")
-        }
+        Text("退出登录")
     }
 }
 

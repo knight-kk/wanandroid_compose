@@ -51,16 +51,16 @@ import androidx.compose.ui.unit.sp
 import com.wkk.model.User
 
 @Composable
-fun UserInfoHeader(isLogin: Boolean, user: User, goToLogin: () -> Unit) {
-    if (isLogin) {
-        UserInfoCard(user = user)
-        return
+fun UserInfoHeader(userUiState: UserUiState, navigateToLogin: () -> Unit) {
+    when (userUiState) {
+        is UserUiState.Error,
+        UserUiState.Loading -> UserNoLoginHeader(navigateToLogin)
+        is UserUiState.Success -> UserInfoCard(user = userUiState.user)
     }
-    UserNoLoginHeader(goToLogin)
 }
 
 @Composable
-fun UserInfoCard(user: User) {
+private fun UserInfoCard(user: User) {
     Column(Modifier.fillMaxWidth()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -86,7 +86,7 @@ fun UserInfoCard(user: User) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "101110",
+                    text = "",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(text = "积分", style = MaterialTheme.typography.labelSmall)
@@ -105,7 +105,7 @@ fun UserInfoCard(user: User) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "100",
+                    text = "",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(text = "收藏", style = MaterialTheme.typography.labelSmall)
@@ -144,10 +144,10 @@ fun UserInfo(user: User?, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun UserNoLoginHeader(toLogin: () -> Unit) {
+private fun UserNoLoginHeader(navigateToLogin: () -> Unit) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         DefaultUserIcon()
-        Button(onClick = toLogin) {
+        Button(onClick = navigateToLogin) {
             Text(text = "登录")
         }
     }

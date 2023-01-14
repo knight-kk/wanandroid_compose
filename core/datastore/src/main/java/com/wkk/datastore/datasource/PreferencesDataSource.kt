@@ -21,7 +21,7 @@ interface PreferencesDataSource {
     suspend fun saveLoginInfo(userId: String)
     suspend fun clearLoginInfo()
     fun isLogin(): Flow<Boolean>
-    suspend fun getUserId(): Flow<String>
+    fun getUserId(): Flow<String>
 
     suspend fun getCookies(): Flow<Set<String>>
 

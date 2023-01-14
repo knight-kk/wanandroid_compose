@@ -23,5 +23,6 @@ interface UserRepository {
 
     suspend fun login(userName: String, password: String): DataResult<Any>
 
-    suspend fun getUserInfo(): Flow<User>
+    fun getUserInfo(): Flow<User>
+    suspend fun logout()
 }

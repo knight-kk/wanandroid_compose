@@ -28,7 +28,11 @@ class FakeUserRepository : UserRepository {
         return DataResult.Success(Any())
     }
 
-    override suspend fun getUserInfo(): Flow<User> {
+    override fun getUserInfo(): Flow<User> {
         TODO()
+    }
+
+    override suspend fun logout() {
+        TODO("Not yet implemented")
     }
 }

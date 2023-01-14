@@ -23,9 +23,7 @@ import com.wkk.model.User
 import com.wkk.network.datasource.UserRemoteDataSource
 import com.wkk.user.model.asEntity
 import com.wkk.user.repository.UserRepository
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
@@ -44,21 +42,18 @@ class UserRepositoryImpl @Inject constructor(
         return DataResult.Success(null)
     }
 
-    suspend fun logout() {
+    override suspend fun logout() {
         preferencesDataSource.clearLoginInfo()
         userRemoteDataSource.logout()
     }
 
-    @OptIn(FlowPreview::class)
-    override suspend fun getUserInfo(): Flow<User> {
+    override fun getUserInfo(): Flow<User> {
         return preferencesDataSource.getUserId()
-            .flatMapConcat { userId ->
+            .mapNotNull { userId ->
                 if (userId.isEmpty()) {
                     throw RuntimeException("未登录")
                 }
-                userDao.getUser(userId)
-            }.mapNotNull {
-                it?.asExternalModule()
+                userDao.getUser(userId)?.asExternalModule()
             }
     }
 }

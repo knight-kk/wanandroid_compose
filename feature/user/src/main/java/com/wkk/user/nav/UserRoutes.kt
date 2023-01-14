@@ -30,7 +30,7 @@ object UserRoutes {
 @OptIn(ExperimentalLifecycleComposeApi::class)
 fun NavGraphBuilder.userNav(navigateToLogin: () -> Unit, navigateUp: () -> Unit) {
     composable(UserRoutes.MAIN) {
-        UserScreen(navigateToLogin)
+        UserScreen(navigateToLogin = navigateToLogin)
     }
     composable(UserRoutes.LOGIN) {
         LoginScreen(onClosePage = navigateUp)

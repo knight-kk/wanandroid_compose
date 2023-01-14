@@ -44,12 +44,12 @@ class PreferencesDataSourceImpl @Inject constructor(
     override suspend fun clearLoginInfo() {
         dataStore.edit {
             it[booleanPreferencesKey(DataStoreConstants.IS_LOGIN_KEY)] = false
-            it[stringPreferencesKey(DataStoreConstants.IS_LOGIN_KEY)] = ""
+            it[stringPreferencesKey(DataStoreConstants.USER_ID)] = ""
             it[stringSetPreferencesKey(DataStoreConstants.LOGIN_COOKIES_KEY)] = emptySet()
         }
     }
 
-    override suspend fun getUserId() =
+    override fun getUserId() =
         dataStore.data.map { it[stringPreferencesKey(DataStoreConstants.USER_ID)] ?: "" }
 
     override suspend fun getCookies() =
