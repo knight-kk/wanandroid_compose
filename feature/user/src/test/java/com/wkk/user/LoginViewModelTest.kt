@@ -15,29 +15,62 @@
  */
 package com.wkk.user
 
+import com.wkk.testing.MainDispatcherRule
+import com.wkk.testing.runTestStateFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginViewModelTest {
 
-    private val viewModel = LoginViewModel(FakeUserRepository())
-    private val userName = "123@gamil.com"
-    private val password = "123456"
+    @Rule
+    @JvmField
+    val mainDispatcherRule = MainDispatcherRule()
+
+    private lateinit var viewModel: LoginViewModel
+
+    @Before
+    fun setUp() {
+        viewModel = LoginViewModel(FakeUserRepository())
+    }
 
     @Test
-    fun `is Error where login username is null`() = runTest {
-        val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
+    fun `login Failed where login username is null`() = runTest {
+        val collectJob = launch(UnconfinedTestDispatcher()) {
             viewModel.uiState.collect()
         }
-        assertTrue(viewModel.uiState.value is LoginUiState.None)
-        viewModel.login("", password)
+        viewModel.login("", TestUser.password)
         assertTrue(viewModel.uiState.value is LoginUiState.Error)
+        assertEquals("请输入用户名", (viewModel.uiState.value as LoginUiState.Error).message)
         collectJob.cancel()
     }
+
+    @Test
+    fun `login Failed where login password is null`() = runTestStateFlow(viewModel.uiState) {
+        viewModel.login(TestUser.userName, "")
+        assertTrue(viewModel.uiState.value is LoginUiState.Error)
+        assertEquals("请输入密码", (viewModel.uiState.value as LoginUiState.Error).message)
+    }
+
+    @Test
+    fun `login Failed where login userName and password error`() =
+        runTestStateFlow(viewModel.uiState) {
+            viewModel.login(TestUser.userName, "123")
+            assertTrue(viewModel.uiState.value is LoginUiState.Error)
+        }
+
+    @Test
+    fun `login Success where login userName or password error matching`() =
+        runTestStateFlow(viewModel.uiState) {
+            viewModel.login(TestUser.userName, TestUser.password)
+            assertTrue(viewModel.uiState.value is LoginUiState.Success)
+        }
 }

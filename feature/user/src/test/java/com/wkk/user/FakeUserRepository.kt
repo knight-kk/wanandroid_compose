@@ -18,14 +18,20 @@ package com.wkk.user
 import com.wkk.model.DataResult
 import com.wkk.model.User
 import com.wkk.user.repository.UserRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+
+object TestUser {
+    const val userName = "123@gamil.com"
+    const val password = "123456"
+}
 
 class FakeUserRepository : UserRepository {
 
     override suspend fun login(userName: String, password: String): DataResult<Any> {
-        delay(2000)
-        return DataResult.Success(Any())
+        if (TestUser.userName == userName && TestUser.password == password) {
+            return DataResult.Success(Any())
+        }
+        return DataResult.Error("账号密码不匹配")
     }
 
     override fun getUserInfo(): Flow<User> {

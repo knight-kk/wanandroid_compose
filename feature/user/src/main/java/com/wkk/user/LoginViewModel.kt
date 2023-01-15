@@ -46,6 +46,10 @@ class LoginViewModel @Inject constructor(
             _uiState.value = LoginUiState.Error("请输入用户名")
             return
         }
+        if (password.isEmpty()) {
+            _uiState.value = LoginUiState.Error("请输入密码")
+            return
+        }
         val result = userRepository.login(userName, password)
         _uiState.value = when (result) {
             is DataResult.Error -> LoginUiState.Error(result.message)
