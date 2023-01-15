@@ -33,3 +33,4 @@ include(":data:user")
 
 include(":feature:article")
 include(":feature:user")
+include(":core:testing")
