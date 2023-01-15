@@ -18,8 +18,8 @@ package com.wkk.model
 sealed class DataResult<T>(
     val data: T?,
     val message: String = "",
-    val code: Int = 0,
+    val code: Int = 0
 ) {
-    class Success<T>(data: T?) : DataResult<T>(data)
+    class Success<T>(data: T? = null) : DataResult<T>(data)
     class Error<T>(message: String, code: Int = -1) : DataResult<T>(null, message, code)
 }

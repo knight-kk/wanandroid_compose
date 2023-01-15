@@ -26,6 +26,7 @@ import com.wkk.database.AppDatabase
 import com.wkk.database.dao.ArticleDao
 import com.wkk.database.model.asExternalModule
 import com.wkk.model.Article
+import com.wkk.model.DataResult
 import com.wkk.network.datasource.ArticleRemoteDataSource
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -46,10 +47,18 @@ class RemoteArticleRepository @Inject constructor(
         pagingSourceFactory = { articleDao.getArticles() }
     ).flow.map { pagingData -> pagingData.map { it.asExternalModule() } }
 
-    override suspend fun toggleCollection(article: Article) = database.withTransaction {
-        val articleEntity = articleDao.getArticle(article.id) ?: return@withTransaction false
-        articleEntity.collect = !article.collect
-        articleDao.update(articleEntity)
-        true
-    }
+    override suspend fun toggleCollection(article: Article): DataResult<Any> =
+        database.withTransaction {
+            val articleEntity =
+                articleDao.getArticle(article.id) ?: return@withTransaction DataResult.Error("更新失败")
+            articleEntity.collect = !article.collect
+            articleDao.update(articleEntity)
+            val result = articleRemoteDataSource.toggleCollection(article)
+            if (result.isSuccess().not()) {
+                articleEntity.collect = article.collect
+                articleDao.update(articleEntity)
+                return@withTransaction DataResult.Error(result.errorMsg, result.errorCode)
+            }
+            DataResult.Success()
+        }
 }

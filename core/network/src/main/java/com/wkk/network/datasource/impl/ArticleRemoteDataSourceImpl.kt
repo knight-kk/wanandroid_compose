@@ -26,7 +26,10 @@ import javax.inject.Inject
 class ArticleRemoteDataSourceImpl @Inject constructor(
     private val apiService: ApiService
 ) : ArticleRemoteDataSource {
-    override suspend fun fetchArticle(page: Int, pageSize: Int): NetworkResult<NetworkPageData<NetworkArticle>> {
+    override suspend fun fetchArticle(
+        page: Int,
+        pageSize: Int
+    ): NetworkResult<NetworkPageData<NetworkArticle>> {
         return apiService.fetchArticle(page, pageSize)
     }
 

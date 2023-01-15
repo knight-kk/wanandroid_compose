@@ -32,6 +32,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.wkk.article.components.ArticleItem
 import com.wkk.model.Article
+import com.wkk.model.DataResult
 import kotlinx.coroutines.launch
 
 @Composable
@@ -57,9 +58,9 @@ private fun ArticleList(viewModel: ArticleViewModel, onItemClick: (Article) -> U
                     onItemClick,
                     onCollectionClick = {
                         coroutineScope.launch {
-                            val isSuccess = viewModel.toggleCollection(article)
-                            if (!isSuccess) {
-                                Toast.makeText(context, "更新失败", Toast.LENGTH_SHORT).show()
+                            val result = viewModel.toggleCollection(article)
+                            if (result is DataResult.Error) {
+                                Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

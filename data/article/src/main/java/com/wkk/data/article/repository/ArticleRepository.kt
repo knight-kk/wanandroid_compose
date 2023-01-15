@@ -17,10 +17,11 @@ package com.wkk.data.repository
 
 import androidx.paging.PagingData
 import com.wkk.model.Article
+import com.wkk.model.DataResult
 import kotlinx.coroutines.flow.Flow
 
 interface ArticleRepository {
 
     fun getPagerFlow(pageSize: Int = 20): Flow<PagingData<Article>>
-    suspend fun toggleCollection(article: Article): Boolean
+    suspend fun toggleCollection(article: Article): DataResult<Any>
 }
