@@ -86,7 +86,7 @@ private fun UserInfoCard(user: User) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "",
+                    text = "${user.coinCount}",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(text = "积分", style = MaterialTheme.typography.labelSmall)
@@ -105,7 +105,7 @@ private fun UserInfoCard(user: User) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "",
+                    text = "--",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(text = "收藏", style = MaterialTheme.typography.labelSmall)
