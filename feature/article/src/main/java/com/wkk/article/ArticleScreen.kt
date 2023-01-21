@@ -19,17 +19,22 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -40,31 +45,44 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ArticleScreen(viewModel: ArticleViewModel = hiltViewModel(), onItemClick: (Article) -> Unit) {
-    val topAppBarState = rememberTopAppBarState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
+    val lazyListState = rememberLazyListState()
+    val isTop = remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex == 0 &&
+                lazyListState.firstVisibleItemScrollOffset == 0
+        }
+    }.value
     Scaffold(topBar = {
-        CenterAlignedTopAppBar(
+        TopAppBar(
             title = { Text(text = "首页") },
-            scrollBehavior = scrollBehavior
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                containerColor =
+                MaterialTheme.colorScheme.surfaceColorAtElevation(
+                    elevation = if (isTop) 0.dp else 3.dp
+                )
+            )
         )
     }) { paddingValues ->
         Column(
             Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
                 .padding(paddingValues)
         ) {
-            ArticleList(viewModel, onItemClick)
+            ArticleList(viewModel, lazyListState, onItemClick)
         }
     }
 }
 
 @Composable
-private fun ArticleList(viewModel: ArticleViewModel, onItemClick: (Article) -> Unit) {
+private fun ArticleList(
+    viewModel: ArticleViewModel,
+    lazyListState: LazyListState = rememberLazyListState(),
+    onItemClick: (Article) -> Unit
+) {
     val lazyPagingItems = viewModel.pagerFlow.collectAsLazyPagingItems()
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    LazyColumn {
+    LazyColumn(state = lazyListState) {
         items(lazyPagingItems, { it.id }) { article ->
             if (article != null) {
                 ArticleItem(
