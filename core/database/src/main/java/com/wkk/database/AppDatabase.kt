@@ -15,7 +15,6 @@
  */
 package com.wkk.database
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.wkk.database.dao.ArticleDao
@@ -29,13 +28,10 @@ import com.wkk.database.model.UserEntity
     entities = [
         ArticleEntity::class,
         ArticleRemoteKey::class,
-        UserEntity::class,
+        UserEntity::class
     ],
-    version = 2,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2)
-    ],
-    exportSchema = true,
+    version = 1,
+    exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
