@@ -30,7 +30,7 @@ import com.wkk.network.datasource.ArticleRemoteDataSource
 @OptIn(ExperimentalPagingApi::class)
 class ArticleRemoteMediator(
     private val articleRemoteDataSource: ArticleRemoteDataSource,
-    private val database: AppDatabase
+    private val database: AppDatabase,
 ) : RemoteMediator<Int, ArticleEntity>() {
 
     private val startPage = 0
@@ -39,7 +39,7 @@ class ArticleRemoteMediator(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ArticleEntity>
+        state: PagingState<Int, ArticleEntity>,
     ): MediatorResult {
         Log.i("ArticleRemoteMediator", "load: loadType : $loadType")
         val page: Int = when (loadType) {

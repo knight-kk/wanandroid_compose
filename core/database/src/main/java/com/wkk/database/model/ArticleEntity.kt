@@ -61,5 +61,5 @@ fun ArticleEntity.asExternalModule() = Article(
     author = author,
     collect = collect,
     formatDateTime = DateTimeUtils.formatDate(publishTime),
-    category = arrayOf(superChapterName, chapterName).filter { it.isNotEmpty() }.joinToString("/")
+    category = arrayOf(superChapterName, chapterName).filter { it.isNotEmpty() }.joinToString("/"),
 )

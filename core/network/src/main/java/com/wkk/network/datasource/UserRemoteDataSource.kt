@@ -26,6 +26,6 @@ interface UserRemoteDataSource {
     suspend fun register(
         userName: String,
         password: String,
-        rePassword: String
+        rePassword: String,
     ): NetworkResult<NetworkUser>
 }

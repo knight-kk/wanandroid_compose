@@ -45,42 +45,42 @@ import com.wkk.model.Article
 fun ArticleItem(
     article: Article,
     onItemClick: (Article) -> Unit,
-    onCollectionClick: () -> Unit
+    onCollectionClick: () -> Unit,
 ) {
     Row(
         Modifier
             .fillMaxWidth()
             .clickable(onClick = { onItemClick(article) })
             .padding(16.dp, 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f)) {
             Row(
                 modifier = Modifier.height(IntrinsicSize.Max),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = article.author,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.labelSmall,
                 )
                 Divider(
                     Modifier
                         .padding(horizontal = 4.dp)
                         .fillMaxHeight(0.6f)
-                        .width(1.dp)
+                        .width(1.dp),
                 )
                 Text(
                     text = article.formatDateTime,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.labelSmall,
                 )
             }
 
             Text(
                 text = article.title,
                 color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
 
             Text(
@@ -89,7 +89,7 @@ fun ArticleItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         }
         ArticleCollectionButton(article.collect, onCollectionClick)
@@ -115,9 +115,9 @@ fun ArticleItemPreview() {
             author = "分享者",
             title = "标题-wanAndroid 开发",
             formatDateTime = "1天前",
-            category = "技术/Android"
+            category = "技术/Android",
         ),
         {},
-        {}
+        {},
     )
 }

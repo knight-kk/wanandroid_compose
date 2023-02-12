@@ -30,7 +30,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource,
     private val preferencesDataSource: PreferencesDataSource,
-    private val userDao: UserDao
+    private val userDao: UserDao,
 ) : UserRepository {
 
     override suspend fun login(userName: String, password: String): DataResult<Any> {

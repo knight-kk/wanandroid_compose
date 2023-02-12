@@ -51,5 +51,5 @@ data class NetworkArticle(
     @Json(name = "type") val type: Int = 1,
     @Json(name = "userId") val userId: Int = 1,
     @Json(name = "visible") val visible: Int = 0,
-    @Json(name = "zan") val zan: Int = 0
+    @Json(name = "zan") val zan: Int = 0,
 )

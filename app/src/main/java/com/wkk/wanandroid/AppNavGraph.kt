@@ -23,27 +23,30 @@ import androidx.navigation.compose.rememberNavController
 import com.wkk.article.nav.ArticleRoutes
 import com.wkk.article.nav.articleNav
 import com.wkk.article.nav.navigateToArticleDetail
+import com.wkk.feature.course.nav.courseNav
 import com.wkk.user.nav.navigateToLogin
 import com.wkk.user.nav.userNav
 
 @Composable
 fun AppNavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
         navController = navController,
         startDestination = ArticleRoutes.MAIN,
-        modifier = modifier
+        modifier = modifier,
     ) {
         articleNav(
             navigateToArticleDetail = navController::navigateToArticleDetail,
-            navigateUp = navController::navigateUp
+            navigateUp = navController::navigateUp,
         )
 
         userNav(
             navigateToLogin = navController::navigateToLogin,
-            navigateUp = navController::navigateUp
+            navigateUp = navController::navigateUp,
         )
+
+        courseNav()
     }
 }

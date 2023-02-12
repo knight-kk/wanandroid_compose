@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<LoginUiState>(LoginUiState.None)
@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
         _uiState.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = LoginUiState.None
+            initialValue = LoginUiState.None,
         )
 
     suspend fun login(userName: String, password: String) {

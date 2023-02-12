@@ -43,7 +43,7 @@ fun PasswordTextField(
     passwordIcon: (Boolean) -> ImageVector =
         { isVisible -> if (isVisible) Icons.Rounded.Visibility else Icons.Rounded.VisibilityOff },
     passwordIconTint: Color = Color.Gray,
-    enabled: Boolean = true
+    enabled: Boolean = true,
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
     OutlinedTextField(
@@ -60,7 +60,7 @@ fun PasswordTextField(
                 Icon(
                     imageVector = passwordIcon(passwordVisibility),
                     contentDescription = "",
-                    tint = passwordIconTint
+                    tint = passwordIconTint,
                 )
             }
         },
@@ -69,6 +69,6 @@ fun PasswordTextField(
             VisualTransformation.None
         } else {
             PasswordVisualTransformation()
-        }
+        },
     )
 }

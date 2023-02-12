@@ -35,5 +35,5 @@ data class NetworkUser(
     @Json(name = "type")
     val type: Int = 0,
     @Json(name = "username")
-    val username: String = ""
+    val username: String = "",
 )

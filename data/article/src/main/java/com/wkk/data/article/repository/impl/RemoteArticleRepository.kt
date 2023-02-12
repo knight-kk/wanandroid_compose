@@ -34,7 +34,7 @@ import javax.inject.Inject
 class RemoteArticleRepository @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource,
     private val articleDao: ArticleDao,
-    private val database: AppDatabase
+    private val database: AppDatabase,
 ) : ArticleRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -42,9 +42,9 @@ class RemoteArticleRepository @Inject constructor(
         config = PagingConfig(10),
         remoteMediator = ArticleRemoteMediator(
             articleRemoteDataSource,
-            database
+            database,
         ),
-        pagingSourceFactory = { articleDao.getArticles() }
+        pagingSourceFactory = { articleDao.getArticles() },
     ).flow.map { pagingData -> pagingData.map { it.asExternalModule() } }
 
     override suspend fun toggleCollection(article: Article): DataResult<Any> =

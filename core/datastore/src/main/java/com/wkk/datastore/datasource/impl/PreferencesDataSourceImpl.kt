@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PreferencesDataSourceImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : PreferencesDataSource {
 
     override fun isLogin() =

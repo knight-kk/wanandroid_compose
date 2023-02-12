@@ -28,10 +28,10 @@ import com.wkk.database.model.UserEntity
     entities = [
         ArticleEntity::class,
         ArticleRemoteKey::class,
-        UserEntity::class
+        UserEntity::class,
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
 

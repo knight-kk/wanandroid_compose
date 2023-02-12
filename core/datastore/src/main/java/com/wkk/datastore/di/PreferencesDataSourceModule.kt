@@ -28,6 +28,6 @@ interface PreferencesDataSourceModule {
 
     @Binds
     fun bindsDataSource(
-        articleRemoteDataSource: PreferencesDataSourceImpl
+        articleRemoteDataSource: PreferencesDataSourceImpl,
     ): PreferencesDataSource
 }

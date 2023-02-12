@@ -51,7 +51,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    testImplementation(project(mapOf("path" to ":core:testing")))
+    testImplementation(project(":core:testing"))
 
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)

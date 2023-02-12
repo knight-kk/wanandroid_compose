@@ -36,26 +36,28 @@ fun ArticleDetailScreen(title: String, url: String, onBack: () -> Unit) {
         topBar = {
             TopAppBar(
                 title = {
-                    if (title.isNotEmpty()) Text(
-                        title,
-                        maxLines = 1,
-                        fontSize = 16.sp,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    if (title.isNotEmpty()) {
+                        Text(
+                            title,
+                            maxLines = 1,
+                            fontSize = 16.sp,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "icon")
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         WebView(
             Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            url
+            url,
         )
     }
 }

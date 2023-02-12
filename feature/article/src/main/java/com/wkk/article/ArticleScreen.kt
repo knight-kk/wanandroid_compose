@@ -63,14 +63,14 @@ fun ArticleScreen(viewModel: ArticleViewModel = hiltViewModel(), onItemClick: (A
             colors = TopAppBarDefaults.smallTopAppBarColors(
                 containerColor =
                 MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    elevation = if (isTop) 0.dp else 3.dp
-                )
-            )
+                    elevation = if (isTop) 0.dp else 3.dp,
+                ),
+            ),
         )
     }) { paddingValues ->
         Column(
             Modifier
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             ArticleList(viewModel, lazyListState, onItemClick)
         }
@@ -81,7 +81,7 @@ fun ArticleScreen(viewModel: ArticleViewModel = hiltViewModel(), onItemClick: (A
 private fun ArticleList(
     viewModel: ArticleViewModel,
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (Article) -> Unit
+    onItemClick: (Article) -> Unit,
 ) {
     val lazyPagingItems = viewModel.pagerFlow.collectAsLazyPagingItems()
 
@@ -101,7 +101,7 @@ private fun ArticleList(
                             Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
                         }
                     }
-                }
+                },
             )
             Divider()
         }
@@ -116,7 +116,7 @@ private fun LazyListScope.footer(appendLoadState: LoadState) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(0.dp, 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CircularProgressIndicator()
             Text(modifier = Modifier.padding(top = 2.dp), text = "加载中……")

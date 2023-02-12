@@ -68,7 +68,7 @@ fun UserScreen(userViewModel: UserViewModel = hiltViewModel(), navigateToLogin: 
             Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             UserInfoHeader(userUiState, navigateToLogin)
 
@@ -105,30 +105,30 @@ fun UserMenuItem(
     icon: ImageVector,
     itemName: String,
     hideDividerLine: Boolean = false,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
         Modifier
             .height(56.dp)
             .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(imageVector = icon, contentDescription = "icon", Modifier.padding(horizontal = 16.dp))
         Box(
             Modifier
                 .weight(1f)
-                .fillMaxHeight()
+                .fillMaxHeight(),
         ) {
             Row(Modifier.align(Alignment.Center)) {
                 Text(
                     text = itemName,
                     Modifier.weight(1f),
-                    style = MaterialTheme.typography.labelLarge
+                    style = MaterialTheme.typography.labelLarge,
                 )
                 Icon(
                     imageVector = Icons.Rounded.ArrowForwardIos,
                     contentDescription = "arrow",
-                    Modifier.padding(end = 16.dp)
+                    Modifier.padding(end = 16.dp),
                 )
             }
             if (hideDividerLine.not()) {
@@ -144,7 +144,7 @@ fun UserLogoutButton(logout: () -> Unit) {
         modifier = Modifier
             .padding(30.dp)
             .fillMaxWidth(),
-        onClick = logout
+        onClick = logout,
     ) {
         Text("退出登录")
     }

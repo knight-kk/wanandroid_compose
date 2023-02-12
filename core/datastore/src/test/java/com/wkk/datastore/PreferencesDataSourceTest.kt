@@ -39,7 +39,7 @@ class PreferencesDataSourceTest {
         preferencesDataSource = PreferencesDataSourceImpl(
             PreferenceDataStoreFactory.create {
                 preferencesCacheFile
-            }
+            },
         )
     }
 

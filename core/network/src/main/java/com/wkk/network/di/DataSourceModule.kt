@@ -30,11 +30,11 @@ interface DataSourceModule {
 
     @Binds
     fun bindsArticleRemoteDataSource(
-        articleRemoteDataSource: ArticleRemoteDataSourceImpl
+        articleRemoteDataSource: ArticleRemoteDataSourceImpl,
     ): ArticleRemoteDataSource
 
     @Binds
     fun bindsUserRemoteDataSource(
-        userRemoteDataSource: UserRemoteDataSourceImpl
+        userRemoteDataSource: UserRemoteDataSourceImpl,
     ): UserRemoteDataSource
 }

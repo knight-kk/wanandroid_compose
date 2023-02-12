@@ -38,7 +38,7 @@ data class UserEntity(
     @ColumnInfo(name = "type")
     val type: Int = 0,
     @ColumnInfo(name = "username")
-    val username: String = ""
+    val username: String = "",
 )
 
 fun UserEntity.asExternalModule() = User(

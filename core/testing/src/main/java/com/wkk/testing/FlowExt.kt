@@ -26,7 +26,7 @@ import kotlinx.coroutines.test.runTest
 @OptIn(ExperimentalCoroutinesApi::class)
 public fun <T> runTestStateFlow(
     stateFlow: StateFlow<T>,
-    testBody: suspend TestScope.() -> Unit
+    testBody: suspend TestScope.() -> Unit,
 ) = runTest {
     val collectJob = launch(UnconfinedTestDispatcher()) { stateFlow.collect() }
     testBody()

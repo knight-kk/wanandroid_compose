@@ -69,18 +69,18 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), onClosePage: () -> 
     val login = coroutineScope.rememberLoginFun(viewModel::login)
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        topBar = { LoginTopBar(onClosePage) }
+        topBar = { LoginTopBar(onClosePage) },
     ) { paddingValues ->
         Box(
             modifier = Modifier.fillMaxSize().padding(paddingValues),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             when (uiState) {
                 LoginUiState.None -> {}
                 LoginUiState.Loading -> CircularProgressIndicator()
                 is LoginUiState.Error -> LaunchedEffect(uiState) {
                     snackbarHostState.showSnackbar(
-                        (uiState as LoginUiState.Error).message
+                        (uiState as LoginUiState.Error).message,
                     )
                 }
                 LoginUiState.Success -> onClosePage()
@@ -92,7 +92,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), onClosePage: () -> 
 
 @Composable
 private fun CoroutineScope.rememberLoginFun(
-    login: suspend (userName: String, password: String) -> Unit
+    login: suspend (userName: String, password: String) -> Unit,
 ): (userName: String, password: String) -> Unit = remember {
     { userName, password ->
         launch { login(userName, password) }
@@ -103,24 +103,24 @@ private fun CoroutineScope.rememberLoginFun(
 @Composable
 fun LoginScreenContent(
     login: (userName: String, password: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.24f),
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_logo),
-            contentDescription = "logo"
+            contentDescription = "logo",
         )
         var userName by remember { mutableStateOf("") }
         UserTextField(
             value = userName,
             onValueChange = { value -> userName = value },
-            onClear = { userName = "" }
+            onClear = { userName = "" },
         )
 
         var password by remember { mutableStateOf("") }
@@ -129,7 +129,7 @@ fun LoginScreenContent(
             onValueChange = { value -> password = value },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(8.dp),
         )
         Row(Modifier.fillMaxWidth()) {
             TextButton(onClick = { /*TODO*/ }) {
@@ -141,7 +141,7 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            onClick = { login(userName, password) }
+            onClick = { login(userName, password) },
         ) {
             Text(text = "登录")
         }
@@ -150,7 +150,7 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            onClick = { /*TODO*/ }
+            onClick = { /*TODO*/ },
         ) {
             Text(text = "注册")
         }
@@ -164,11 +164,11 @@ private fun LoginTopBar(onNavigationAction: () -> Unit) {
             IconButton(onClick = onNavigationAction) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
-                    contentDescription = "close"
+                    contentDescription = "close",
                 )
             }
         },
-        title = { Text(text = "登录") }
+        title = { Text(text = "登录") },
     )
 }
 
@@ -176,7 +176,7 @@ private fun LoginTopBar(onNavigationAction: () -> Unit) {
 private fun UserTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    onClear: () -> Unit
+    onClear: () -> Unit,
 ) {
     OutlinedTextField(
         modifier = Modifier
@@ -192,7 +192,7 @@ private fun UserTextField(
             IconButton(onClick = onClear) {
                 Icon(Icons.Rounded.Clear, contentDescription = "")
             }
-        }
+        },
     )
 }
 

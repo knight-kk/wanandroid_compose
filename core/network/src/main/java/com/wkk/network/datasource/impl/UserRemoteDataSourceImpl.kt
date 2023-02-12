@@ -20,7 +20,7 @@ import com.wkk.network.datasource.UserRemoteDataSource
 import javax.inject.Inject
 
 class UserRemoteDataSourceImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : UserRemoteDataSource {
     override suspend fun login(userName: String, password: String) =
         apiService.login(userName, password)

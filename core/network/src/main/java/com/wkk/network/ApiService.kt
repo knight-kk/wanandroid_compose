@@ -16,6 +16,7 @@
 package com.wkk.network
 
 import com.wkk.network.model.NetworkArticle
+import com.wkk.network.model.NetworkCourse
 import com.wkk.network.model.NetworkPageData
 import com.wkk.network.model.NetworkResult
 import com.wkk.network.model.NetworkUser
@@ -35,7 +36,7 @@ interface ApiService {
     @POST(UrlConstants.LOGIN)
     suspend fun login(
         @Field("username") userName: String,
-        @Field("password") password: String
+        @Field("password") password: String,
     ): NetworkResult<NetworkUser>
 
     /**
@@ -67,7 +68,7 @@ interface ApiService {
     @GET("/article/list/{page}/json")
     suspend fun fetchArticle(
         @Path("page") page: Int = 0,
-        @Query("page_size") pageSize: Int = 20
+        @Query("page_size") pageSize: Int = 20,
     ): NetworkResult<NetworkPageData<NetworkArticle>>
 
     @POST("/lg/collect/{articleId}/json")
@@ -75,4 +76,7 @@ interface ApiService {
 
     @POST("/lg/uncollect_originId/{articleId}/json")
     suspend fun unCollectArticle(@Path("articleId") articleId: String): NetworkResult<Any>
+
+    @GET("chapter/547/sublist/json")
+    suspend fun getCourseList(): NetworkResult<List<NetworkCourse>>
 }

@@ -44,13 +44,13 @@ fun WebView(modifier: Modifier = Modifier, url: String) {
                     javaScriptEnabled = true
                     domStorageEnabled = true
                 }
-            }
+            },
         )
 
         if (loadingState is LoadingState.Loading) {
             LinearProgressIndicator(
                 modifier = Modifier.fillMaxWidth(),
-                progress = loadingState.progress
+                progress = loadingState.progress,
             )
         }
     }

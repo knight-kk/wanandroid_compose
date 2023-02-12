@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
-    private val articleRepository: ArticleRepository
+    private val articleRepository: ArticleRepository,
 ) : ViewModel() {
     val pagerFlow by lazy {
         articleRepository.getPagerFlow().cachedIn(viewModelScope)

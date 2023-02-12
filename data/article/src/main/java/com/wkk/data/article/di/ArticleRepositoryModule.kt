@@ -28,6 +28,6 @@ interface ArticleRepositoryModule {
 
     @Binds
     fun bindsArticleRepository(
-        remoteArticleRepository: RemoteArticleRepository
+        remoteArticleRepository: RemoteArticleRepository,
     ): ArticleRepository
 }

@@ -27,5 +27,5 @@ data class ArticleRemoteKey(
     @ColumnInfo(name = "prev_key")
     val prevKey: Int?,
     @ColumnInfo(name = "next_key")
-    val nextKey: Int?
+    val nextKey: Int?,
 )

@@ -36,6 +36,6 @@ object DatabaseModule {
     ): AppDatabase = Room.databaseBuilder(
         context,
         AppDatabase::class.java,
-        "wan_android.db"
+        "wan_android.db",
     ).build()
 }

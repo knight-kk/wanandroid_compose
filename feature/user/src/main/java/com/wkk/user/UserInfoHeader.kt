@@ -54,7 +54,8 @@ import com.wkk.model.User
 fun UserInfoHeader(userUiState: UserUiState, navigateToLogin: () -> Unit) {
     when (userUiState) {
         is UserUiState.Error,
-        UserUiState.Loading -> UserNoLoginHeader(navigateToLogin)
+        UserUiState.Loading,
+        -> UserNoLoginHeader(navigateToLogin)
         is UserUiState.Success -> UserInfoCard(user = userUiState.user)
     }
 }
@@ -64,7 +65,7 @@ private fun UserInfoCard(user: User) {
     Column(Modifier.fillMaxWidth()) {
         Row(
             Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             DefaultUserIcon(user.nickname.trim())
             UserInfo(user, modifier = Modifier.weight(1f))
@@ -76,18 +77,18 @@ private fun UserInfoCard(user: User) {
                 .padding(top = 20.dp)
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .clickable { }
                     .padding(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = "${user.coinCount}",
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(text = "积分", style = MaterialTheme.typography.labelSmall)
             }
@@ -95,18 +96,18 @@ private fun UserInfoCard(user: User) {
                 modifier = Modifier
                     .padding(vertical = 8.dp)
                     .fillMaxHeight()
-                    .width(DividerDefaults.Thickness)
+                    .width(DividerDefaults.Thickness),
             )
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .clickable { }
                     .padding(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = "--",
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(text = "收藏", style = MaterialTheme.typography.labelSmall)
             }
@@ -121,7 +122,7 @@ fun UserInfo(user: User?, modifier: Modifier = Modifier) {
         Row(verticalAlignment = Alignment.Bottom) {
             Text(
                 text = user.nickname,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
             )
             Text(
                 modifier = Modifier
@@ -132,13 +133,13 @@ fun UserInfo(user: User?, modifier: Modifier = Modifier) {
                     .padding(horizontal = 10.dp, vertical = 4.dp),
                 text = "LV100",
                 style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
 
         Text(
             text = user.email,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }
@@ -163,14 +164,14 @@ private fun DefaultUserIcon(userName: String = "--") {
             .clip(CircleShape)
             .border(1.dp, MaterialTheme.colorScheme.primary, CircleShape)
             .background(MaterialTheme.colorScheme.secondaryContainer),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = content,
             textAlign = TextAlign.Center,
             fontSize = 22.sp,
             color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
     }
 }

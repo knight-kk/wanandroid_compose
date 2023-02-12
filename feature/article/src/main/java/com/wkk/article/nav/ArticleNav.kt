@@ -39,7 +39,7 @@ object ArticleRoutes {
 
 fun NavGraphBuilder.articleNav(
     navigateToArticleDetail: (title: String, url: String) -> Unit,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
     composable(MAIN) {
         ArticleScreen(onItemClick = { navigateToArticleDetail(it.title, it.link) })
@@ -49,7 +49,7 @@ fun NavGraphBuilder.articleNav(
         ArticleDetailScreen(
             title = arguments.getString(DETAIL.ARGUMENT_TITLE) ?: "",
             url = arguments.getString(DETAIL.ARGUMENT_URL) ?: "",
-            onBack = navigateUp
+            onBack = navigateUp,
         )
     }
 }

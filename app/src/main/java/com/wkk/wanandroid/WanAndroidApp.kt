@@ -38,6 +38,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.wkk.article.nav.ArticleRoutes
+import com.wkk.feature.course.nav.CourseNav
 import com.wkk.user.nav.UserRoutes
 
 @Composable
@@ -48,20 +49,22 @@ fun WanAndroidApp() {
             val currentRoute = navController
                 .currentBackStackEntryAsState().value?.destination?.route ?: return@Scaffold
             val shouldShowBottomBar = currentRoute in HomeSections.values().map { it.route }
-            if (shouldShowBottomBar) HomeBottomNav(currentRoute) {
-                navigateToBottomBarRoute(
-                    navController,
-                    it.route
-                )
+            if (shouldShowBottomBar) {
+                HomeBottomNav(currentRoute) {
+                    navigateToBottomBarRoute(
+                        navController,
+                        it.route,
+                    )
+                }
             }
         },
         containerColor = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.background,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0)
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { innerPaddingValue ->
         AppNavGraph(
             Modifier.padding(innerPaddingValue),
-            navController
+            navController,
         )
     }
 }
@@ -69,7 +72,7 @@ fun WanAndroidApp() {
 @Composable
 private fun HomeBottomNav(
     currentRoute: String,
-    onItemSelected: (section: HomeSections) -> Unit
+    onItemSelected: (section: HomeSections) -> Unit,
 ) {
     NavigationBar {
         val items = HomeSections.values()
@@ -82,12 +85,12 @@ private fun HomeBottomNav(
                     Icon(
                         painterResource(item.icon),
                         contentDescription = item.route,
-                        tint = selectedColor
+                        tint = selectedColor,
                     )
                 },
                 label = { Text(text = stringResource(item.title), color = selectedColor) },
                 selected = selected,
-                onClick = { onItemSelected(item) }
+                onClick = { onItemSelected(item) },
             )
         }
     }
@@ -121,10 +124,11 @@ private tailrec fun findStartDestination(graph: NavDestination): NavDestination 
 private enum class HomeSections(
     val route: String,
     @StringRes val title: Int,
-    @DrawableRes val icon: Int
+    @DrawableRes val icon: Int,
 ) {
-    INDEX(ArticleRoutes.MAIN, R.string.main_tab_article, R.drawable.ic_outline_article_24),
-    USER(UserRoutes.MAIN, R.string.main_tab_user, R.drawable.ic_outline_person_24),
+    Index(ArticleRoutes.MAIN, R.string.main_tab_article, R.drawable.ic_outline_article_24),
+    Course(CourseNav.MAIN, R.string.main_tab_course, R.drawable.ic_outline_local_library_24),
+    User(UserRoutes.MAIN, R.string.main_tab_user, R.drawable.ic_outline_person_24),
 }
 
 @Preview

@@ -24,11 +24,11 @@ import com.wkk.network.model.NetworkResult
 import javax.inject.Inject
 
 class ArticleRemoteDataSourceImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : ArticleRemoteDataSource {
     override suspend fun fetchArticle(
         page: Int,
-        pageSize: Int
+        pageSize: Int,
     ): NetworkResult<NetworkPageData<NetworkArticle>> {
         return apiService.fetchArticle(page, pageSize)
     }

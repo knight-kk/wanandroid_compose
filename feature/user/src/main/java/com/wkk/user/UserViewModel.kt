@@ -31,14 +31,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     val userUiState: StateFlow<UserUiState> = userUiState()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = UserUiState.Loading
+            initialValue = UserUiState.Loading,
         )
 
     fun userUiState(): Flow<UserUiState> {

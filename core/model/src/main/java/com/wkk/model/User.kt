@@ -23,5 +23,5 @@ data class User(
     val nickname: String = "",
     val publicName: String = "",
     val type: Int = 0,
-    val username: String = ""
+    val username: String = "",
 )

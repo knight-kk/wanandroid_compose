@@ -28,6 +28,6 @@ interface UserRepositoryModule {
 
     @Binds
     fun bindsUserRepository(
-        userRepository: UserRepositoryImpl
+        userRepository: UserRepositoryImpl,
     ): UserRepository
 }

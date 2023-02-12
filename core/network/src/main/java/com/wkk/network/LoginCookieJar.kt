@@ -23,7 +23,7 @@ import okhttp3.CookieJar
 import okhttp3.HttpUrl
 
 class LoginCookieJar(
-    private val preferencesDataSource: PreferencesDataSource
+    private val preferencesDataSource: PreferencesDataSource,
 ) : CookieJar {
 
     private var cacheCookies: List<Cookie>? = null
