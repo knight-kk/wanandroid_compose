@@ -72,7 +72,9 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), onClosePage: () -> 
         topBar = { LoginTopBar(onClosePage) },
     ) { paddingValues ->
         Box(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             contentAlignment = Alignment.Center,
         ) {
             when (uiState) {

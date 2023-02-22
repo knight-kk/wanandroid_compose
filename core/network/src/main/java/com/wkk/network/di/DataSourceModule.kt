@@ -16,8 +16,10 @@
 package com.wkk.network.di
 
 import com.wkk.network.datasource.ArticleRemoteDataSource
+import com.wkk.network.datasource.CourseRemoteDataSource
 import com.wkk.network.datasource.UserRemoteDataSource
 import com.wkk.network.datasource.impl.ArticleRemoteDataSourceImpl
+import com.wkk.network.datasource.impl.CourseRemoteDataSourceImpl
 import com.wkk.network.datasource.impl.UserRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -37,4 +39,9 @@ interface DataSourceModule {
     fun bindsUserRemoteDataSource(
         userRemoteDataSource: UserRemoteDataSourceImpl,
     ): UserRemoteDataSource
+
+    @Binds
+    fun bindsCourseRemoteDataSource(
+        courseRemoteDataSource: CourseRemoteDataSourceImpl,
+    ): CourseRemoteDataSource
 }

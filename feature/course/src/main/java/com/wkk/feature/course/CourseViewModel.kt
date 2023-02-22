@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user
+package com.wkk.feature.course
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wkk.model.User
-import com.wkk.user.repository.UserRepository
+import com.wkk.data.course.repository.CourseRepository
+import com.wkk.model.Course
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -30,33 +29,30 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(
-    private val userRepository: UserRepository,
+class CourseViewModel @Inject constructor(
+    private val courseRepository: CourseRepository,
 ) : ViewModel() {
 
-    val userUiState: StateFlow<UserUiState> = userUiState()
-        .stateIn(
+    val uiState: StateFlow<CourseUiState> =
+        courseUiState().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = UserUiState.Loading,
+            initialValue = CourseUiState.Loading,
         )
 
-    private fun userUiState(): Flow<UserUiState> {
-        return userRepository.getUserInfo()
-            .map<User, UserUiState> {
-                UserUiState.Success(it)
-            }
-            .onStart { emit(UserUiState.Loading) }
-            .catch { emit(UserUiState.Error(it.message ?: "")) }
-    }
-
-    suspend fun logout() {
-        userRepository.logout()
-    }
+    private fun courseUiState() = courseRepository.getCourseList()
+        .map {
+            CourseUiState.Success(it)
+        }
+        .onStart {
+            CourseUiState.Loading
+        }.catch {
+            CourseUiState.Error(it.message ?: "未知错误")
+        }
 }
 
-sealed interface UserUiState {
-    data class Success(val user: User) : UserUiState
-    data class Error(val message: String) : UserUiState
-    object Loading : UserUiState
+sealed interface CourseUiState {
+    object Loading : CourseUiState
+    data class Success(val list: List<Course>) : CourseUiState
+    data class Error(val message: String) : CourseUiState
 }

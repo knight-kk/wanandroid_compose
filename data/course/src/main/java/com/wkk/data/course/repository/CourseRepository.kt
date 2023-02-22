@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 knight-kk
+ * Copyright 2023 knight-kk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.network.model
+package com.wkk.data.course.repository
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.wkk.model.Course
+import kotlinx.coroutines.flow.Flow
 
-@JsonClass(generateAdapter = true)
-data class NetworkCourse(
-    @Json(name = "id") val id: String = "",
-    @Json(name = "cover") val cover: String = "",
-    @Json(name = "name") val name: String = "",
-    @Json(name = "desc") val desc: String = "",
-    @Json(name = "author") val author: String = "",
-    @Json(name = "courseId") val courseId: Int = 0,
-    @Json(name = "parentChapterId") val parentChapterId: Int = 0,
-)
+interface CourseRepository {
+
+    fun getCourseList(): Flow<List<Course>>
+}

@@ -45,8 +45,9 @@ android {
 
 dependencies {
     implementation(project(":core:model"))
+    implementation(project(":core:ui"))
     implementation(project(":core:network"))
-    implementation(project(":data:article"))
+    implementation(project(":data:course"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -61,10 +62,11 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.compose.activity)
-    implementation(libs.androidx.datastore.preferences)
     implementation(libs.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.paging.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
