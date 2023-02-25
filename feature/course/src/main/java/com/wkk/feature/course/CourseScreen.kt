@@ -15,7 +15,6 @@
  */
 package com.wkk.feature.course
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,14 +23,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,19 +45,27 @@ import com.wkk.ui.theme.AppTheme
 @Composable
 fun CourseScreen(viewModel: CourseViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    Surface {
-        CourseScreen(uiState)
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "教程") },
+                scrollBehavior = scrollBehavior
+            )
+        }
+    ) { paddingValues ->
+        CourseScreen(
+            uiState,
+            Modifier
+                .padding(paddingValues)
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+        )
     }
 }
 
 @Composable
-fun CourseScreen(uiState: CourseUiState) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-    ) {
-        TopAppBar(title = { Text(text = "教程") })
+fun CourseScreen(uiState: CourseUiState, modifier: Modifier = Modifier) {
+    Column(modifier.fillMaxSize()) {
         when (uiState) {
             is CourseUiState.Error -> ErrorView(uiState.message)
             is CourseUiState.Loading -> LoadingView()

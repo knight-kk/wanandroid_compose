@@ -15,28 +15,59 @@
  */
 package com.wkk.feature.course.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.wkk.model.Course
 import com.wkk.ui.theme.AppTheme
 
 @Composable
 fun CourseItem(course: Course, modifier: Modifier = Modifier, onItemClick: () -> Unit) {
-    Column(
+    Row(
         Modifier
             .fillMaxWidth()
             .clickable(onClick = onItemClick)
             .then(modifier),
     ) {
-        Text(text = course.name, style = MaterialTheme.typography.titleMedium)
-        Text(text = "作者:${course.author}", style = MaterialTheme.typography.labelMedium)
-        Text(text = course.desc.trim(), style = MaterialTheme.typography.bodyMedium)
+        AsyncImage(
+            modifier = Modifier
+                .clip(RoundedCornerShape(4.dp))
+                .background(Color.LightGray)
+                .size(95.dp, 133.dp),
+            model = course.cover,
+            contentDescription = "cover"
+        )
+        Column(
+            Modifier
+                .weight(1f)
+                .padding(horizontal = 10.dp)
+        ) {
+            Text(text = course.name, style = MaterialTheme.typography.titleMedium)
+            Text(
+                modifier = Modifier.padding(vertical = 4.dp),
+                text = "作者:${course.author}",
+                style = MaterialTheme.typography.labelMedium
+            )
+            Text(
+                text = course.desc.trim(),
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 4
+            )
+        }
     }
 }
 
