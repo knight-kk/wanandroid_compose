@@ -69,6 +69,6 @@ test-junit = "junit:junit:4.13.1"
 # https://developer.android.google.cn/kotlin/coroutines/test
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 # http://robolectric.org/getting-started/
-
 robolectric = "org.robolectric:robolectric:4.9"
 desugar_jdk = "com.android.tools:desugar_jdk_libs:1.2.0"
+coil-compose = "io.coil-kt:coil-compose:2.2.2"

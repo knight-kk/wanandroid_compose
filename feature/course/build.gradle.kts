@@ -73,6 +73,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.accompanist.webview)
+    implementation(libs.coil.compose)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.androidx.test.junit.ktx)
