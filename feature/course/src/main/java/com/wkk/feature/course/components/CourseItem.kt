@@ -49,23 +49,23 @@ fun CourseItem(course: Course, modifier: Modifier = Modifier, onItemClick: () ->
                 .background(Color.LightGray)
                 .size(95.dp, 133.dp),
             model = course.cover,
-            contentDescription = "cover"
+            contentDescription = "cover",
         )
         Column(
             Modifier
                 .weight(1f)
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = 10.dp),
         ) {
             Text(text = course.name, style = MaterialTheme.typography.titleMedium)
             Text(
                 modifier = Modifier.padding(vertical = 4.dp),
                 text = "作者:${course.author}",
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
             )
             Text(
                 text = course.desc.trim(),
                 style = MaterialTheme.typography.bodyMedium,
-                maxLines = 4
+                maxLines = 4,
             )
         }
     }

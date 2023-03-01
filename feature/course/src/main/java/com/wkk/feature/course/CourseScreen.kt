@@ -50,15 +50,15 @@ fun CourseScreen(viewModel: CourseViewModel = hiltViewModel()) {
         topBar = {
             TopAppBar(
                 title = { Text(text = "教程") },
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
             )
-        }
+        },
     ) { paddingValues ->
         CourseScreen(
             uiState,
             Modifier
                 .padding(paddingValues)
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
         )
     }
 }
