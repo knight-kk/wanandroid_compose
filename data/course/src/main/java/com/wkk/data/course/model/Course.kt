@@ -24,6 +24,5 @@ fun NetworkCourse.asExternalModule() = Course(
     name = name,
     desc = desc,
     author = author,
-    courseId = courseId,
     parentChapterId = parentChapterId,
 )

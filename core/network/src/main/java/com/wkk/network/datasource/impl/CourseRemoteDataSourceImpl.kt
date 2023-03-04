@@ -18,6 +18,8 @@ package com.wkk.network.datasource.impl
 import com.wkk.network.ApiService
 import com.wkk.network.datasource.CourseRemoteDataSource
 import com.wkk.network.model.NetworkCourse
+import com.wkk.network.model.NetworkCourseChapter
+import com.wkk.network.model.NetworkPageData
 import com.wkk.network.model.NetworkResult
 import javax.inject.Inject
 
@@ -27,5 +29,14 @@ class CourseRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getCourseList(): NetworkResult<List<NetworkCourse>> {
         return apiService.getCourseList()
+    }
+
+    override suspend fun getCourseChapters(
+        courseId: String,
+        page: Int,
+        pageSize: Int,
+        isAsc: Boolean,
+    ): NetworkResult<NetworkPageData<NetworkCourseChapter>> {
+        return apiService.getCourseChapters(page, courseId, "1".takeIf { isAsc })
     }
 }

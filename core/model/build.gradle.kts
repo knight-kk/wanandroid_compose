@@ -8,5 +8,4 @@ java {
 }
 
 dependencies {
-    implementation(libs.moshi.kotlin)
 }

@@ -21,6 +21,5 @@ data class Course(
     val name: String = "",
     val desc: String = "",
     val author: String = "",
-    val courseId: Int = 0,
     val parentChapterId: Int = 0,
 )

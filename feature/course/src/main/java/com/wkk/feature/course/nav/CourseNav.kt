@@ -15,17 +15,57 @@
  */
 package com.wkk.feature.course.nav
 
+import android.net.Uri
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
+import com.wkk.feature.course.CourseDetailScreen
 import com.wkk.feature.course.CourseScreen
+import com.wkk.feature.course.CourseViewModel
+import com.wkk.feature.course.nav.CourseNav.DETAIL
 import com.wkk.feature.course.nav.CourseNav.MAIN
+import com.wkk.feature.course.nav.CourseNav.ROUTE
 
 object CourseNav {
+    const val ROUTE = "course_route"
     const val MAIN = "course"
+    const val DETAIL = "courseDetail"
 }
 
-fun NavGraphBuilder.courseNav() {
-    composable(MAIN) {
-        CourseScreen()
+fun NavGraphBuilder.courseNav(navController: NavHostController) {
+    navigation(MAIN, ROUTE) {
+        composable(MAIN) { navBackStackEntry ->
+            CourseScreen(
+                viewModel = getCourseViewModel(navController, navBackStackEntry),
+                navigateToCourseDetail = {
+                    navController.navigate(DETAIL)
+                },
+            )
+        }
+        composable(route = DETAIL) { navBackStackEntry ->
+            CourseDetailScreen(
+                viewModel = getCourseViewModel(navController, navBackStackEntry),
+                navigateToChapterDetail = navController::navigateToChapterDetail,
+                onBack = navController::navigateUp,
+            )
+        }
     }
+}
+
+private fun NavHostController.navigateToChapterDetail(title: String, link: String) {
+    navigate("articleDetail/${Uri.encode(title)}/${Uri.encode(link)}")
+}
+
+@Composable
+private fun getCourseViewModel(
+    navController: NavHostController,
+    navBackStackEntry: NavBackStackEntry,
+): CourseViewModel {
+    val parentEntry = remember(navBackStackEntry) { navController.getBackStackEntry(ROUTE) }
+    return hiltViewModel(parentEntry)
 }

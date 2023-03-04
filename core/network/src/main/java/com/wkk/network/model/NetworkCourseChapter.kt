@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.network.datasource
+package com.wkk.network.model
 
-import com.wkk.network.model.NetworkCourse
-import com.wkk.network.model.NetworkCourseChapter
-import com.wkk.network.model.NetworkPageData
-import com.wkk.network.model.NetworkResult
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-interface CourseRemoteDataSource {
-
-    suspend fun getCourseList(): NetworkResult<List<NetworkCourse>>
-    suspend fun getCourseChapters(
-        courseId: String,
-        page: Int = 0,
-        pageSize: Int = 20,
-        isAsc: Boolean = true,
-    ): NetworkResult<NetworkPageData<NetworkCourseChapter>>
-}
+@JsonClass(generateAdapter = true)
+data class NetworkCourseChapter(
+    @Json(name = "id") val id: String,
+    @Json(name = "chapterId") val chapterId: String,
+    @Json(name = "title") val name: String,
+    @Json(name = "link") val link: String,
+)

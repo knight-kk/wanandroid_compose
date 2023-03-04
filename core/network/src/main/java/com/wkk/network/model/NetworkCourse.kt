@@ -25,6 +25,5 @@ data class NetworkCourse(
     @Json(name = "name") val name: String = "",
     @Json(name = "desc") val desc: String = "",
     @Json(name = "author") val author: String = "",
-    @Json(name = "courseId") val courseId: Int = 0,
     @Json(name = "parentChapterId") val parentChapterId: Int = 0,
 )

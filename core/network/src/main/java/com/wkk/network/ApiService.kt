@@ -17,6 +17,7 @@ package com.wkk.network
 
 import com.wkk.network.model.NetworkArticle
 import com.wkk.network.model.NetworkCourse
+import com.wkk.network.model.NetworkCourseChapter
 import com.wkk.network.model.NetworkPageData
 import com.wkk.network.model.NetworkResult
 import com.wkk.network.model.NetworkUser
@@ -79,4 +80,12 @@ interface ApiService {
 
     @GET("chapter/547/sublist/json")
     suspend fun getCourseList(): NetworkResult<List<NetworkCourse>>
+
+    @GET("/article/list/{page}/json")
+    suspend fun getCourseChapters(
+        @Path("page") page: Int = 0,
+        @Query("cid") cid: String,
+        @Query("order_type") orderType: String?,
+        @Query("page_size") pageSize: Int = 20,
+    ): NetworkResult<NetworkPageData<NetworkCourseChapter>>
 }

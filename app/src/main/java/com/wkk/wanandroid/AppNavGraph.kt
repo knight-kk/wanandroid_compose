@@ -46,7 +46,6 @@ fun AppNavGraph(
             navigateToLogin = navController::navigateToLogin,
             navigateUp = navController::navigateUp,
         )
-
-        courseNav()
+        courseNav(navController)
     }
 }

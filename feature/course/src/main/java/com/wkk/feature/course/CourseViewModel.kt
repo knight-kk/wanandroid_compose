@@ -17,6 +17,7 @@ package com.wkk.feature.course
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.wkk.data.course.repository.CourseRepository
 import com.wkk.model.Course
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,6 +41,13 @@ class CourseViewModel @Inject constructor(
             initialValue = CourseUiState.Loading,
         )
 
+    private var _currentCourse: Course? = null
+
+    fun getCurrentCourse() = _currentCourse ?: Course()
+
+    fun getChapterFlow() =
+        courseRepository.getCourseChapters(getCurrentCourse().id).cachedIn(viewModelScope)
+
     private fun courseUiState() = courseRepository.getCourseList()
         .map {
             CourseUiState.Success(it)
@@ -49,6 +57,10 @@ class CourseViewModel @Inject constructor(
         }.catch {
             CourseUiState.Error(it.message ?: "未知错误")
         }
+
+    fun onItemClick(course: Course) {
+        _currentCourse = course
+    }
 }
 
 sealed interface CourseUiState {

@@ -15,9 +15,14 @@
  */
 package com.wkk.data.course.repository.impl
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.wkk.data.course.CourseChapterPagingSource
 import com.wkk.data.course.model.asExternalModule
 import com.wkk.data.course.repository.CourseRepository
 import com.wkk.model.Course
+import com.wkk.model.CourseChapter
 import com.wkk.network.datasource.CourseRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -35,4 +40,12 @@ class CourseRepositoryImpl
         }
         throw RuntimeException(result.errorMsg)
     }
+
+    override fun getCourseChapters(
+        courseId: String,
+        pageSize: Int,
+        isAsc: Boolean,
+    ): Flow<PagingData<CourseChapter>> = Pager(config = PagingConfig(pageSize)) {
+        CourseChapterPagingSource(courseId, remoteDataSource)
+    }.flow
 }

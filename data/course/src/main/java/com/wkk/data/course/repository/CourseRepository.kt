@@ -15,10 +15,18 @@
  */
 package com.wkk.data.course.repository
 
+import androidx.paging.PagingData
 import com.wkk.model.Course
+import com.wkk.model.CourseChapter
 import kotlinx.coroutines.flow.Flow
 
 interface CourseRepository {
 
     fun getCourseList(): Flow<List<Course>>
+
+    fun getCourseChapters(
+        courseId: String,
+        pageSize: Int = 10,
+        isAsc: Boolean = true,
+    ): Flow<PagingData<CourseChapter>>
 }

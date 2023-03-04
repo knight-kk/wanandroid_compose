@@ -13,20 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.network.datasource
+package com.wkk.model
 
-import com.wkk.network.model.NetworkCourse
-import com.wkk.network.model.NetworkCourseChapter
-import com.wkk.network.model.NetworkPageData
-import com.wkk.network.model.NetworkResult
-
-interface CourseRemoteDataSource {
-
-    suspend fun getCourseList(): NetworkResult<List<NetworkCourse>>
-    suspend fun getCourseChapters(
-        courseId: String,
-        page: Int = 0,
-        pageSize: Int = 20,
-        isAsc: Boolean = true,
-    ): NetworkResult<NetworkPageData<NetworkCourseChapter>>
-}
+data class CourseChapter(
+    val id: String,
+    val name: String,
+    val link: String,
+)

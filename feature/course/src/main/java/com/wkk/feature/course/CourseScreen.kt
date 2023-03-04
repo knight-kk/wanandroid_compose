@@ -43,9 +43,16 @@ import com.wkk.ui.theme.AppTheme
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun CourseScreen(viewModel: CourseViewModel = hiltViewModel()) {
+fun CourseScreen(
+    viewModel: CourseViewModel = hiltViewModel(),
+    navigateToCourseDetail: (course: Course) -> Unit,
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val onItemClick = { course: Course ->
+        viewModel.onItemClick(course)
+        navigateToCourseDetail(course)
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -56,6 +63,7 @@ fun CourseScreen(viewModel: CourseViewModel = hiltViewModel()) {
     ) { paddingValues ->
         CourseScreen(
             uiState,
+            onItemClick,
             Modifier
                 .padding(paddingValues)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -64,21 +72,25 @@ fun CourseScreen(viewModel: CourseViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun CourseScreen(uiState: CourseUiState, modifier: Modifier = Modifier) {
+fun CourseScreen(
+    uiState: CourseUiState,
+    onItemClick: (course: Course) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(modifier.fillMaxSize()) {
         when (uiState) {
             is CourseUiState.Error -> ErrorView(uiState.message)
             is CourseUiState.Loading -> LoadingView()
-            is CourseUiState.Success -> CourseContent(uiState.list)
+            is CourseUiState.Success -> CourseContent(uiState.list, onItemClick)
         }
     }
 }
 
 @Composable
-fun CourseContent(courses: List<Course>) {
+fun CourseContent(courses: List<Course>, onItemClick: (course: Course) -> Unit) {
     LazyColumn(Modifier.fillMaxSize()) {
         items(courses, key = { it.id }) { course ->
-            CourseItem(course, Modifier.padding(10.dp)) {}
+            CourseItem(course, Modifier.padding(10.dp), onItemClick)
             Divider()
         }
     }
@@ -119,6 +131,7 @@ fun CourseScreenPreView() {
                     )
                 },
             ),
+            {},
         )
     }
 }
