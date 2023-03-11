@@ -15,17 +15,19 @@
  */
 package com.wkk.feature.course
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.FormatListBulleted
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -37,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemsIndexed
 import com.wkk.feature.course.components.CourseItem
 import com.wkk.model.CourseChapter
 
@@ -47,7 +49,6 @@ fun CourseDetailScreen(
     navigateToChapterDetail: (title: String, link: String) -> Unit = { _, _ -> },
     onBack: () -> Unit = {},
 ) {
-    Log.i("CourseDetailScreen", "CourseDetailScreen: ")
     val course = remember(viewModel) { viewModel.getCurrentCourse() }
     val chapters = remember(viewModel) { viewModel.getChapterFlow() }.collectAsLazyPagingItems()
     Scaffold(
@@ -61,7 +62,14 @@ fun CourseDetailScreen(
                     .clickable(enabled = false, onClick = {}),
             ) {}
 
-            Text(text = "目录", Modifier.padding(10.dp))
+            Row(modifier = Modifier.padding(10.dp)) {
+                Icon(
+                    imageVector = Icons.Default.FormatListBulleted,
+                    tint = MaterialTheme.colorScheme.outline,
+                    contentDescription = "目录",
+                )
+                Text(text = "目录", modifier = Modifier.padding(horizontal = 10.dp))
+            }
             DirectoryList(chapters, navigateToChapterDetail)
         }
     }
@@ -86,9 +94,9 @@ fun DirectoryList(
     navigateToChapterDetail: (title: String, link: String) -> Unit = { _, _ -> },
 ) {
     LazyColumn {
-        items(chapters, key = { it.id }) { chapter ->
+        itemsIndexed(chapters, key = { _, chapter -> chapter.id }) { index, chapter ->
             Text(
-                text = chapter?.name ?: "",
+                text = "${index + 1}. ${chapter?.name ?: ""}",
                 Modifier
                     .clickable {
                         if (chapter == null) return@clickable
