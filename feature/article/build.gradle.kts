@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:ui"))
     implementation(project(":core:model"))
     implementation(project(":core:network"))
     implementation(project(":data:article"))
@@ -69,8 +70,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
-
-    implementation(libs.accompanist.webview)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.androidx.test.junit.ktx)

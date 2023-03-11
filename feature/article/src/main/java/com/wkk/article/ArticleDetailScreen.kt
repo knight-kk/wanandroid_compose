@@ -28,7 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
-import com.wkk.article.components.WebView
+import com.wkk.ui.theme.components.WebView
 
 @Composable
 fun ArticleDetailScreen(title: String, url: String, onBack: () -> Unit) {

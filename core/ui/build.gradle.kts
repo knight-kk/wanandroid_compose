@@ -47,6 +47,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
+    implementation(libs.accompanist.webview)
+
     implementation(libs.compose.material3)
     androidTestImplementation(composeBom)
 }
