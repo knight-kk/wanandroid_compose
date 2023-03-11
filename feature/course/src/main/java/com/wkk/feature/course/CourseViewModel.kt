@@ -20,6 +20,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.wkk.data.course.repository.CourseRepository
 import com.wkk.model.Course
+import com.wkk.model.CourseChapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -42,8 +43,10 @@ class CourseViewModel @Inject constructor(
         )
 
     private var _currentCourse: Course? = null
+    private var _currentCourseChapter: CourseChapter? = null
 
     fun getCurrentCourse() = _currentCourse ?: Course()
+    fun getCurrentCourseChapter() = _currentCourseChapter ?: CourseChapter()
 
     fun getChapterFlow() =
         courseRepository.getCourseChapters(getCurrentCourse().id).cachedIn(viewModelScope)
@@ -60,6 +63,10 @@ class CourseViewModel @Inject constructor(
 
     fun onItemClick(course: Course) {
         _currentCourse = course
+    }
+
+    fun onChapterItemClick(courseChapter: CourseChapter) {
+        _currentCourseChapter = courseChapter
     }
 }
 

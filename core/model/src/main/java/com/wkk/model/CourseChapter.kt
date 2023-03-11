@@ -16,7 +16,7 @@
 package com.wkk.model
 
 data class CourseChapter(
-    val id: String,
-    val name: String,
-    val link: String,
+    val id: String = "",
+    val name: String = "",
+    val link: String = "",
 )

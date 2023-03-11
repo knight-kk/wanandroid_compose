@@ -15,7 +15,6 @@
  */
 package com.wkk.feature.course.nav
 
-import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,9 +23,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.wkk.feature.course.CourseChapterDetailScreen
 import com.wkk.feature.course.CourseDetailScreen
 import com.wkk.feature.course.CourseScreen
 import com.wkk.feature.course.CourseViewModel
+import com.wkk.feature.course.nav.CourseNav.CHAPTER_DETAIL
 import com.wkk.feature.course.nav.CourseNav.DETAIL
 import com.wkk.feature.course.nav.CourseNav.MAIN
 import com.wkk.feature.course.nav.CourseNav.ROUTE
@@ -35,6 +36,7 @@ object CourseNav {
     const val ROUTE = "course_route"
     const val MAIN = "course"
     const val DETAIL = "courseDetail"
+    const val CHAPTER_DETAIL = "courseChapterDetail"
 }
 
 fun NavGraphBuilder.courseNav(navController: NavHostController) {
@@ -54,11 +56,18 @@ fun NavGraphBuilder.courseNav(navController: NavHostController) {
                 onBack = navController::navigateUp,
             )
         }
+        composable(CHAPTER_DETAIL) { navBackStackEntry ->
+            CourseChapterDetailScreen(
+                viewModel = getCourseViewModel(navController, navBackStackEntry),
+                navigateToChapterDetail = navController::navigateToChapterDetail,
+                onBack = navController::navigateUp,
+            )
+        }
     }
 }
 
-private fun NavHostController.navigateToChapterDetail(title: String, link: String) {
-    navigate("articleDetail/${Uri.encode(title)}/${Uri.encode(link)}")
+private fun NavHostController.navigateToChapterDetail() {
+    navigate(CHAPTER_DETAIL)
 }
 
 @Composable

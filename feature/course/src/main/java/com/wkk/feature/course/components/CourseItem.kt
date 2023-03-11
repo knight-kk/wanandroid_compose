@@ -36,7 +36,7 @@ import com.wkk.model.Course
 import com.wkk.ui.theme.AppTheme
 
 @Composable
-fun CourseItem(course: Course, modifier: Modifier = Modifier, onItemClick: (Course) -> Unit) {
+internal fun CourseItem(course: Course, modifier: Modifier = Modifier, onItemClick: (Course) -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
