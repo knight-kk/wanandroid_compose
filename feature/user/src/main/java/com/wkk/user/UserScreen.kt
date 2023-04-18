@@ -15,7 +15,6 @@
  */
 package com.wkk.user
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,15 +49,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 
 /**
  * 我的
  */
-@SuppressLint("ProduceStateDoesNotAssignValue")
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UserScreen(userViewModel: UserViewModel = hiltViewModel(), navigateToLogin: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()

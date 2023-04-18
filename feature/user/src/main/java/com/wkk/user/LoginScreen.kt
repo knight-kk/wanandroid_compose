@@ -54,13 +54,11 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wkk.user.components.PasswordTextField
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@ExperimentalLifecycleComposeApi
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), onClosePage: () -> Unit) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -101,7 +99,6 @@ private fun CoroutineScope.rememberLoginFun(
     }
 }
 
-@ExperimentalLifecycleComposeApi
 @Composable
 fun LoginScreenContent(
     login: (userName: String, password: String) -> Unit,
@@ -199,7 +196,6 @@ private fun UserTextField(
 }
 
 @Preview(showBackground = true, showSystemUi = false)
-@ExperimentalLifecycleComposeApi
 @Composable
 fun LoginPreView() {
     LoginScreenContent(login = { _, _ -> })
