@@ -18,6 +18,8 @@ package com.wkk.feature.course
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FormatListBulleted
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -54,7 +56,7 @@ fun CourseChapterDetailScreen(
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
         drawerState = drawerState,
-        gesturesEnabled = false,
+        gesturesEnabled = true,
         drawerContent = drawerContent(
             chapters = chapters,
             onItemClick = {
@@ -84,7 +86,7 @@ fun CourseChapterDetailScreen(
 
 @Composable
 private fun CourseChapterDetailContent(modifier: Modifier, url: String) {
-    WebView(modifier, url)
+    WebView(modifier.verticalScroll(rememberScrollState()), url)
 }
 
 private fun drawerContent(
