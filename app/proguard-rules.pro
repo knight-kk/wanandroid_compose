@@ -55,4 +55,6 @@
 -keepclassmembers class kotlin.coroutines.SafeContinuation {
     volatile <fields>;
 }
+# 修复 因获取不到 suspend 方法参数泛型类型导致的异常
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 
