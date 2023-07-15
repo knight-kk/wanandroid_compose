@@ -40,6 +40,7 @@ fun WebView(modifier: Modifier = Modifier, url: String) {
         WebView(
             state = state,
             onCreated = { webView: WebView ->
+                webView.alpha = 0.99f
                 webView.settings.apply {
                     javaScriptEnabled = true
                     domStorageEnabled = true
