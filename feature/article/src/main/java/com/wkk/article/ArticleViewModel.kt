@@ -18,7 +18,8 @@ package com.wkk.article
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.wkk.data.repository.ArticleRepository
+import com.wkk.data.article.repository.ArticleRepository
+import com.wkk.model.Article
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -32,4 +33,8 @@ class ArticleViewModel @Inject constructor(
 
     suspend fun toggleCollection(article: com.wkk.model.Article) =
         articleRepository.toggleCollection(article)
+
+    suspend fun readArticle(article: Article) {
+        articleRepository.readArticle(article)
+    }
 }

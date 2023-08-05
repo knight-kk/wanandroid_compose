@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user
+package com.wkk.user.screen.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -55,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wkk.user.R
 import com.wkk.user.components.PasswordTextField
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -112,7 +113,7 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.24f),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_logo),
+            imageVector = ImageVector.vectorResource(id = com.wkk.ui.R.drawable.ic_logo),
             contentDescription = "logo",
         )
         var userName by remember { mutableStateOf("") }

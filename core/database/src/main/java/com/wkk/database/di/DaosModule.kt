@@ -17,6 +17,7 @@ package com.wkk.database.di
 
 import com.wkk.database.AppDatabase
 import com.wkk.database.dao.ArticleDao
+import com.wkk.database.dao.ArticleHistoryDao
 import com.wkk.database.dao.ArticleRemoteKeysDao
 import com.wkk.database.dao.UserDao
 import dagger.Module
@@ -42,4 +43,9 @@ object DaosModule {
     fun providesUserDao(
         database: AppDatabase,
     ): UserDao = database.userDao()
+
+    @Provides
+    fun providesArticleHistoryDao(
+        database: AppDatabase,
+    ): ArticleHistoryDao = database.articleHistoryDao()
 }

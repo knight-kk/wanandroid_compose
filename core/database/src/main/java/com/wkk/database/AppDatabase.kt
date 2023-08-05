@@ -18,9 +18,11 @@ package com.wkk.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.wkk.database.dao.ArticleDao
+import com.wkk.database.dao.ArticleHistoryDao
 import com.wkk.database.dao.ArticleRemoteKeysDao
 import com.wkk.database.dao.UserDao
 import com.wkk.database.model.ArticleEntity
+import com.wkk.database.model.ArticleHistoryEntity
 import com.wkk.database.model.ArticleRemoteKey
 import com.wkk.database.model.UserEntity
 
@@ -29,6 +31,7 @@ import com.wkk.database.model.UserEntity
         ArticleEntity::class,
         ArticleRemoteKey::class,
         UserEntity::class,
+        ArticleHistoryEntity::class,
     ],
     version = 1,
     exportSchema = true,
@@ -40,4 +43,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun articleKeyDao(): ArticleRemoteKeysDao
 
     abstract fun userDao(): UserDao
+
+    abstract fun articleHistoryDao(): ArticleHistoryDao
 }

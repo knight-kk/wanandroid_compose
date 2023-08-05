@@ -21,9 +21,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.map
 import androidx.room.withTransaction
 import com.wkk.data.article.ArticleRemoteMediator
-import com.wkk.data.repository.ArticleRepository
+import com.wkk.data.article.repository.ArticleRepository
 import com.wkk.database.AppDatabase
 import com.wkk.database.dao.ArticleDao
+import com.wkk.database.dao.ArticleHistoryDao
+import com.wkk.database.model.ArticleHistoryEntity
 import com.wkk.database.model.asExternalModule
 import com.wkk.model.Article
 import com.wkk.model.DataResult
@@ -31,10 +33,11 @@ import com.wkk.network.datasource.ArticleRemoteDataSource
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class RemoteArticleRepository @Inject constructor(
+class ArticleRepositoryImpl @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource,
     private val articleDao: ArticleDao,
     private val database: AppDatabase,
+    private val articleHistoryDao: ArticleHistoryDao,
 ) : ArticleRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -50,7 +53,8 @@ class RemoteArticleRepository @Inject constructor(
     override suspend fun toggleCollection(article: Article): DataResult<Any> =
         database.withTransaction {
             val articleEntity =
-                articleDao.getArticle(article.id) ?: return@withTransaction DataResult.Error("更新失败")
+                articleDao.getArticle(article.id)
+                    ?: return@withTransaction DataResult.Error("更新失败")
             articleEntity.collect = !article.collect
             articleDao.update(articleEntity)
             val result = articleRemoteDataSource.toggleCollection(article)
@@ -61,4 +65,8 @@ class RemoteArticleRepository @Inject constructor(
             }
             DataResult.Success()
         }
+
+    override suspend fun readArticle(article: Article) {
+        articleHistoryDao.insert(ArticleHistoryEntity.create(article))
+    }
 }

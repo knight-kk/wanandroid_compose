@@ -87,13 +87,17 @@ private fun ArticleList(
 
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+    val onItemClickWrapper: (Article) -> Unit = { article ->
+        coroutineScope.launch { viewModel.readArticle(article) }
+        onItemClick(article)
+    }
 
     LazyColumn(state = lazyListState) {
         items(lazyPagingItems, { it.id }) { article ->
             if (article == null) return@items
             ArticleItem(
                 article,
-                onItemClick,
+                onItemClickWrapper,
                 onCollectionClick = {
                     coroutineScope.launch {
                         val result = viewModel.toggleCollection(article)

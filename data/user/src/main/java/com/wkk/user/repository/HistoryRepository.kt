@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 knight-kk
+ * Copyright 2023 knight-kk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.data.article.di
+package com.wkk.user.repository
 
-import com.wkk.data.article.repository.ArticleRepository
-import com.wkk.data.article.repository.impl.ArticleRepositoryImpl
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.wkk.model.ArticleHistory
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface ArticleRepositoryModule {
+interface HistoryRepository {
 
-    @Binds
-    fun bindsArticleRepository(
-        remoteArticleRepository: ArticleRepositoryImpl,
-    ): ArticleRepository
+    suspend fun getHistoryList(page: Int, pageSize: Int): List<ArticleHistory>
 }

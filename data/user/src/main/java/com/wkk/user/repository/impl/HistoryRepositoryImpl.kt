@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 knight-kk
+ * Copyright 2023 knight-kk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.data.article.di
+package com.wkk.user.repository.impl
 
-import com.wkk.data.article.repository.ArticleRepository
-import com.wkk.data.article.repository.impl.ArticleRepositoryImpl
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.wkk.database.dao.ArticleHistoryDao
+import com.wkk.database.model.asExternalModule
+import com.wkk.user.repository.HistoryRepository
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface ArticleRepositoryModule {
+class HistoryRepositoryImpl @Inject constructor(
+    private val articleHistoryDao: ArticleHistoryDao,
+) : HistoryRepository {
 
-    @Binds
-    fun bindsArticleRepository(
-        remoteArticleRepository: ArticleRepositoryImpl,
-    ): ArticleRepository
+    override suspend fun getHistoryList(page: Int, pageSize: Int) =
+        articleHistoryDao.getList(page, pageSize).map { it.asExternalModule() }
 }

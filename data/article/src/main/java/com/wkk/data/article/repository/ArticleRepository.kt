@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.data.repository
+package com.wkk.data.article.repository
 
 import androidx.paging.PagingData
 import com.wkk.model.Article
@@ -24,4 +24,6 @@ interface ArticleRepository {
 
     fun getPagerFlow(pageSize: Int = 20): Flow<PagingData<Article>>
     suspend fun toggleCollection(article: Article): DataResult<Any>
+
+    suspend fun readArticle(article: Article)
 }

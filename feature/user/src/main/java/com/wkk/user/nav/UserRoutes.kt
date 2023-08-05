@@ -18,23 +18,36 @@ package com.wkk.user.nav
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.wkk.user.LoginScreen
 import com.wkk.user.UserScreen
+import com.wkk.user.screen.ReadHistoryScreen
+import com.wkk.user.screen.login.LoginScreen
 
 object UserRoutes {
     const val MAIN = "user"
     const val LOGIN = "login"
+    const val READ_HISTORY = "read_history"
 }
 
-fun NavGraphBuilder.userNav(navigateToLogin: () -> Unit, navigateUp: () -> Unit) {
+fun NavGraphBuilder.userNav(
+    navigateToLogin: () -> Unit,
+    navigateUp: () -> Unit,
+    navigate: (route: String) -> Unit,
+) {
     composable(UserRoutes.MAIN) {
-        UserScreen(navigateToLogin = navigateToLogin)
+        UserScreen(navigateToLogin = navigateToLogin, navigateToItem = navigate)
     }
     composable(UserRoutes.LOGIN) {
         LoginScreen(onClosePage = navigateUp)
+    }
+    composable(UserRoutes.READ_HISTORY) {
+        ReadHistoryScreen(navigateUp = navigateUp)
     }
 }
 
 fun NavHostController.navigateToLogin() {
     navigate(UserRoutes.LOGIN)
+}
+
+fun NavHostController.navigateTo(routeName: String) {
+    navigate(routeName)
 }

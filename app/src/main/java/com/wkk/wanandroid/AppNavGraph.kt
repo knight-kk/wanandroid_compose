@@ -24,6 +24,7 @@ import com.wkk.article.nav.ArticleRoutes
 import com.wkk.article.nav.articleNav
 import com.wkk.article.nav.navigateToArticleDetail
 import com.wkk.feature.course.nav.courseNav
+import com.wkk.user.nav.navigateTo
 import com.wkk.user.nav.navigateToLogin
 import com.wkk.user.nav.userNav
 
@@ -45,6 +46,7 @@ fun AppNavGraph(
         userNav(
             navigateToLogin = navController::navigateToLogin,
             navigateUp = navController::navigateUp,
+            navigate = navController::navigateTo,
         )
         courseNav(navController)
     }

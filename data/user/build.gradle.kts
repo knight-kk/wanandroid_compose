@@ -42,7 +42,7 @@ dependencies {
     implementation(project(":core:datastore"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-
+    implementation(libs.paging.runtime)
     implementation(libs.hilt.android)
 
     kapt(libs.hilt.android.compiler)

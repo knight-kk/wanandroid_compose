@@ -67,11 +67,9 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
-
     testImplementation(project(":core:testing"))
     androidTestImplementation(composeBom)
 }

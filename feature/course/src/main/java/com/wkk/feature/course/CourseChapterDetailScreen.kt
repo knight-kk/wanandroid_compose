@@ -40,7 +40,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.wkk.feature.course.components.CourseDirectory
 import com.wkk.model.CourseChapter
-import com.wkk.ui.theme.components.WebView
+import com.wkk.ui.components.WebView
 import kotlinx.coroutines.launch
 
 @Composable
