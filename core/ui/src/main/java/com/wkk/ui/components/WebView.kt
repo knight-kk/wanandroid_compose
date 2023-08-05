@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.ui.theme.components
+package com.wkk.ui.components
 
 import android.annotation.SuppressLint
 import android.webkit.WebView
