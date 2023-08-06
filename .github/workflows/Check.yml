@@ -20,11 +20,7 @@ jobs:
           java-version: 17
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@2.4.2
-
-
       - name: gradle check
-        run: ./gradlew check assembleDebug lintDebug --stacktrace
+        run: ./gradlew check assembleDebug
 
   
