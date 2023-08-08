@@ -24,6 +24,4 @@ data class ArticleHistory(
     val collect: Boolean = false,
     val updateTime: Long,
     val category: String = "",
-) {
-    val selectionDate: String? = null
-}
+)
