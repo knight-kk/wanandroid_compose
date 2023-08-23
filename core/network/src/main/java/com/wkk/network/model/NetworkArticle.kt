@@ -15,8 +15,11 @@
  */
 package com.wkk.network.model
 
+import androidx.core.text.HtmlCompat
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.wkk.model.Article
+import com.wkk.utils.DateTimeUtils
 
 @JsonClass(generateAdapter = true)
 data class NetworkArticle(
@@ -52,4 +55,15 @@ data class NetworkArticle(
     @Json(name = "userId") val userId: Int = 1,
     @Json(name = "visible") val visible: Int = 0,
     @Json(name = "zan") val zan: Int = 0,
+)
+
+fun NetworkArticle.asExternalModule() = Article(
+    id = id,
+    title = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_COMPACT).toString(),
+    desc = desc,
+    link = link,
+    author = author,
+    collect = collect,
+    formatDateTime = DateTimeUtils.formatDate(publishTime),
+    category = arrayOf(superChapterName, chapterName).filter { it.isNotEmpty() }.joinToString("/"),
 )

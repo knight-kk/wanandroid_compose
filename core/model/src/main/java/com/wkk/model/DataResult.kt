@@ -21,5 +21,7 @@ sealed class DataResult<T>(
     val code: Int = 0,
 ) {
     class Success<T>(data: T? = null) : DataResult<T>(data)
-    class Error<T>(message: String, code: Int = -1) : DataResult<T>(null, message, code)
+    class Error<T>(message: String, code: Int = -1) : DataResult<T>(null, message, code) {
+        constructor(throwable: Throwable) : this("${throwable.message}${throwable.javaClass.simpleName}")
+    }
 }

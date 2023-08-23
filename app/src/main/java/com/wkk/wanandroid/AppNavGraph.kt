@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.wkk.article.nav.ArticleRoutes
 import com.wkk.article.nav.articleNav
+import com.wkk.article.nav.navigateToArticleCollection
 import com.wkk.article.nav.navigateToArticleDetail
 import com.wkk.feature.course.nav.courseNav
 import com.wkk.user.nav.navigateTo
@@ -43,11 +44,13 @@ fun AppNavGraph(
             navigateUp = navController::navigateUp,
         )
 
+        courseNav(navController)
+
         userNav(
             navigateToLogin = navController::navigateToLogin,
             navigateUp = navController::navigateUp,
             navigate = navController::navigateTo,
+            navigateToArticleCollection = navController::navigateToArticleCollection,
         )
-        courseNav(navController)
     }
 }

@@ -17,6 +17,7 @@ package com.wkk.network.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.wkk.model.PageData
 
 /**
  *  分页数据
@@ -63,3 +64,13 @@ data class NetworkPageData<T>(
     val total: Int = 0,
 
 )
+
+fun <T> NetworkPageData<T>.asExternalModule(): PageData<T> {
+    return PageData(curPage, size, datas)
+}
+
+inline fun <NetData, ItemData> NetworkPageData<NetData>.asExternalModule(
+    getData: NetData.() -> ItemData,
+): PageData<ItemData> {
+    return PageData(curPage, size, datas.map(getData))
+}

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.article
+package com.wkk.article.screen
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column

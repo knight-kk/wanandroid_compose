@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.article
+package com.wkk.article.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,7 +31,7 @@ class ArticleViewModel @Inject constructor(
         articleRepository.getPagerFlow().cachedIn(viewModelScope)
     }
 
-    suspend fun toggleCollection(article: com.wkk.model.Article) =
+    suspend fun toggleCollection(article: Article) =
         articleRepository.toggleCollection(article)
 
     suspend fun readArticle(article: Article) {

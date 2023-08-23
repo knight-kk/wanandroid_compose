@@ -18,8 +18,8 @@ package com.wkk.user.nav
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.wkk.user.UserScreen
 import com.wkk.user.screen.ReadHistoryScreen
+import com.wkk.user.screen.UserScreen
 import com.wkk.user.screen.login.LoginScreen
 
 object UserRoutes {
@@ -32,9 +32,14 @@ fun NavGraphBuilder.userNav(
     navigateToLogin: () -> Unit,
     navigateUp: () -> Unit,
     navigate: (route: String) -> Unit,
+    navigateToArticleCollection: () -> Unit = {},
 ) {
     composable(UserRoutes.MAIN) {
-        UserScreen(navigateToLogin = navigateToLogin, navigateToItem = navigate)
+        UserScreen(
+            navigateToLogin = navigateToLogin,
+            navigateToItem = navigate,
+            navigateToArticleCollection = navigateToArticleCollection,
+        )
     }
     composable(UserRoutes.LOGIN) {
         LoginScreen(onClosePage = navigateUp)

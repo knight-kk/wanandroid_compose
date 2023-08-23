@@ -40,4 +40,11 @@ class ArticleRemoteDataSourceImpl @Inject constructor(
             apiService.collectArticle(article.id)
         }
     }
+
+    override suspend fun fetchCollections(
+        page: Int,
+        pageSize: Int,
+    ): NetworkResult<NetworkPageData<NetworkArticle>> {
+        return apiService.fetchCollections(page, pageSize)
+    }
 }

@@ -33,10 +33,10 @@ class CourseRepositoryImpl
     private val remoteDataSource: CourseRemoteDataSource,
 ) : CourseRepository {
 
-    override fun getCourseList(): Flow<List<Course>> = flow<List<Course>> {
-        val result = remoteDataSource.getCourseList()
+    override fun getCourseList(): Flow<List<Course>> = flow {
+        val result = kotlin.runCatching { remoteDataSource.getCourseList() }.getOrNull() ?: return@flow
         if (result.isSuccess()) {
-            emit(result.data?.map { it.asExternalModule() } ?: emptyList())
+            emit(result.data?.map { it.asExternalModule() } ?: listOf())
         }
         throw RuntimeException(result.errorMsg)
     }

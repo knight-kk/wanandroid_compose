@@ -19,8 +19,8 @@ import androidx.core.text.HtmlCompat
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.wkk.database.utils.DateTimeUtils
 import com.wkk.model.Article
+import com.wkk.utils.DateTimeUtils
 
 @Entity(tableName = "articles")
 data class ArticleEntity(

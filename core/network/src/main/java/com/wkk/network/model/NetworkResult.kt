@@ -17,6 +17,7 @@ package com.wkk.network.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.wkk.model.DataResult
 
 @JsonClass(generateAdapter = true)
 class NetworkResult<T>(
@@ -32,4 +33,22 @@ class NetworkResult<T>(
     val errorMsg: String = "",
 ) {
     fun isSuccess() = errorCode == 0
+
+    companion object {
+        val asExternalModule = fun NetworkResult<*>.() = asExternalModule()
+    }
+}
+
+fun <T> NetworkResult<T>.asExternalModule(): DataResult<T> {
+    if (isSuccess()) {
+        return DataResult.Success(data)
+    }
+    return DataResult.Error(errorMsg, errorCode)
+}
+
+inline fun <NetData, Data> NetworkResult<NetData>.asExternalModule(getData: (NetData) -> Data): DataResult<Data> {
+    if (isSuccess()) {
+        return DataResult.Success(if (data != null) getData(data) else null)
+    }
+    return DataResult.Error(errorMsg, errorCode)
 }

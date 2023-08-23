@@ -21,11 +21,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -33,13 +31,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wkk.model.ArticleHistory
+import com.wkk.ui.components.LoadFooter
 import com.wkk.ui.components.appTopBar
 import kotlinx.coroutines.launch
 
@@ -88,7 +86,11 @@ fun ReadHistoryList(
             }
         }
         item {
-            ReadHistoryFooter(articleHistoryData, onLoadMoreData)
+            LoadFooter(
+                isLoading = articleHistoryData.isLoading,
+                isDataEnd = articleHistoryData.isDataEnd,
+                onLoadMoreData = onLoadMoreData,
+            )
         }
     }
 }
@@ -133,27 +135,5 @@ fun ReadHistoryItem(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
-    }
-}
-
-@Composable
-fun ReadHistoryFooter(data: ArticleHistoryData, onLoadMoreData: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        if (data.isLoading) {
-            Text(text = "Loading...")
-            return
-        }
-        if (data.isDataEnd) {
-            Text(text = "加载完成")
-            return
-        }
-        Button(onClick = onLoadMoreData) {
-            Text(text = "加载更多")
-        }
     }
 }

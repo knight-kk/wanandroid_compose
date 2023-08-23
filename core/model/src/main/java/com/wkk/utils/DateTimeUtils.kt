@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.database.utils
+package com.wkk.utils
 
 import java.util.concurrent.TimeUnit
 
-internal object DateTimeUtils {
+object DateTimeUtils {
 
     private val MINUTE = TimeUnit.MINUTES.toMillis(1)
     private val HOUR = TimeUnit.HOURS.toMillis(1)

@@ -52,13 +52,14 @@ class CourseViewModel @Inject constructor(
         courseRepository.getCourseChapters(getCurrentCourse().id).cachedIn(viewModelScope)
 
     private fun courseUiState() = courseRepository.getCourseList()
+        .catch {
+            CourseUiState.Error(it.message ?: "未知错误")
+        }
         .map {
             CourseUiState.Success(it)
         }
         .onStart {
             CourseUiState.Loading
-        }.catch {
-            CourseUiState.Error(it.message ?: "未知错误")
         }
 
     fun onItemClick(course: Course) {

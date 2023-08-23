@@ -28,6 +28,8 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+const val PAGE_SIZE = 10
+
 interface ApiService {
 
     /**
@@ -69,7 +71,7 @@ interface ApiService {
     @GET("/article/list/{page}/json")
     suspend fun fetchArticle(
         @Path("page") page: Int = 0,
-        @Query("page_size") pageSize: Int = 20,
+        @Query("page_size") pageSize: Int = PAGE_SIZE,
     ): NetworkResult<NetworkPageData<NetworkArticle>>
 
     @POST("/lg/collect/{articleId}/json")
@@ -86,6 +88,12 @@ interface ApiService {
         @Path("page") page: Int = 0,
         @Query("cid") cid: String,
         @Query("order_type") orderType: String?,
-        @Query("page_size") pageSize: Int = 20,
+        @Query("page_size") pageSize: Int = PAGE_SIZE,
     ): NetworkResult<NetworkPageData<NetworkCourseChapter>>
+
+    @GET("/lg/collect/list/{page}/json")
+    suspend fun fetchCollections(
+        @Path("page") page: Int = 0,
+        @Query("page_size") pageSize: Int = PAGE_SIZE,
+    ): NetworkResult<NetworkPageData<NetworkArticle>>
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user
+package com.wkk.user.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForwardIos
+import androidx.compose.material.icons.rounded.CollectionsBookmark
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.ListAlt
@@ -50,6 +51,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wkk.user.components.UserInfoHeader
 import com.wkk.user.nav.UserRoutes
 import kotlinx.coroutines.launch
 
@@ -61,6 +63,7 @@ fun UserScreen(
     userViewModel: UserViewModel = hiltViewModel(),
     navigateToLogin: () -> Unit = {},
     navigateToItem: (routeName: String) -> Unit = {},
+    navigateToArticleCollection: () -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
     val userUiState by userViewModel.userUiState.collectAsStateWithLifecycle()
@@ -80,6 +83,11 @@ fun UserScreen(
                 }
                 UserMenuItem(Icons.Rounded.ListAlt, "待办清单") {
                 }
+                UserMenuItem(
+                    Icons.Rounded.CollectionsBookmark,
+                    "收藏",
+                    onClick = navigateToArticleCollection,
+                )
                 UserMenuItem(Icons.Rounded.History, "阅读记录", true) {
                     navigateToItem(UserRoutes.READ_HISTORY)
                 }

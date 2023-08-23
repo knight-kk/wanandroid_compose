@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user
+package com.wkk.user.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wkk.model.User
+import com.wkk.user.screen.UserUiState
 
 @Composable
 fun UserInfoHeader(userUiState: UserUiState, navigateToLogin: () -> Unit) {

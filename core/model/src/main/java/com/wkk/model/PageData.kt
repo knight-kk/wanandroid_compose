@@ -15,13 +15,8 @@
  */
 package com.wkk.model
 
-data class ArticleHistory(
-    val id: String = "",
-    val title: String = "",
-    val desc: String = "",
-    val link: String = "",
-    val author: String = "",
-    val collect: Boolean = false,
-    val updateTime: Long,
-    val category: String = "",
+data class PageData<T>(
+    val curPage: Int,
+    val pageSize: Int,
+    val datas: List<T> = emptyList(),
 )

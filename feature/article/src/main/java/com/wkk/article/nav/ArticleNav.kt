@@ -19,13 +19,15 @@ import android.net.Uri
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.wkk.article.ArticleDetailScreen
-import com.wkk.article.ArticleScreen
 import com.wkk.article.nav.ArticleRoutes.DETAIL
 import com.wkk.article.nav.ArticleRoutes.MAIN
+import com.wkk.article.screen.ArticleCollectionScreen
+import com.wkk.article.screen.ArticleDetailScreen
+import com.wkk.article.screen.ArticleScreen
 
 object ArticleRoutes {
     const val MAIN = "article"
+    const val ARTICLE_COLLECTION = "article_collection"
 
     object DETAIL {
         const val ARGUMENT_TITLE = "title"
@@ -52,8 +54,19 @@ fun NavGraphBuilder.articleNav(
             onBack = navigateUp,
         )
     }
+
+    composable(ArticleRoutes.ARTICLE_COLLECTION) {
+        ArticleCollectionScreen(
+            navigateUp = navigateUp,
+            navigateToArticleDetail = { navigateToArticleDetail(it.title, it.link) },
+        )
+    }
 }
 
 fun NavHostController.navigateToArticleDetail(title: String, url: String) {
     navigate(DETAIL.crateParams(Uri.encode(title), Uri.encode(url)))
+}
+
+fun NavHostController.navigateToArticleCollection() {
+    navigate(ArticleRoutes.ARTICLE_COLLECTION)
 }

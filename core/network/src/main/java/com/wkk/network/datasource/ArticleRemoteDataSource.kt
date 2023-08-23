@@ -23,9 +23,13 @@ import com.wkk.network.model.NetworkResult
 interface ArticleRemoteDataSource {
 
     suspend fun fetchArticle(
-        page: Int = 0,
-        pageSize: Int = 10,
+        page: Int,
+        pageSize: Int,
     ): NetworkResult<NetworkPageData<NetworkArticle>>
 
     suspend fun toggleCollection(article: Article): NetworkResult<Any>
+    suspend fun fetchCollections(
+        page: Int = 0,
+        pageSize: Int,
+    ): NetworkResult<NetworkPageData<NetworkArticle>>
 }

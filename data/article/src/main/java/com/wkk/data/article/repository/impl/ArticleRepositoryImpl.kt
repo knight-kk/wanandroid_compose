@@ -29,7 +29,11 @@ import com.wkk.database.model.ArticleHistoryEntity
 import com.wkk.database.model.asExternalModule
 import com.wkk.model.Article
 import com.wkk.model.DataResult
+import com.wkk.model.PageData
 import com.wkk.network.datasource.ArticleRemoteDataSource
+import com.wkk.network.model.NetworkArticle
+import com.wkk.network.model.NetworkPageData
+import com.wkk.network.model.asExternalModule
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -65,6 +69,18 @@ class ArticleRepositoryImpl @Inject constructor(
             }
             DataResult.Success()
         }
+
+    override suspend fun getCollections(
+        page: Int,
+        pageSize: Int,
+    ): DataResult<PageData<Article>> = runCatching {
+        val networkResult = articleRemoteDataSource.fetchCollections(page, pageSize)
+        val asArticle = fun NetworkArticle.() = asExternalModule()
+        val asNetworkPageData = fun NetworkPageData<NetworkArticle>.() = asExternalModule(asArticle)
+        return networkResult.asExternalModule(asNetworkPageData)
+    }.getOrElse {
+        DataResult.Error(it)
+    }
 
     override suspend fun readArticle(article: Article) {
         articleHistoryDao.insert(ArticleHistoryEntity.create(article))
