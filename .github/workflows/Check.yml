@@ -20,8 +20,7 @@ jobs:
           java-version: 17
           distribution: 'temurin'
 
-
       - name: gradle check
-        run: ./gradlew check assembleDebug lintDebug --stacktrace
+        run: ./gradlew check assembleDebug
 
   
