@@ -18,7 +18,7 @@ package com.wkk.ui.components
 import androidx.compose.runtime.Composable
 
 @Composable
-fun Visibility(visible: Boolean, content: @Composable () -> Unit) {
+inline fun Visibility(visible: Boolean, content: @Composable () -> Unit) {
     if (visible.not()) return
     content()
 }

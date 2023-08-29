@@ -29,7 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -60,11 +60,8 @@ fun ArticleScreen(viewModel: ArticleViewModel = hiltViewModel(), onItemClick: (A
     Scaffold(topBar = {
         TopAppBar(
             title = { Text(text = "首页") },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor =
-                MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    elevation = if (isTop) 0.dp else 3.dp,
-                ),
+            colors = topAppBarColors(
+                MaterialTheme.colorScheme.surfaceColorAtElevation(if (isTop) 0.dp else 3.dp),
             ),
         )
     }) { paddingValues ->

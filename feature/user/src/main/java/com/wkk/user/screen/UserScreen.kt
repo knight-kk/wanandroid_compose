@@ -17,7 +17,6 @@ package com.wkk.user.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -41,16 +40,19 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wkk.ui.components.ScrollColumn
 import com.wkk.user.components.UserInfoHeader
 import com.wkk.user.nav.UserRoutes
 import kotlinx.coroutines.launch
@@ -67,8 +69,17 @@ fun UserScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val userUiState by userViewModel.userUiState.collectAsStateWithLifecycle()
-    Scaffold(topBar = { TopAppBar(title = { Text(text = "我的") }) }) { paddingValues ->
-        Column(
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "我的") },
+                scrollBehavior = scrollBehavior,
+            )
+        },
+    ) { paddingValues ->
+        ScrollColumn(
             Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxSize()
