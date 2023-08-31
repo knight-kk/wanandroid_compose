@@ -10,6 +10,7 @@ room = "2.5.1"
 hilt = "2.44"
 paging = "3.1.1"
 datastore = "1.0.0"
+kotlinxCoroutines = '1.6.4'
 
 [libraries]
 androidx-core-ktx = "androidx.core:core-ktx:1.10.0"
@@ -41,7 +42,7 @@ accompanist-pager = { group = "com.google.accompanist", name = "accompanist-page
 accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-webview = { group = "com.google.accompanist", name = "accompanist-webview", version.ref = "accompanist" }
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
-accompanist-swiperefresh= { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist" }
+accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
@@ -68,8 +69,11 @@ paging-compose = "androidx.paging:paging-compose:1.0.0-alpha18"
 
 test-junit = "junit:junit:4.13.2"
 # https://developer.android.google.cn/kotlin/coroutines/test
-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+
 # http://robolectric.org/getting-started/
 robolectric = "org.robolectric:robolectric:4.9"
 desugar_jdk = "com.android.tools:desugar_jdk_libs:2.0.3"
 coil-compose = "io.coil-kt:coil-compose:2.2.2"
+
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-core = { module = 'org.jetbrains.kotlinx:kotlinx-coroutines-core', version.ref = "kotlinxCoroutines" }
