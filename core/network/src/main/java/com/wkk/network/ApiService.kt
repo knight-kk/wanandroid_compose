@@ -21,6 +21,7 @@ import com.wkk.network.model.NetworkCourseChapter
 import com.wkk.network.model.NetworkPageData
 import com.wkk.network.model.NetworkResult
 import com.wkk.network.model.NetworkUser
+import com.wkk.network.model.NetworkUserInfo
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -58,6 +59,9 @@ interface ApiService {
      */
     @GET(UrlConstants.LOGOUT)
     suspend fun logout(): NetworkResult<Any?>
+
+    @GET("user/lg/userinfo/json")
+    suspend fun fetchUserInfo(): NetworkResult<NetworkUserInfo>
 
     /**
      * 未读消息

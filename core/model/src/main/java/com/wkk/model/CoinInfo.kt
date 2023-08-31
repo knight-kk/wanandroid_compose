@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 knight-kk
+ * Copyright 2023 knight-kk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user.repository
+package com.wkk.model
 
-import com.wkk.model.DataResult
-import com.wkk.model.User
-import kotlinx.coroutines.flow.Flow
-
-interface UserRepository {
-
-    suspend fun login(userName: String, password: String): DataResult<Any>
-
-    suspend fun logout()
-    suspend fun fetchUserInfo(): DataResult<Unit>
-    fun getUserInfo(): Flow<User>
-}
+data class CoinInfo(
+    val coinCount: Int = 0,
+    val level: Int = 0,
+    val nickname: String = "",
+    val rank: String = "",
+    val userId: String = "",
+)

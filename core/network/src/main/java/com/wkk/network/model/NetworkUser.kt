@@ -36,4 +36,5 @@ data class NetworkUser(
     val type: Int = 0,
     @Json(name = "username")
     val username: String = "",
+
 )

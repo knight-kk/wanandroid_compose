@@ -107,7 +107,7 @@ private fun UserInfoCard(user: User) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "--",
+                    text = "${user.collectionCount}",
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Text(text = "收藏", style = MaterialTheme.typography.labelSmall)
@@ -132,7 +132,7 @@ fun UserInfo(user: User?, modifier: Modifier = Modifier) {
                     .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
                     .background(MaterialTheme.colorScheme.secondaryContainer)
                     .padding(horizontal = 10.dp, vertical = 4.dp),
-                text = "LV100",
+                text = "LV${user.level}",
                 style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
             )

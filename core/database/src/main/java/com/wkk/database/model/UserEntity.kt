@@ -25,8 +25,6 @@ data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String,
-    @ColumnInfo(name = "coinCount")
-    val coinCount: Int = 0,
     @ColumnInfo(name = "email")
     val email: String = "",
     @ColumnInfo(name = "icon")
@@ -39,15 +37,28 @@ data class UserEntity(
     val type: Int = 0,
     @ColumnInfo(name = "username")
     val username: String = "",
+
+    @ColumnInfo(name = "collectionCount")
+    val collectionCount: Int = 0,
+
+    @ColumnInfo(name = "coinCount")
+    val coinCount: Int = 0,
+    @ColumnInfo(name = "level")
+    val level: Int = 0,
+    @ColumnInfo(name = "rank")
+    val rank: String = "",
 )
 
 fun UserEntity.asExternalModule() = User(
     id = id,
-    coinCount = coinCount,
     email = email,
     icon = icon,
     nickname = nickname,
     username = username,
     publicName = publicName,
     type = type,
+    collectionCount = collectionCount,
+    level = level,
+    rank = rank,
+    coinCount = coinCount,
 )

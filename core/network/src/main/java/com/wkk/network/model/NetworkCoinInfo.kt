@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 knight-kk
+ * Copyright 2023 knight-kk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user.repository
+package com.wkk.network.model
 
-import com.wkk.model.DataResult
-import com.wkk.model.User
-import kotlinx.coroutines.flow.Flow
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-interface UserRepository {
-
-    suspend fun login(userName: String, password: String): DataResult<Any>
-
-    suspend fun logout()
-    suspend fun fetchUserInfo(): DataResult<Unit>
-    fun getUserInfo(): Flow<User>
-}
+@JsonClass(generateAdapter = true)
+data class NetworkCoinInfo(
+    @Json(name = "coinCount")
+    val coinCount: Int,
+    @Json(name = "level")
+    val level: Int,
+    @Json(name = "nickname")
+    val nickname: String,
+    @Json(name = "rank")
+    val rank: String,
+    @Json(name = "userId")
+    val userId: String,
+)

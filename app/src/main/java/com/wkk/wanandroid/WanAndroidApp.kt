@@ -50,12 +50,12 @@ fun WanAndroidApp() {
                 .currentBackStackEntryAsState().value?.destination?.route ?: return@Scaffold
             val shouldShowBottomBar = currentRoute in HomeSections.values().map { it.route }
             if (shouldShowBottomBar) {
-                HomeBottomNav(currentRoute) {
-                    navigateToBottomBarRoute(
-                        navController,
-                        it.route,
-                    )
-                }
+                HomeBottomNav(
+                    currentRoute = currentRoute,
+                    onItemSelected = {
+                        navigateToBottomBarRoute(navController, it.route)
+                    },
+                )
             }
         },
         containerColor = Color.Transparent,
