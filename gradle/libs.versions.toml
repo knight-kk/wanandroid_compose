@@ -1,18 +1,18 @@
 [versions]
 kotlin = "1.6.2"
-androidxComposeBom = "2023.06.01"
+androidxComposeBom = "2023.08.00"
 accompanist = "0.25.1"
 okhttp = "4.10.0"
 retrofit = "2.9.0"
 moshi = "1.13.0"
 liefcycle = "2.6.1"
-room = "2.4.3"
+room = "2.5.1"
 hilt = "2.44"
 paging = "3.1.1"
 datastore = "1.0.0"
 
 [libraries]
-androidx-core-ktx = "androidx.core:core-ktx:1.9.0"
+androidx-core-ktx = "androidx.core:core-ktx:1.10.0"
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
@@ -64,12 +64,12 @@ hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", vers
 hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.0.0"
 
 paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha17"
+paging-compose = "androidx.paging:paging-compose:1.0.0-alpha18"
 
-test-junit = "junit:junit:4.13.1"
+test-junit = "junit:junit:4.13.2"
 # https://developer.android.google.cn/kotlin/coroutines/test
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 # http://robolectric.org/getting-started/
 robolectric = "org.robolectric:robolectric:4.9"
-desugar_jdk = "com.android.tools:desugar_jdk_libs:1.2.0"
+desugar_jdk = "com.android.tools:desugar_jdk_libs:2.0.3"
 coil-compose = "io.coil-kt:coil-compose:2.2.2"
