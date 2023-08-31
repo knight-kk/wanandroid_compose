@@ -17,6 +17,7 @@ package com.wkk.user.model
 
 import com.wkk.database.model.UserEntity
 import com.wkk.network.model.NetworkUser
+import com.wkk.network.model.NetworkUserInfo
 
 fun NetworkUser.asEntity() = UserEntity(
     id = id,
@@ -27,4 +28,18 @@ fun NetworkUser.asEntity() = UserEntity(
     username = username,
     publicName = publicName,
     type = type,
+)
+
+fun NetworkUserInfo.asEntity() = UserEntity(
+    id = userInfo.id,
+    coinCount = userInfo.coinCount,
+    email = userInfo.email,
+    icon = userInfo.icon,
+    nickname = userInfo.nickname,
+    username = userInfo.username,
+    publicName = userInfo.publicName,
+    type = userInfo.type,
+    collectionCount = collectArticleInfo.count,
+    level = coinInfo.level,
+    rank = coinInfo.rank,
 )

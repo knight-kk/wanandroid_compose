@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.paging.runtime)
     implementation(libs.hilt.android)
+    implementation(libs.kotlinx.coroutines.core)
 
     kapt(libs.hilt.android.compiler)
 

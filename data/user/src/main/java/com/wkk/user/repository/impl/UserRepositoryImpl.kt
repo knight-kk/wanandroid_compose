@@ -23,8 +23,12 @@ import com.wkk.model.User
 import com.wkk.network.datasource.UserRemoteDataSource
 import com.wkk.user.model.asEntity
 import com.wkk.user.repository.UserRepository
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -47,13 +51,30 @@ class UserRepositoryImpl @Inject constructor(
         userRemoteDataSource.logout()
     }
 
+    override suspend fun fetchUserInfo(): DataResult<Unit> {
+        val isLogin = runBlocking { preferencesDataSource.isLogin().first() }
+        if (isLogin.not()) return DataResult.Error("未登录")
+        val result = userRemoteDataSource.fetchUserInfo()
+        if (result.isSuccess().not()) return DataResult.Error(result.errorMsg)
+        val networkUser = result.data ?: return DataResult.Error("获取数据失败")
+        val user = networkUser.asEntity()
+        userDao.insertOrUpdate(user)
+        return DataResult.Success(null)
+    }
+
+    @OptIn(FlowPreview::class)
     override fun getUserInfo(): Flow<User> {
         return preferencesDataSource.getUserId()
-            .mapNotNull { userId ->
+            .flatMapConcat { userId ->
                 if (userId.isEmpty()) {
                     throw RuntimeException("未登录")
                 }
-                userDao.getUser(userId)?.asExternalModule()
+                userDao.getUserFow(userId)
+            }.map { userEntity ->
+                if (userEntity == null) {
+                    throw RuntimeException("未登录")
+                }
+                userEntity.asExternalModule()
             }
     }
 }

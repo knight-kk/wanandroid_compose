@@ -25,6 +25,8 @@ class UserRemoteDataSourceImpl @Inject constructor(
     override suspend fun login(userName: String, password: String) =
         apiService.login(userName, password)
 
+    override suspend fun fetchUserInfo() = apiService.fetchUserInfo()
+
     override suspend fun logout() = apiService.logout()
 
     override suspend fun register(userName: String, password: String, rePassword: String) =

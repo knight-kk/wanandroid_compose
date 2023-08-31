@@ -53,6 +53,8 @@ class UserViewModel @Inject constructor(
     suspend fun logout() {
         userRepository.logout()
     }
+
+    suspend fun fetchUserInfo() = userRepository.fetchUserInfo()
 }
 
 sealed interface UserUiState {

@@ -17,9 +17,12 @@ package com.wkk.network.datasource
 
 import com.wkk.network.model.NetworkResult
 import com.wkk.network.model.NetworkUser
+import com.wkk.network.model.NetworkUserInfo
 
 interface UserRemoteDataSource {
     suspend fun login(userName: String, password: String): NetworkResult<NetworkUser>
+
+    suspend fun fetchUserInfo(): NetworkResult<NetworkUserInfo>
 
     suspend fun logout(): NetworkResult<Any?>
 

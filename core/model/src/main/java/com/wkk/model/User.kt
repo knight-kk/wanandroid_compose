@@ -17,11 +17,14 @@ package com.wkk.model
 
 data class User(
     val id: String,
-    val coinCount: Int = 0,
     val email: String = "",
     val icon: String = "",
     val nickname: String = "",
     val publicName: String = "",
     val type: Int = 0,
     val username: String = "",
+    val collectionCount: Int = 0,
+    val level: Int = 0,
+    val rank: String = "",
+    val coinCount: Int = 0,
 )
