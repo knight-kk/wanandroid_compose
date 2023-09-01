@@ -21,7 +21,7 @@ jobs:
          java-version: 17
          distribution: 'corretto'
 
-      - name: gradle check
-        run: ./gradlew check assembleDebug
+      - name: Check spotless
+        run: ./gradlew spotlessCheck assembleDebug
 
   
