@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
@@ -21,7 +21,7 @@ jobs:
          java-version: 17
          distribution: 'corretto'
 
-      - name: gradle check
-        run: ./gradlew check assembleDebug
+      - name: Check spotless
+        run: ./gradlew spotlessCheck assembleDebug
 
   
