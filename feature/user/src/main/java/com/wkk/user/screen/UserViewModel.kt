@@ -46,7 +46,10 @@ class UserViewModel @Inject constructor(
             .map<User, UserUiState> {
                 UserUiState.Success(it)
             }
-            .onStart { emit(UserUiState.Loading) }
+            .onStart {
+                userRepository.fetchUserInfo()
+                emit(UserUiState.Loading)
+            }
             .catch { emit(UserUiState.Error(it.message ?: "")) }
     }
 
