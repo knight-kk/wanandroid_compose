@@ -41,4 +41,8 @@ class FakeUserRepository : UserRepository {
     override suspend fun logout() {
         TODO("Not yet implemented")
     }
+
+    override suspend fun fetchUserInfo(): DataResult<Unit> {
+        TODO()
+    }
 }
