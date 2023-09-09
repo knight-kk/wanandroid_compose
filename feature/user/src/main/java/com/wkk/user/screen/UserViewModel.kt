@@ -25,14 +25,20 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            userRepository.fetchUserInfo()
+        }
+    }
 
     val userUiState: StateFlow<UserUiState> = userUiState()
         .stateIn(
@@ -45,19 +51,12 @@ class UserViewModel @Inject constructor(
         return userRepository.getUserInfo()
             .map<User, UserUiState> {
                 UserUiState.Success(it)
-            }
-            .onStart {
-                userRepository.fetchUserInfo()
-                emit(UserUiState.Loading)
-            }
-            .catch { emit(UserUiState.Error(it.message ?: "")) }
+            }.catch { emit(UserUiState.Error(it.message ?: "")) }
     }
 
     suspend fun logout() {
         userRepository.logout()
     }
-
-    suspend fun fetchUserInfo() = userRepository.fetchUserInfo()
 }
 
 sealed interface UserUiState {
