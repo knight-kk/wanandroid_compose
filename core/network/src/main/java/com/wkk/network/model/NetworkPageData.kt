@@ -70,7 +70,7 @@ fun <T> NetworkPageData<T>.asExternalModule(): PageData<T> {
 }
 
 inline fun <NetData, ItemData> NetworkPageData<NetData>.asExternalModule(
-    getData: NetData.() -> ItemData,
+    getData: (NetData) -> ItemData,
 ): PageData<ItemData> {
     return PageData(curPage, size, datas.map(getData))
 }

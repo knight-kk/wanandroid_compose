@@ -21,7 +21,7 @@ import com.wkk.datastore.datasource.PreferencesDataSource
 import com.wkk.model.DataResult
 import com.wkk.model.User
 import com.wkk.network.datasource.UserRemoteDataSource
-import com.wkk.user.model.asEntity
+import com.wkk.user.convert.asEntity
 import com.wkk.user.repository.UserRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow

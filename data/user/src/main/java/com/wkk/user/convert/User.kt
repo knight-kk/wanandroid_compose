@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user.model
+package com.wkk.user.convert
 
 import com.wkk.database.model.UserEntity
 import com.wkk.network.model.NetworkUser

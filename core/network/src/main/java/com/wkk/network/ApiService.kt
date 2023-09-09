@@ -16,6 +16,8 @@
 package com.wkk.network
 
 import com.wkk.network.model.NetworkArticle
+import com.wkk.network.model.NetworkCoinInfo
+import com.wkk.network.model.NetworkCoinRecord
 import com.wkk.network.model.NetworkCourse
 import com.wkk.network.model.NetworkCourseChapter
 import com.wkk.network.model.NetworkPageData
@@ -100,4 +102,17 @@ interface ApiService {
         @Path("page") page: Int = 0,
         @Query("page_size") pageSize: Int = PAGE_SIZE,
     ): NetworkResult<NetworkPageData<NetworkArticle>>
+
+    @GET("/lg/coin/userinfo/json")
+    suspend fun fetchUserCoin(): NetworkResult<NetworkCoinInfo>
+
+    @GET("/coin/rank/{page}/json")
+    suspend fun fetchCoinRank(
+        @Path("page") page: Int = 1,
+    ): NetworkResult<NetworkPageData<NetworkCoinInfo>>
+
+    @GET("/lg/coin/list/{page}/json")
+    suspend fun fetchCoinRecords(
+        @Path("page") page: Int = 1,
+    ): NetworkResult<NetworkPageData<NetworkCoinRecord>>
 }
