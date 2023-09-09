@@ -15,29 +15,28 @@
  */
 package com.wkk.user.repository.impl
 
-import com.wkk.model.CoinInfo
-import com.wkk.model.CoinRecord
-import com.wkk.model.DataResult
-import com.wkk.model.PageData
-import com.wkk.network.ApiService
+import androidx.paging.map
+import com.wkk.network.datasource.CoinRemoteDataSource
 import com.wkk.network.model.asExternalModule
-import com.wkk.network.model.asExternalWrapperPageDataModule
 import com.wkk.user.convert.asExternalModule
 import com.wkk.user.repository.UserCoinRepository
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserCoinRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val coinRemoteDataSource: CoinRemoteDataSource,
 ) : UserCoinRepository {
-    override suspend fun fetchUserCoin(): DataResult<CoinInfo> {
-        return apiService.fetchUserCoin().asExternalModule { it.asExternalModule() }
-    }
+    override suspend fun fetchUserCoin() =
+        coinRemoteDataSource.fetchUserCoin().asExternalModule { it.asExternalModule() }
 
-    override suspend fun fetchCoinRank(page: Int): DataResult<PageData<CoinInfo>> {
-        return apiService.fetchCoinRank(page).asExternalWrapperPageDataModule { it.asExternalModule() }
-    }
+    override fun fetchCoinRank() =
+        coinRemoteDataSource.fetchCoinRank()
+            .map { pagingData ->
+                pagingData.map { it.asExternalModule() }
+            }
 
-    override suspend fun fetchCoinRecords(page: Int): DataResult<PageData<CoinRecord>> {
-        return apiService.fetchCoinRecords(page).asExternalWrapperPageDataModule { it.asExternalModule() }
-    }
+    override fun fetchCoinRecord() = coinRemoteDataSource.fetchCoinRecord()
+        .map { pagingData ->
+            pagingData.map { it.asExternalModule() }
+        }
 }

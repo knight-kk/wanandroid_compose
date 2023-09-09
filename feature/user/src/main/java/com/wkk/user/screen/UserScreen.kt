@@ -85,7 +85,12 @@ fun UserScreen(
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
-            UserInfoHeader(userUiState, navigateToLogin)
+            UserInfoHeader(
+                userUiState,
+                navigateToLogin,
+                { navigateToItem(UserRoutes.USER_COIN) },
+                navigateToArticleCollection,
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 

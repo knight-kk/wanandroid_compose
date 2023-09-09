@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":core:datastore"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.paging.runtime)
 
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)

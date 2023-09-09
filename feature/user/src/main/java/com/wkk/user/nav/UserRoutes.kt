@@ -19,6 +19,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.wkk.user.screen.ReadHistoryScreen
+import com.wkk.user.screen.UserCoinScreen
 import com.wkk.user.screen.UserScreen
 import com.wkk.user.screen.login.LoginScreen
 
@@ -26,6 +27,7 @@ object UserRoutes {
     const val MAIN = "user"
     const val LOGIN = "login"
     const val READ_HISTORY = "read_history"
+    const val USER_COIN = "user_coin"
 }
 
 fun NavGraphBuilder.userNav(
@@ -46,6 +48,9 @@ fun NavGraphBuilder.userNav(
     }
     composable(UserRoutes.READ_HISTORY) {
         ReadHistoryScreen(navigateUp = navigateUp)
+    }
+    composable(UserRoutes.USER_COIN) {
+        UserCoinScreen(navigateUp = navigateUp)
     }
 }
 

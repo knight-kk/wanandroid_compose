@@ -52,17 +52,31 @@ import com.wkk.model.User
 import com.wkk.user.screen.UserUiState
 
 @Composable
-fun UserInfoHeader(userUiState: UserUiState, navigateToLogin: () -> Unit) {
+fun UserInfoHeader(
+    userUiState: UserUiState,
+    navigateToLogin: () -> Unit,
+    navigateToUserCoin: () -> Unit = {},
+    navigateToArticleCollection: () -> Unit = {},
+) {
     when (userUiState) {
         is UserUiState.Error,
         UserUiState.Loading,
         -> UserNoLoginHeader(navigateToLogin)
-        is UserUiState.Success -> UserInfoCard(user = userUiState.user)
+
+        is UserUiState.Success -> UserInfoCard(
+            user = userUiState.user,
+            navigateToUserCoin = navigateToUserCoin,
+            navigateToArticleCollection = navigateToArticleCollection,
+        )
     }
 }
 
 @Composable
-private fun UserInfoCard(user: User) {
+private fun UserInfoCard(
+    user: User,
+    navigateToUserCoin: () -> Unit = {},
+    navigateToArticleCollection: () -> Unit = {},
+) {
     Column(Modifier.fillMaxWidth()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -83,7 +97,7 @@ private fun UserInfoCard(user: User) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { }
+                    .clickable(onClick = navigateToUserCoin)
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -102,7 +116,7 @@ private fun UserInfoCard(user: User) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { }
+                    .clickable(onClick = navigateToArticleCollection)
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

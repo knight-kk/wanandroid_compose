@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user.repository
+package com.wkk.network.datasource
 
 import androidx.paging.PagingData
-import com.wkk.model.CoinInfo
-import com.wkk.model.CoinRecord
-import com.wkk.model.DataResult
+import com.wkk.network.model.NetworkCoinInfo
+import com.wkk.network.model.NetworkCoinRecord
+import com.wkk.network.model.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
-interface UserCoinRepository {
-
-    suspend fun fetchUserCoin(): DataResult<CoinInfo>
-    fun fetchCoinRank(): Flow<PagingData<CoinInfo>>
-    fun fetchCoinRecord(): Flow<PagingData<CoinRecord>>
+interface CoinRemoteDataSource {
+    suspend fun fetchUserCoin(): NetworkResult<NetworkCoinInfo>
+    fun fetchCoinRecord(): Flow<PagingData<NetworkCoinRecord>>
+    fun fetchCoinRank(): Flow<PagingData<NetworkCoinInfo>>
 }

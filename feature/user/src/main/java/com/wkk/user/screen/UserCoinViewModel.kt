@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wkk.user.repository
+package com.wkk.user.screen
 
-import androidx.paging.PagingData
-import com.wkk.model.CoinInfo
-import com.wkk.model.CoinRecord
-import com.wkk.model.DataResult
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
+import com.wkk.user.repository.UserCoinRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-interface UserCoinRepository {
+@HiltViewModel
+class UserCoinViewModel @Inject constructor(
+    private val userCoinRepository: UserCoinRepository,
+) : ViewModel() {
 
-    suspend fun fetchUserCoin(): DataResult<CoinInfo>
-    fun fetchCoinRank(): Flow<PagingData<CoinInfo>>
-    fun fetchCoinRecord(): Flow<PagingData<CoinRecord>>
+    val fetchCoinRecord by lazy {
+        userCoinRepository.fetchCoinRecord().cachedIn(viewModelScope)
+    }
 }

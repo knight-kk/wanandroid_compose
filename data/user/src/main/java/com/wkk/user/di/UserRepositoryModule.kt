@@ -16,8 +16,10 @@
 package com.wkk.user.di
 
 import com.wkk.user.repository.HistoryRepository
+import com.wkk.user.repository.UserCoinRepository
 import com.wkk.user.repository.UserRepository
 import com.wkk.user.repository.impl.HistoryRepositoryImpl
+import com.wkk.user.repository.impl.UserCoinRepositoryImpl
 import com.wkk.user.repository.impl.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -37,4 +39,9 @@ interface UserRepositoryModule {
     fun bindsHistoryRepository(
         userRepository: HistoryRepositoryImpl,
     ): HistoryRepository
+
+    @Binds
+    fun bindsUserCoinRepository(
+        userCoinRepository: UserCoinRepositoryImpl,
+    ): UserCoinRepository
 }
