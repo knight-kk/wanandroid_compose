@@ -22,8 +22,8 @@ import com.wkk.network.model.NetworkCoinRecord
 fun NetworkCoinRecord.asExternalModule() = CoinRecord(
     id = id,
     coinCount = coinCount,
-    date = DateFormat.format("yyyy-MM-dd HH:mm", date).toString(),
-    desc = desc,
+    date = DateFormat.format("yyyy-MM-dd HH:mm:ss", date).toString(),
+    desc = desc.substringAfter(","),
     reason = reason,
     type = type,
 )

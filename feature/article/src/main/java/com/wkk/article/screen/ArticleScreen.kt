@@ -112,7 +112,7 @@ private fun ArticleList(
 
 private fun LazyListScope.footer(appendLoadState: LoadState) {
     if (appendLoadState != LoadState.Loading) return
-    item {
+    item(key = "footer") {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

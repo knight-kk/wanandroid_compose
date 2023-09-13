@@ -64,6 +64,6 @@ fun NetworkArticle.asExternalModule() = Article(
     link = link,
     author = author,
     collect = collect,
-    formatDateTime = DateTimeUtils.formatDate(publishTime),
+    formatDateTime = DateTimeUtils.formatBeforeDate(publishTime),
     category = arrayOf(superChapterName, chapterName).filter { it.isNotEmpty() }.joinToString("/"),
 )

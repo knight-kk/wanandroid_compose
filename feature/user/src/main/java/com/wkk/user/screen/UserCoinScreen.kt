@@ -18,15 +18,25 @@ package com.wkk.user.screen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -39,7 +49,12 @@ fun UserCoinScreen(navigateUp: () -> Unit, viewModel: UserCoinViewModel = hiltVi
         topBar = appTopBar("积分明细", navigateUp),
     ) { paddingValues ->
 
-        Box(modifier = Modifier.padding(paddingValues)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center,
+        ) {
             val items = viewModel.fetchCoinRecord.collectAsLazyPagingItems()
             UserCoinRecordList(items)
         }
@@ -47,23 +62,62 @@ fun UserCoinScreen(navigateUp: () -> Unit, viewModel: UserCoinViewModel = hiltVi
 }
 
 @Composable
-private fun UserCoinRecordList(items: LazyPagingItems<CoinRecord>) {
-    LazyColumn {
+private fun UserCoinRecordList(
+    items: LazyPagingItems<CoinRecord>,
+    lazyListState: LazyListState = rememberLazyListState(),
+) {
+    if (items.itemCount == 0) {
+        CircularProgressIndicator()
+        return
+    }
+    LazyColumn(state = lazyListState) {
         items(items, key = { it.id }) { coinRecord: CoinRecord? ->
             if (coinRecord == null) return@items
             CoinRecordItem(coinRecord)
             Divider()
         }
+        footer(items.loadState.append)
     }
 }
 
 @Composable
 fun CoinRecordItem(coinRecord: CoinRecord) {
-    Row(Modifier.fillMaxWidth()) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Column(Modifier.weight(1f)) {
-            Text(coinRecord.desc)
-            Text(coinRecord.reason)
+            Text(
+                coinRecord.reason,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Text(
+                "${coinRecord.date},${coinRecord.desc}",
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
-        Text(text = "${if (coinRecord.type == 1) "+" else "-"}${coinRecord.coinCount}")
+        Text(
+            text = "${if (coinRecord.type == 1) "+" else "-"}${coinRecord.coinCount}",
+            fontWeight = FontWeight.SemiBold,
+            color = if (coinRecord.type == 1) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+}
+
+private fun LazyListScope.footer(appendLoadState: LoadState) {
+    if (appendLoadState != LoadState.Loading) return
+    item(key = "footer") {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            CircularProgressIndicator()
+            Text(modifier = Modifier.padding(top = 2.dp), text = "加载中……")
+        }
     }
 }

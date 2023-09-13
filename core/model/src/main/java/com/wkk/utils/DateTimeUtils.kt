@@ -26,7 +26,7 @@ object DateTimeUtils {
     private val MONTH = TimeUnit.DAYS.toMillis(1) * 30
     private val YEAR = TimeUnit.DAYS.toMillis(1) * 365
 
-    fun formatDate(timeMillis: Long): String {
+    fun formatBeforeDate(timeMillis: Long): String {
         val time = System.currentTimeMillis() - timeMillis
         if (time < MINUTE) {
             return "刚刚"
