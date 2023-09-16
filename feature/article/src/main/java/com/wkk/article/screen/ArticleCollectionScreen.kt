@@ -21,10 +21,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wkk.article.components.ArticleItem
@@ -39,8 +41,10 @@ fun ArticleCollectionScreen(
     navigateUp: () -> Unit,
     navigateToArticleDetail: (Article) -> Unit,
 ) {
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
-        topBar = appTopBar("收藏", navigateUp),
+        modifier=Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = appTopBar("收藏", navigateUp,scrollBehavior),
     ) { paddingValues ->
         val data = viewModel.uiDataState.collectAsStateWithLifecycle().value
         Box(Modifier.padding(paddingValues)) {

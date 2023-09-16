@@ -21,14 +21,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 
-fun appTopBar(title: String, onNavigation: () -> Unit): @Composable () -> Unit = {
-    AppTopBar(title, onNavigation)
+fun appTopBar(
+    title: String,
+    onNavigation: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior? = null
+): @Composable () -> Unit = {
+    AppTopBar(title, onNavigation, scrollBehavior)
 }
 
 @Composable
-fun AppTopBar(title: String, onNavigation: () -> Unit) {
+fun AppTopBar(
+    title: String,
+    onNavigation: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior? = null
+) {
     TopAppBar(
         title = { Text(text = title) },
         navigationIcon = {
@@ -36,5 +45,6 @@ fun AppTopBar(title: String, onNavigation: () -> Unit) {
                 Icon(imageVector = Icons.Default.ArrowBack, "back")
             }
         },
+        scrollBehavior = scrollBehavior
     )
 }

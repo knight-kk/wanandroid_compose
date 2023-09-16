@@ -25,18 +25,15 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
-import androidx.compose.material3.surfaceColorAtElevation
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -51,20 +48,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun ArticleScreen(viewModel: ArticleViewModel = hiltViewModel(), onItemClick: (Article) -> Unit) {
     val lazyListState = rememberLazyListState()
-    val isTop = remember {
-        derivedStateOf {
-            lazyListState.firstVisibleItemIndex == 0 &&
-                lazyListState.firstVisibleItemScrollOffset == 0
-        }
-    }.value
-    Scaffold(topBar = {
-        TopAppBar(
-            title = { Text(text = "首页") },
-            colors = topAppBarColors(
-                MaterialTheme.colorScheme.surfaceColorAtElevation(if (isTop) 0.dp else 3.dp),
-            ),
-        )
-    }) { paddingValues ->
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "首页") },
+                scrollBehavior = scrollBehavior
+            )
+        }) { paddingValues ->
         Column(
             Modifier
                 .padding(paddingValues),

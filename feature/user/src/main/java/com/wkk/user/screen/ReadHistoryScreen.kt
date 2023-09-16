@@ -28,10 +28,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,8 +48,10 @@ fun ReadHistoryScreen(
     viewModel: ReadHistoryViewModel = hiltViewModel(),
     navigateUp: () -> Unit,
 ) {
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
-        topBar = appTopBar("浏览记录", navigateUp),
+        modifier=Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = appTopBar("浏览记录", navigateUp,scrollBehavior),
     ) { paddingValues ->
         val data = viewModel.uiDataState.collectAsStateWithLifecycle().value
         Box(Modifier.padding(paddingValues)) {
