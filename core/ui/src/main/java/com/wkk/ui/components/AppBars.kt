@@ -27,7 +27,7 @@ import androidx.compose.runtime.Composable
 fun appTopBar(
     title: String,
     onNavigation: () -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ): @Composable () -> Unit = {
     AppTopBar(title, onNavigation, scrollBehavior)
 }
@@ -36,7 +36,7 @@ fun appTopBar(
 fun AppTopBar(
     title: String,
     onNavigation: () -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     TopAppBar(
         title = { Text(text = title) },
@@ -45,6 +45,6 @@ fun AppTopBar(
                 Icon(imageVector = Icons.Default.ArrowBack, "back")
             }
         },
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
     )
 }

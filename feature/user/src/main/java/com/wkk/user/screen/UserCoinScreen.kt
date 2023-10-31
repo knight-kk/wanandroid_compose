@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
@@ -38,12 +37,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.wkk.model.CoinRecord
 import com.wkk.ui.components.appTopBar
+import com.wkk.ui.components.paging.pagingFooter
 
 @Composable
 fun UserCoinScreen(navigateUp: () -> Unit, viewModel: UserCoinViewModel = hiltViewModel()) {
@@ -80,7 +79,7 @@ private fun UserCoinRecordList(
             CoinRecordItem(coinRecord)
             Divider()
         }
-        footer(items.loadState.append)
+        pagingFooter(items.loadState.append)
     }
 }
 
@@ -108,20 +107,5 @@ fun CoinRecordItem(coinRecord: CoinRecord) {
             color = if (coinRecord.type == 1) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.bodyMedium,
         )
-    }
-}
-
-private fun LazyListScope.footer(appendLoadState: LoadState) {
-    if (appendLoadState != LoadState.Loading) return
-    item(key = "footer") {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(0.dp, 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            CircularProgressIndicator()
-            Text(modifier = Modifier.padding(top = 2.dp), text = "加载中……")
-        }
     }
 }

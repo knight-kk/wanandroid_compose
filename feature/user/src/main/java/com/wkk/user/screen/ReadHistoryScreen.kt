@@ -50,8 +50,8 @@ fun ReadHistoryScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
-        modifier=Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = appTopBar("浏览记录", navigateUp,scrollBehavior),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = appTopBar("浏览记录", navigateUp, scrollBehavior),
     ) { paddingValues ->
         val data = viewModel.uiDataState.collectAsStateWithLifecycle().value
         Box(Modifier.padding(paddingValues)) {

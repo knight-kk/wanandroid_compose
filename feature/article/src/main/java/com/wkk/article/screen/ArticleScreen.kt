@@ -54,9 +54,10 @@ fun ArticleScreen(viewModel: ArticleViewModel = hiltViewModel(), onItemClick: (A
         topBar = {
             TopAppBar(
                 title = { Text(text = "首页") },
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
             )
-        }) { paddingValues ->
+        },
+    ) { paddingValues ->
         Column(
             Modifier
                 .padding(paddingValues),
