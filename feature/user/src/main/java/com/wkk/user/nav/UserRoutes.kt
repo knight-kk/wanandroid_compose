@@ -18,6 +18,8 @@ package com.wkk.user.nav
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.wkk.model.AppInfo
+import com.wkk.user.screen.AboutScreen
 import com.wkk.user.screen.ReadHistoryScreen
 import com.wkk.user.screen.UserCoinScreen
 import com.wkk.user.screen.UserScreen
@@ -28,9 +30,11 @@ object UserRoutes {
     const val LOGIN = "login"
     const val READ_HISTORY = "read_history"
     const val USER_COIN = "user_coin"
+    const val ABOUT_US = "about_us"
 }
 
 fun NavGraphBuilder.userNav(
+    appInfo: AppInfo,
     navigateToLogin: () -> Unit,
     navigateUp: () -> Unit,
     navigate: (route: String) -> Unit,
@@ -51,6 +55,9 @@ fun NavGraphBuilder.userNav(
     }
     composable(UserRoutes.USER_COIN) {
         UserCoinScreen(navigateUp = navigateUp)
+    }
+    composable(UserRoutes.ABOUT_US) {
+        AboutScreen(appInfo, navigateUp = navigateUp, navigate)
     }
 }
 

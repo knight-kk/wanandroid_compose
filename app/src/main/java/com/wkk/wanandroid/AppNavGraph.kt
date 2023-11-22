@@ -25,6 +25,7 @@ import com.wkk.article.nav.articleNav
 import com.wkk.article.nav.navigateToArticleCollection
 import com.wkk.article.nav.navigateToArticleDetail
 import com.wkk.feature.course.nav.courseNav
+import com.wkk.model.AppInfo
 import com.wkk.user.nav.navigateTo
 import com.wkk.user.nav.navigateToLogin
 import com.wkk.user.nav.userNav
@@ -33,6 +34,11 @@ import com.wkk.user.nav.userNav
 fun AppNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    appInfo: AppInfo = AppInfo(
+        "玩Android",
+        BuildConfig.VERSION_CODE,
+        BuildConfig.VERSION_NAME,
+        ),
 ) {
     NavHost(
         navController = navController,
@@ -47,6 +53,7 @@ fun AppNavGraph(
         courseNav(navController)
 
         userNav(
+            appInfo = appInfo,
             navigateToLogin = navController::navigateToLogin,
             navigateUp = navController::navigateUp,
             navigate = navController::navigateTo,

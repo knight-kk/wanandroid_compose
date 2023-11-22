@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForwardIos
-import androidx.compose.material.icons.rounded.CollectionsBookmark
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.ListAlt
@@ -99,11 +98,6 @@ fun UserScreen(
                 }
                 UserMenuItem(Icons.Rounded.ListAlt, "待办清单") {
                 }
-                UserMenuItem(
-                    Icons.Rounded.CollectionsBookmark,
-                    "收藏",
-                    onClick = navigateToArticleCollection,
-                )
                 UserMenuItem(Icons.Rounded.History, "阅读记录", true) {
                     navigateToItem(UserRoutes.READ_HISTORY)
                 }
@@ -111,6 +105,7 @@ fun UserScreen(
 
             OutlinedCard(Modifier.padding(vertical = 10.dp)) {
                 UserMenuItem(Icons.Rounded.Info, "关于") {
+                    navigateToItem(UserRoutes.ABOUT_US)
                 }
                 UserMenuItem(Icons.Rounded.Settings, "设置", true) {
                 }
